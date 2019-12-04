@@ -1,0 +1,8 @@
+{
+    "image_width": 1500,
+    "image_height": 1500,
+    "file_type": "png",
+    "file_directory": "./output/",
+    "file_name": "colour_static",
+    "generate_new_file": true
+}

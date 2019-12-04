@@ -8,6 +8,7 @@ import (
 	"image/png"
 	"io/ioutil"
 	"math"
+	"math/rand"
 	"os"
 	"time"
 )
@@ -46,8 +47,9 @@ func main() {
 			scaledRedVal := uint16(redVal * float64(math.MaxUint16))
 			greenVal := float64(y) / float64(maxBoundsY)
 			scaledGreenVal := uint16(greenVal * float64(math.MaxUint16))
-			blueVal := 0.0
+			blueVal := rand.Float64()
 			scaledBlueVal := uint16(blueVal * float64(math.MaxUint16))
+			fmt.Println(scaledBlueVal)
 			// fmt.Printf("%d, %d, %d\n", scaledRedVal, scaledGreenVal, scaledBlueVal)
 			// yVal := uint16((float64(y) / float64(maxBoundsY)) * math.MaxInt16)
 
@@ -76,5 +78,6 @@ func main() {
 
 func getImageFile(settings Settings) (*os.File, error) {
 	filename := fmt.Sprintf("%s%s_%s.%s", settings.FileDirectory, settings.FileName, time.Now().Format("2006-01-02_T150405"), settings.FileType)
+	os.MkdirAll(settings.FileDirectory, os.ModePerm)
 	return os.Create(filename)
 }

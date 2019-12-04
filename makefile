@@ -12,10 +12,13 @@ OUTPUT_DIR=./output/
 all: clean run
 
 run: build
+	# execute binary
 	./$(BINARY_NAME)
 build:
+	# go build
 	$(GOBUILD) -o $(BINARY_NAME) main.go
 clean:
-	# goworker
+	# remove binary
 	-rm $(BINARY_NAME)
+	# delete all generated images
 	-rm -r $(OUTPUT_DIR)

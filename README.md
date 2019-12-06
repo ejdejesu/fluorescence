@@ -1,2 +1,3 @@
-# fluorescence
-A Path Tracer written in Golang
+# Fluorescence
+A Path Tracer written in Golang, and a spiritual successor to Luminescence
+

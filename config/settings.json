@@ -1,8 +1,9 @@
 {
-    "image_width": 1500,
-    "image_height": 1500,
+    "image_width": 400,
+    "image_height": 200,
     "file_type": "png",
     "file_directory": "./output/",
     "file_name": "colour_static",
-    "generate_new_file": true
+    "generate_new_file": true,
+    "background_color": [0.08, 0.1, 0.12, 1.0]
 }

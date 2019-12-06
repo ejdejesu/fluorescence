@@ -11,6 +11,8 @@ OUTPUT_DIR=./output/
 ## Actions ##
 all: clean run
 
+restart: clean clean-output run
+
 run: build
 	# execute binary
 	./$(BINARY_NAME)
@@ -20,5 +22,6 @@ build:
 clean:
 	# remove binary
 	-rm $(BINARY_NAME)
+clean-output:
 	# delete all generated images
 	-rm -r $(OUTPUT_DIR)

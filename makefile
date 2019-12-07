@@ -1,6 +1,7 @@
 ## Go parameters ##
 GOCMD=go
 GORUN=$(GOCMD) run
+GOINSTALL=$(GOCMD) install
 GOBUILD=$(GOCMD) build
 GOCLEAN=$(GOCMD) clean
 GOGET=$(GOCMD) get
@@ -9,19 +10,22 @@ BINARY_NAME=fluorescence
 OUTPUT_DIR=./output/
 
 ## Actions ##
-all: clean run
+all: clean install run
 
-restart: clean clean-output run
+restart: clean clean-output install run
 
-run: build
+run:
 	# execute binary
-	./$(BINARY_NAME)
+	$(GOPATH)/bin/$(BINARY_NAME)
+install:
+	# go install
+	$(GOINSTALL)
 build:
 	# go build
 	$(GOBUILD) -o $(BINARY_NAME) main.go
 clean:
 	# remove binary
-	-rm $(BINARY_NAME)
+	-rm $(GOPATH)/bin/$(BINARY_NAME)
 clean-output:
 	# delete all generated images
 	-rm -r $(OUTPUT_DIR)

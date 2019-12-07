@@ -43,8 +43,8 @@ func (c *Color) ToRGBA64() *color.RGBA64 {
 		uint16(c.Alpha * float64(math.MaxUint16))}
 }
 
-func (s *Color) UnmarshalJSON(buf []byte) error {
-	tmp := []interface{}{&s.Red, &s.Green, &s.Blue, &s.Alpha}
+func (c *Color) UnmarshalJSON(buf []byte) error {
+	tmp := []interface{}{&c.Red, &c.Green, &c.Blue, &c.Alpha}
 	wantLen := len(tmp)
 	if err := json.Unmarshal(buf, &tmp); err != nil {
 		return err

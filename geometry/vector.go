@@ -1,18 +1,16 @@
 package geometry
 
 import (
-	"encoding/json"
 	"fluorescence/shading"
-	"fmt"
 	"math"
 	"math/rand"
 )
 
 // Vector is a 3D vector
 type Vector struct {
-	X float64
-	Y float64
-	Z float64
+	X float64 `json:"x"`
+	Y float64 `json:"y"`
+	Z float64 `json:"z"`
 }
 
 var ZERO = &Vector{0.0, 0.0, 0.0}
@@ -21,12 +19,25 @@ var UP = &Vector{0.0, 1.0, 0.0}
 var RIGHT = &Vector{1.0, 0.0, 0.0}
 var FORWARD = &Vector{0.0, 0.0, -1.0}
 
-func RandomOnUnitDisc() *Vector {
+func RandomOnUnitDisc(rng *rand.Rand) *Vector {
 	for {
 		v := &Vector{
-			X: rand.Float64(),
-			Y: rand.Float64(),
+			X: 2.0*rng.Float64() - 1.0,
+			Y: 2.0*rng.Float64() - 1.0,
 			Z: 0.0,
+		}
+		if v.Magnitude() < 1.0 {
+			return v
+		}
+	}
+}
+
+func RandomInUnitSphere(rng *rand.Rand) *Vector {
+	for {
+		v := &Vector{
+			X: 2.0*rng.Float64() - 1.0,
+			Y: 2.0*rng.Float64() - 1.0,
+			Z: 2.0*rng.Float64() - 1.0,
 		}
 		if v.Magnitude() < 1.0 {
 			return v
@@ -70,6 +81,10 @@ func (v *Vector) MultiplyFloat64(s float64) *Vector {
 	return &Vector{v.X * s, v.Y * s, v.Z * s}
 }
 
+func (v *Vector) Pow(e float64) *Vector {
+	return &Vector{math.Pow(v.X, e), math.Pow(v.Y, e), math.Pow(v.Z, e)}
+}
+
 func (v *Vector) MultiplyVector(w *Vector) *Vector {
 	return &Vector{v.X * w.X, v.Y * w.Y, v.Z * w.Z}
 }
@@ -88,16 +103,4 @@ func (v *Vector) ToColor() *shading.Color {
 
 func (v *Vector) Copy() *Vector {
 	return &Vector{v.X, v.Y, v.Z}
-}
-
-func (v *Vector) UnmarshalJSON(buf []byte) error {
-	tmp := []interface{}{&v.X, &v.Y, &v.Z}
-	wantLen := len(tmp)
-	if err := json.Unmarshal(buf, &tmp); err != nil {
-		return err
-	}
-	if len(tmp) != wantLen {
-		return fmt.Errorf("wrong number of fields: %d != %d", len(tmp), wantLen)
-	}
-	return nil
 }

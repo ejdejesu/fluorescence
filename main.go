@@ -2,54 +2,88 @@ package main
 
 import (
 	"fluorescence/geometry"
+	"fluorescence/shading/material"
 	"fmt"
 	"image"
 	"image/png"
 	"math"
 	"math/rand"
 	"os"
+	"sync"
 	"time"
 )
 
 func main() {
-	// get settings
-	parameters, err := LoadParameters("./config/parameters.json")
+
+	// maxThreads := int64(runtime.NumCPU())
+	// maxThreads := int64(runtime.NumCPU() * 10)
+	// maxThreads := int64(runtime.NumCPU() * 1000)
+	// maxThreads := int64(1)
+	// get parameters
+	parametersFileName := "./config/parameters.json"
+	fmt.Printf("Loading Parameters file (%s)...\n", parametersFileName)
+	parameters, err := LoadParameters(parametersFileName)
 	if err != nil {
 		fmt.Printf("Error loading parameters data: %s\n", err.Error())
 		return
 	}
-	// get objects
-	objects, err := LoadObjects("./config/objects.json")
-	if err != nil {
-		fmt.Printf("Error loading settings data: %s\n", err.Error())
-		return
-	}
 
 	// create image
+	fmt.Printf("Creating in-mem image...\n")
 	img := image.NewRGBA64(image.Rect(0, 0, parameters.ImageWidth, parameters.ImageHeight))
 
+	// fill image
+	fmt.Printf("Filling in-mem image...\n")
+
+	wg := sync.WaitGroup{}
+	// sem := semaphore.NewWeighted(maxThreads)
+	// pixelsChan := make(chan geometry.Pixel)
+	// rng := rand.New(rand.NewSource(time.Now().UnixNano()))
 	startTime := time.Now()
 	for y := 0; y < parameters.ImageHeight; y++ {
 		for x := 0; x < parameters.ImageWidth; x++ {
-			colorAccumulator := geometry.ZERO.Copy()
-			for s := 0; s < parameters.AntialiasSampleCount; s++ {
-				u := (float64(x) + rand.Float64()) / float64(parameters.ImageWidth)
-				v := (float64(y) + rand.Float64()) / float64(parameters.ImageHeight)
+			// sem.Acquire(context.Background(), 1)
+			wg.Add(1)
+			r := rand.New(rand.NewSource(time.Now().UnixNano()))
+			go func(x, y int, rng *rand.Rand) {
+				defer wg.Done()
+				// defer sem.Release(1)
+				colorAccumulator := geometry.ZERO.Copy()
+				for s := 0; s < parameters.AntialiasSampleCount; s++ {
+					u := (float64(x) + rng.Float64()) / float64(parameters.ImageWidth)
+					v := (float64(y) + rng.Float64()) / float64(parameters.ImageHeight)
 
-				ray := objects.Camera.GetRay(u, v)
+					ray := parameters.Scene.Camera.GetRay(u, v, rng)
 
-				tempColor := colorOf(parameters, objects, ray)
-				colorAccumulator.AddInPlace(tempColor)
-			}
-			color := colorAccumulator.DivideFloat64(float64(parameters.AntialiasSampleCount)).ToColor()
-			img.SetRGBA64(x, parameters.ImageHeight-y-1, *color.ToRGBA64())
+					tempColor := colorOf(parameters, ray, rng, 0)
+					colorAccumulator.AddInPlace(tempColor)
+				}
+				colorAccumulator = colorAccumulator.DivideFloat64(float64(parameters.AntialiasSampleCount))
+				colorAccumulator = colorAccumulator.Pow(1.0 / float64(parameters.GammaCorrection))
+				color := colorAccumulator.ToColor()
+				// pixelsChan <- geometry.Pixel{x, parameters.ImageHeight - y - 1, *color}
+				img.SetRGBA64(x, parameters.ImageHeight-y-1, *color.ToRGBA64())
+			}(x, y, r)
+			// fmt.Printf("ok\n")
+
+		}
+		if y%10 == 0 {
+			fmt.Printf("\t\t%3.4f%%\n", 100*float64(y)/float64(parameters.ImageHeight))
 		}
 	}
-	endTime := time.Now()
-	fmt.Printf("Fill pixel time: %.3fms\n", 0.000001*float64(endTime.UnixNano()-startTime.UnixNano()))
+	// var p geometry.Pixel
+	// for i := 0; i < parameters.ImageWidth*parameters.ImageHeight; i++ {
+	// 	p = <-pixelsChan
+	// 	img.SetRGBA64(p.X, p.Y, *p.Color.ToRGBA64())
+	// }
+	// fmt.Printf("Waiting on threads...\n")
+	wg.Wait()
+	// sem.Release(0)
+	totalDuration := time.Since(startTime)
+	fmt.Printf("\tTotal time: %v\n", totalDuration)
 
 	// create file
-
+	fmt.Printf("Creating image file...\n")
 	file, err := getImageFile(parameters)
 	if err != nil {
 		fmt.Printf("Error creating image file: %s\n", err.Error())
@@ -58,37 +92,55 @@ func main() {
 	defer file.Close()
 
 	// encode image to file
+	fmt.Printf("Writing in-mem image to image file...\n")
 	err = png.Encode(file, img)
 	if err != nil {
 		fmt.Printf("Error encoding to image file: %s\n", err.Error())
 		return
 	}
+	fmt.Printf("Done!\n")
+	return
 }
 
-func colorOf(parameters *Parameters, objects *Objects, r *geometry.Ray) *geometry.Vector {
-	var minRayHit *geometry.RayHit
-	minT := math.MaxFloat64
-	hitSomething := false
-	for _, g := range objects.Total {
-		rayHit, wasHit := g.Intersection(r, 0, 100000.0)
-		if wasHit && rayHit.T < minT {
-			hitSomething = true
-			minRayHit = rayHit
-			minT = rayHit.T
-		}
-	}
-	if hitSomething {
-		return &geometry.Vector{
-			X: (1 + minRayHit.NormalAtHit.X) / 2,
-			Y: (1 + minRayHit.NormalAtHit.Y) / 2,
-			Z: (1 + minRayHit.NormalAtHit.Z) / 2,
-		}
-	}
-	return &geometry.Vector{
+func colorOf(parameters *Parameters, r *geometry.Ray, rng *rand.Rand, depth int) *geometry.Vector {
+
+	backgroundColor := &geometry.Vector{
 		X: parameters.BackgroundColor.Red,
 		Y: parameters.BackgroundColor.Green,
 		Z: parameters.BackgroundColor.Blue,
 	}
+
+	if depth > parameters.MaxBounces {
+		return backgroundColor
+	}
+
+	var rayHit *material.RayHit
+	minT := math.MaxFloat64
+	hitSomething := false
+	for _, p := range parameters.Scene.Objects.Total {
+		rh, wasHit := p.Intersection(r, parameters.TMin, parameters.TMax)
+		if wasHit && rh.T < minT {
+			hitSomething = true
+			rayHit = rh
+			minT = rh.T
+		}
+	}
+	if !hitSomething {
+		return backgroundColor
+	}
+
+	material := rayHit.Material
+
+	if *material.Reflectance() == *geometry.ZERO {
+		return material.Emittance()
+	}
+
+	scatteredRay, wasScattered := rayHit.Material.Scatter(rayHit, rng)
+	if !wasScattered {
+		return backgroundColor
+	}
+	incomingColor := colorOf(parameters, scatteredRay, rng, depth+1)
+	return material.Reflectance().MultiplyVector(incomingColor)
 }
 
 func getImageFile(parameters *Parameters) (*os.File, error) {

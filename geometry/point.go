@@ -1,14 +1,9 @@
 package geometry
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
 type Point struct {
-	X float64
-	Y float64
-	Z float64
+	X float64 `json:"x"`
+	Y float64 `json:"y"`
+	Z float64 `json:"z"`
 }
 
 var ORIGIN = &Point{0.0, 0.0, 0.0}
@@ -35,16 +30,4 @@ func (p *Point) SubtractVector(v *Vector) *Point {
 
 func (p *Point) toVector() *Vector {
 	return &Vector{p.X, p.Y, p.Z}
-}
-
-func (p *Point) UnmarshalJSON(buf []byte) error {
-	tmp := []interface{}{&p.X, &p.Y, &p.Z}
-	wantLen := len(tmp)
-	if err := json.Unmarshal(buf, &tmp); err != nil {
-		return err
-	}
-	if len(tmp) != wantLen {
-		return fmt.Errorf("wrong number of fields: %d != %d", len(tmp), wantLen)
-	}
-	return nil
 }

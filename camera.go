@@ -3,6 +3,7 @@ package main
 import (
 	"fluorescence/geometry"
 	"math"
+	"math/rand"
 )
 
 type Camera struct {
@@ -28,8 +29,9 @@ type Camera struct {
 	verical         *geometry.Vector `json:"-"`
 }
 
-func (c *Camera) Setup() error {
+func (c *Camera) Setup(p *Parameters) error {
 	c.UpVector = c.UpVector.Unit()
+	c.AspectRatio = float64(p.ImageWidth) / float64(p.ImageHeight)
 
 	c.lensRadius = c.Aperture / 2.0
 	c.theta = c.VerticalFOV * math.Pi / 180.0
@@ -51,8 +53,8 @@ func (c *Camera) Setup() error {
 	return nil
 }
 
-func (c *Camera) GetRay(u float64, v float64) *geometry.Ray {
-	randomOnLens := geometry.RandomOnUnitDisc().MultiplyFloat64(c.lensRadius)
+func (c *Camera) GetRay(u float64, v float64, rng *rand.Rand) *geometry.Ray {
+	randomOnLens := geometry.RandomOnUnitDisc(rng).MultiplyFloat64(c.lensRadius)
 	offset := c.u.MultiplyFloat64(randomOnLens.X).Add(c.v.MultiplyFloat64(randomOnLens.Y))
 	return &geometry.Ray{
 		Origin: c.EyeLocation.AddVector(offset),

@@ -1,17 +1,15 @@
 package shading
 
 import (
-	"encoding/json"
-	"fmt"
 	"image/color"
 	"math"
 )
 
 type Color struct {
-	Red   float64
-	Green float64
-	Blue  float64
-	Alpha float64
+	Red   float64 `json:"red"`
+	Green float64 `json:"green"`
+	Blue  float64 `json:"blue"`
+	Alpha float64 `json:"alpha"`
 }
 
 var TRANSPARENT = &Color{0.0, 0.0, 0.0, 0.0}
@@ -41,16 +39,4 @@ func (c *Color) ToRGBA64() *color.RGBA64 {
 		uint16(c.Green * float64(math.MaxUint16)),
 		uint16(c.Blue * float64(math.MaxUint16)),
 		uint16(c.Alpha * float64(math.MaxUint16))}
-}
-
-func (c *Color) UnmarshalJSON(buf []byte) error {
-	tmp := []interface{}{&c.Red, &c.Green, &c.Blue, &c.Alpha}
-	wantLen := len(tmp)
-	if err := json.Unmarshal(buf, &tmp); err != nil {
-		return err
-	}
-	if len(tmp) != wantLen {
-		return fmt.Errorf("wrong number of fields: %d != %d", len(tmp), wantLen)
-	}
-	return nil
 }

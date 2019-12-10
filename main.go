@@ -9,7 +9,6 @@ import (
 	"math"
 	"math/rand"
 	"os"
-	"sync"
 	"time"
 )
 
@@ -38,18 +37,18 @@ func main() {
 	// fill image
 	fmt.Printf("Filling in-mem image...\n")
 
-	wg := sync.WaitGroup{}
-	pixelCount := parameters.ImageWidth * parameters.ImageWidth
+	// wg := sync.WaitGroup{}
+	pixelCount := parameters.ImageWidth * parameters.ImageHeight
 	// sem := semaphore.NewWeighted(maxThreads)
 	doneChan := make(chan int, pixelCount)
 	// rng := rand.New(rand.NewSource(time.Now().UnixNano()))
 	startTime := time.Now()
 	for y := 0; y < parameters.ImageHeight; y++ {
 		// sem.Acquire(context.Background(), 1)
-		wg.Add(1)
+		// wg.Add(1)
 		r := rand.New(rand.NewSource(time.Now().UnixNano()))
 		go func(y int, rng *rand.Rand, dc chan<- int) {
-			defer wg.Done()
+			// defer wg.Done()
 			for x := 0; x < parameters.ImageWidth; x++ {
 				// defer sem.Release(1)
 				colorAccumulator := geometry.ZERO.Copy()
@@ -87,10 +86,13 @@ func main() {
 		<-doneChan
 		doneCount++
 		if doneCount%printInterval == 0 {
-			fmt.Printf("\t\t%5.1f%%\n", 100*float64(doneCount)/float64(pixelCount))
+			elapsedTime := time.Since(startTime)
+			estimatedTime := time.Duration(float64(elapsedTime) * float64(float64(pixelCount)/float64(doneCount)))
+			remainingTime := estimatedTime - elapsedTime
+			fmt.Printf("\t\t%5.1f%% - Est. Remaining: %v\n", 100*float64(doneCount)/float64(pixelCount), remainingTime)
 		}
 	}
-	wg.Wait()
+	// wg.Wait()
 	// sem.Release(0)
 	totalDuration := time.Since(startTime)
 	fmt.Printf("\tTotal time: %v\n", totalDuration)

@@ -128,6 +128,102 @@
         }
     },
     {
+        "name": "red_light",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "name": "bright_red_light",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 5.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "name": "green_light",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "name": "bright_green_light",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 0.0,
+                "y": 5.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "name": "blue_light",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 1.0
+            }
+        }
+    },
+    {
+        "name": "bright_blue_light",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 5.0
+            }
+        }
+    },
+    {
         "name": "perfect_mirror",
         "type": "Metal",
         "data": {
@@ -142,6 +238,40 @@
                 "z": 0.0
             },
             "fuzziness": 0.0
+        }
+    },
+    {
+        "name": "real_mirror",
+        "type": "Metal",
+        "data": {
+            "r": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fuzziness": 0.01
+        }
+    },
+    {
+        "name": "fuzzy_mirror",
+        "type": "Metal",
+        "data": {
+            "r": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fuzziness": 0.1
         }
     },
     {

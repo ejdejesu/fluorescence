@@ -300,7 +300,7 @@
         }
     },
     {
-        "name": "light_triangle_center_1",
+        "name": "light_center_triangle_1",
         "type": "Triangle",
         "data": {
             "a": {
@@ -322,7 +322,7 @@
         }
     },
     {
-        "name": "light_triangle_center_2",
+        "name": "light_center_triangle_2",
         "type": "Triangle",
         "data": {
             "a": {
@@ -339,6 +339,138 @@
                 "x": 2.5,
                 "y": 9.9999,
                 "z": -2.5
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    },
+    {
+        "name": "light_far_left_triangle_1",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 0,
+                "y": 9.9999,
+                "z": -10.0
+            },
+            "b": {
+                "x": 3.5,
+                "y": 9.9999,
+                "z": -10.0
+            },
+            "c": {
+                "x": 0.0,
+                "y": 9.9999,
+                "z": -6.0
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    },
+    {
+        "name": "light_far_left_triangle_2",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 3.5,
+                "y": 9.9999,
+                "z": -10.0
+            },
+            "b": {
+                "x": 3.5,
+                "y": 9.9999,
+                "z": -6.0
+            },
+            "c": {
+                "x": 0.0,
+                "y": 9.9999,
+                "z": -6.0
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    },
+    {
+        "name": "light_far_center_triangle_1",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 3.5,
+                "y": 9.9999,
+                "z": -10.0
+            },
+            "b": {
+                "x": 6.5,
+                "y": 9.9999,
+                "z": -10.0
+            },
+            "c": {
+                "x": 3.5,
+                "y": 9.9999,
+                "z": -6.0
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    },
+    {
+        "name": "light_far_center_triangle_2",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 6.5,
+                "y": 9.9999,
+                "z": -10.0
+            },
+            "b": {
+                "x": 6.5,
+                "y": 9.9999,
+                "z": -6.0
+            },
+            "c": {
+                "x": 3.5,
+                "y": 9.9999,
+                "z": -6.0
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    },
+    {
+        "name": "light_far_right_triangle_1",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 6.5,
+                "y": 9.9999,
+                "z": -10.0
+            },
+            "b": {
+                "x": 10.0,
+                "y": 9.9999,
+                "z": -10.0
+            },
+            "c": {
+                "x": 6.5,
+                "y": 9.9999,
+                "z": -6.0
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    },
+    {
+        "name": "light_far_right_triangle_2",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 10.0,
+                "y": 9.9999,
+                "z": -10.0
+            },
+            "b": {
+                "x": 10.0,
+                "y": 9.9999,
+                "z": -6.0
+            },
+            "c": {
+                "x": 6.5,
+                "y": 9.9999,
+                "z": -6.0
             },
             "intersect_epsilon": 0.0000001
         }

@@ -6,5 +6,5 @@ type Ray struct {
 }
 
 func (r *Ray) PointAt(s float64) *Point {
-	return r.Origin.AddVector(r.Direction.MultiplyFloat64(s))
+	return r.Origin.AddVector(r.Direction.MultScalar(s))
 }

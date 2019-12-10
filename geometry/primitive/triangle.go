@@ -46,6 +46,15 @@ func (t *Triangle) Intersection(ray *geometry.Ray, tMin float64, tMax float64) (
 	return nil, false
 }
 
+func (t *Triangle) SetMaterial(m material.Material) {
+	t.Material = m
+}
+
+func (t *Triangle) Copy() Primitive {
+	newT := *t
+	return &newT
+}
+
 func (t *Triangle) normal() *geometry.Vector {
 	return t.A.To(t.B).Cross(t.A.To(t.C)).Unit()
 }

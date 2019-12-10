@@ -49,6 +49,15 @@ func (s *Sphere) Intersection(ray *geometry.Ray, tMin float64, tMax float64) (*m
 	return nil, false
 }
 
+func (s *Sphere) SetMaterial(m material.Material) {
+	s.Material = m
+}
+
+func (s *Sphere) Copy() Primitive {
+	newS := *s
+	return &newS
+}
+
 func (s *Sphere) normalAt(p *geometry.Point) *geometry.Vector {
 	return s.Center.To(p).Unit()
 }

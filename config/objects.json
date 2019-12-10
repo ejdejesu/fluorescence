@@ -1,0 +1,346 @@
+[
+    {
+        "name": "left_sphere",
+        "type": "Sphere",
+        "data": {
+            "center": {
+                "x": 2.5,
+                "y": 2.5,
+                "z": -2.5
+            },
+            "radius": 2
+        }
+    },
+    {
+        "name": "center_sphere",
+        "type": "Sphere",
+        "data": {
+            "center": {
+                "x": 5.0,
+                "y": 5.0,
+                "z": -5.0
+            },
+            "radius": 2
+        }
+    },
+    {
+        "name": "right_sphere",
+        "type": "Sphere",
+        "data": {
+            "center": {
+                "x": 7.5,
+                "y": 7.5,
+                "z": -7.5
+            },
+            "radius": 2
+        }
+    },
+    {
+        "name": "bottom_triangle_1",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "b": {
+                "x": 10.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "c": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": -10.0
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    },
+    {
+        "name": "bottom_triangle_2",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 10.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "b": {
+                "x": 10.0,
+                "y": 0.0,
+                "z": -10.0
+            },
+            "c": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": -10.0
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    },
+    {
+        "name": "right_triangle_1",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 10.0,
+                "y": 0.0,
+                "z": -10.0
+            },
+            "b": {
+                "x": 10.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "c": {
+                "x": 10.0,
+                "y": 10.0,
+                "z": -10.0
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    },
+    {
+        "name": "right_triangle_2",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 10.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "b": {
+                "x": 10.0,
+                "y": 10.0,
+                "z": 0.0
+            },
+            "c": {
+                "x": 10.0,
+                "y": 10.0,
+                "z": -10.0
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    },
+    {
+        "name": "far_triangle_1",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": -10.0
+            },
+            "b": {
+                "x": 10.0,
+                "y": 0.0,
+                "z": -10.0
+            },
+            "c": {
+                "x": 0.0,
+                "y": 10.0,
+                "z": -10.0
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    },
+    {
+        "name": "far_triangle_2",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 10.0,
+                "y": 0.0,
+                "z": -10.0
+            },
+            "b": {
+                "x": 10.0,
+                "y": 10.0,
+                "z": -10.0
+            },
+            "c": {
+                "x": 0.0,
+                "y": 10.0,
+                "z": -10.0
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    },
+    {
+        "name": "left_triangle_1",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "b": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": -10.0
+            },
+            "c": {
+                "x": 0.0,
+                "y": 10.0,
+                "z": 0.0
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    },
+    {
+        "name": "left_triangle_2",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": -10.0
+            },
+            "b": {
+                "x": 0.0,
+                "y": 10.0,
+                "z": -10.0
+            },
+            "c": {
+                "x": 0.0,
+                "y": 10.0,
+                "z": 0.0
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    },
+    {
+        "name": "near_triangle_1",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 10.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "b": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "c": {
+                "x": 10.0,
+                "y": 10.0,
+                "z": 0.0
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    },
+    {
+        "name": "near_triangle_2",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "b": {
+                "x": 0.0,
+                "y": 10.0,
+                "z": 0.0
+            },
+            "c": {
+                "x": 10.0,
+                "y": 10.0,
+                "z": 0.0
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    },
+    {
+        "name": "top_triangle_1",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 0.0,
+                "y": 10.0,
+                "z": -10.0
+            },
+            "b": {
+                "x": 10.0,
+                "y": 10.0,
+                "z": -10.0
+            },
+            "c": {
+                "x": 0.0,
+                "y": 10.0,
+                "z": 0.0
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    },
+    {
+        "name": "top_triangle_2",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 10.0,
+                "y": 10.0,
+                "z": -10.0
+            },
+            "b": {
+                "x": 10.0,
+                "y": 10.0,
+                "z": 0.0
+            },
+            "c": {
+                "x": 0.0,
+                "y": 10.0,
+                "z": 0.0
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    },
+    {
+        "name": "light_triangle_center_1",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 2.5,
+                "y": 9.9999,
+                "z": -7.5
+            },
+            "b": {
+                "x": 7.5,
+                "y": 9.9999,
+                "z": -7.5
+            },
+            "c": {
+                "x": 2.5,
+                "y": 9.9999,
+                "z": -2.5
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    },
+    {
+        "name": "light_triangle_center_2",
+        "type": "Triangle",
+        "data": {
+            "a": {
+                "x": 7.5,
+                "y": 9.9999,
+                "z": -7.5
+            },
+            "b": {
+                "x": 7.5,
+                "y": 9.9999,
+                "z": -2.5
+            },
+            "c": {
+                "x": 2.5,
+                "y": 9.9999,
+                "z": -2.5
+            },
+            "intersect_epsilon": 0.0000001
+        }
+    }
+]

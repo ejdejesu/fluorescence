@@ -1,0 +1,198 @@
+[
+    {
+        "name": "white_diffuse",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.9,
+                "y": 0.9,
+                "z": 0.9
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "name": "grey_diffuse",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.3,
+                "y": 0.3,
+                "z": 0.3
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "name": "black_diffuse",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "name": "red_diffuse",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.9,
+                "y": 0.1,
+                "z": 0.1
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "name": "green_diffuse",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.1,
+                "y": 0.9,
+                "z": 0.1
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "name": "blue_diffuse",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.1,
+                "y": 0.1,
+                "z": 0.9
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "name": "white_light",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            }
+        }
+    },
+    {
+        "name": "bright_white_light",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 5.0,
+                "y": 5.0,
+                "z": 5.0
+            }
+        }
+    },
+    {
+        "name": "perfect_mirror",
+        "type": "Metal",
+        "data": {
+            "r": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fuzziness": 0.0
+        }
+    },
+    {
+        "name": "water",
+        "type": "Dielectric",
+        "data": {
+            "r": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "refractive_index": 1.33
+        }
+    },
+    {
+        "name": "glass",
+        "type": "Dielectric",
+        "data": {
+            "r": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "refractive_index": 1.5
+        }
+    },
+    {
+        "name": "diamond",
+        "type": "Dielectric",
+        "data": {
+            "r": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "refractive_index": 2.42
+        }
+    }
+]

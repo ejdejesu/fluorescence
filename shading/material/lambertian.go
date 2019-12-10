@@ -6,16 +6,16 @@ import (
 )
 
 type Lambertian struct {
-	Reflectance_ *geometry.Vector
-	Emittance_   *geometry.Vector
+	R *geometry.Vector `json:"r"`
+	E *geometry.Vector `json:"e"`
 }
 
 func (l *Lambertian) Reflectance() *geometry.Vector {
-	return l.Reflectance_
+	return l.R
 }
 
 func (l *Lambertian) Emittance() *geometry.Vector {
-	return l.Emittance_
+	return l.E
 }
 
 func (l *Lambertian) IsSpecular() bool {
@@ -24,6 +24,6 @@ func (l *Lambertian) IsSpecular() bool {
 
 func (l *Lambertian) Scatter(rayHit *RayHit, rng *rand.Rand) (*geometry.Ray, bool) {
 	hitPoint := rayHit.Ray.PointAt(rayHit.T)
-	target := hitPoint.AddVector(rayHit.NormalAtHit).AddVector(geometry.RandomInUnitSphere(rng))
+	target := hitPoint.AddVector(rayHit.NormalAtHit).AddVectorInPlace(geometry.RandomInUnitSphere(rng))
 	return &geometry.Ray{hitPoint, hitPoint.To(target)}, true
 }

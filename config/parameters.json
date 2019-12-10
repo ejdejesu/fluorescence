@@ -1,143 +1,93 @@
 {
-    "image_width": 300,
-    "image_height": 300,
+    "image_width": 200,
+    "image_height": 200,
     "file_type": "png",
     "file_directory": "./output/",
-    "file_name": "lambertial-0.1",
+    "file_name": "0.5",
     "gamma_correction": 2,
     "generate_new_file": true,
-    "antialias_sample_count": 100,
-    "max_bounces": 5,
+    "sample_count": 500,
+    "max_bounces": 10,
     "background_color": {
-        "red": 0.5,
-        "green": 0.5,
-        "blue": 0.5,
+        "red": 0.0,
+        "green": 0.0,
+        "blue": 0.0,
         "alpha": 1.0
     },
     "t_min": 0.0000001,
     "t_max": 1.797693134862315708145274237317043567981e+308,
+    "triangle_intersect_epsilon": 0.0000001,
     "scene": {
-        "camera": {
-            "eye_location": {
-                "x": 5.0,
-                "y": 5.0,
-                "z": 14.0
+        "camera_name": "main",
+        "objects": [
+            {
+                "object_name": "left_sphere",
+                "material_name": "glass"
             },
-            "target_location": {
-                "x": 5.0,
-                "y": 5.0,
-                "z": 0.0
+            {
+                "object_name": "center_sphere",
+                "material_name": "perfect_mirror"
             },
-            "up_vector": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0
+            {
+                "object_name": "right_sphere",
+                "material_name": "blue_diffuse"
             },
-            "vertical_fov": 40.0,
-            "aperture": 0.0,
-            "focus_distance": 1.0
-        },
-        "objects": {
-            "spheres": [
-                {
-                    "center": {
-                        "x": 2.5,
-                        "y": 2.5,
-                        "z": -2.5
-                    },
-                    "radius": 2
-                },
-                {
-                    "center": {
-                        "x": 5.0,
-                        "y": 5.0,
-                        "z": -5.0
-                    },
-                    "radius": 2
-                },
-                {
-                    "center": {
-                        "x": 7.5,
-                        "y": 7.5,
-                        "z": -7.5
-                    },
-                    "radius": 2
-                }
-            ],
-            "triangles" : [
-                {
-                    "a" : {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "b":{
-                        "x": 10.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "c":{
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": -10.0
-                    },
-                    "intersect_epsilon": 0.0000001
-                },
-                {
-                    "a" : {
-                        "x": 10.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "b":{
-                        "x": 10.0,
-                        "y": 0.0,
-                        "z": -10.0
-                    },
-                    "c":{
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": -10.0
-                    },
-                    "intersect_epsilon": 0.0000001
-                },
-                {
-                    "a" : {
-                        "x": 10.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "b":{
-                        "x": 10.0,
-                        "y": 10.0,
-                        "z": 0.0
-                    },
-                    "c":{
-                        "x": 10.0,
-                        "y": 0.0,
-                        "z": -10.0
-                    },
-                    "intersect_epsilon": 0.0000001
-                },
-                {
-                    "a" : {
-                        "x": 10.0,
-                        "y": 10.0,
-                        "z": 0.0
-                    },
-                    "b":{
-                        "x": 10.0,
-                        "y": 10.0,
-                        "z": -10.0
-                    },
-                    "c":{
-                        "x": 10.0,
-                        "y": 0.0,
-                        "z": -10.0
-                    },
-                    "intersect_epsilon": 0.0000001
-                }
-            ]
-        }
+            {
+                "object_name": "bottom_triangle_1",
+                "material_name": "white_diffuse"
+            },
+            {
+                "object_name": "bottom_triangle_2",
+                "material_name": "white_diffuse"
+            },
+            {
+                "object_name": "top_triangle_1",
+                "material_name": "white_diffuse"
+            },
+            {
+                "object_name": "top_triangle_2",
+                "material_name": "white_diffuse"
+            },
+            {
+                "object_name": "right_triangle_1",
+                "material_name": "green_diffuse"
+            },
+            {
+                "object_name": "right_triangle_2",
+                "material_name": "green_diffuse"
+            },
+            {
+                "object_name": "far_triangle_1",
+                "material_name": "white_diffuse"
+            },
+            {
+                "object_name": "far_triangle_2",
+                "material_name": "white_diffuse"
+            },
+            {
+                "object_name": "left_triangle_1",
+                "material_name": "red_diffuse"
+            },
+            {
+                "object_name": "left_triangle_2",
+                "material_name": "red_diffuse"
+            },
+            {
+                "object_name": "near_triangle_1",
+                "material_name": "white_diffuse"
+            },
+            {
+                "object_name": "near_triangle_2",
+                "material_name": "white_diffuse"
+            },
+            {
+                "object_name": "light_triangle_center_1",
+                "material_name": "white_light"
+            },
+            {
+                "object_name": "light_triangle_center_2",
+                "material_name": "white_light"
+            }
+        ]
     }
 }

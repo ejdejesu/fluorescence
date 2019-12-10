@@ -7,4 +7,6 @@ import (
 
 type Primitive interface {
 	Intersection(*geometry.Ray, float64, float64) (*material.RayHit, bool)
+	SetMaterial(material.Material)
+	Copy() Primitive
 }

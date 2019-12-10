@@ -42,26 +42,26 @@ func (c *Camera) Setup(p *Parameters) error {
 	c.u = c.UpVector.Cross(c.w)
 	c.v = c.w.Cross(c.u)
 
-	c.lowerLeftCorner = c.EyeLocation.SubtractVector(
-		c.u.MultiplyFloat64(c.halfWidth * c.FocusDistance)).SubtractVector(
-		c.v.MultiplyFloat64(c.halfHeight * c.FocusDistance)).SubtractVector(
-		c.w.MultiplyFloat64(c.FocusDistance))
+	c.lowerLeftCorner = c.EyeLocation.SubVector(
+		c.u.MultScalar(c.halfWidth * c.FocusDistance)).SubVector(
+		c.v.MultScalar(c.halfHeight * c.FocusDistance)).SubVector(
+		c.w.MultScalar(c.FocusDistance))
 
-	c.horizonal = c.u.MultiplyFloat64(2.0 * c.halfWidth * c.FocusDistance)
-	c.verical = c.v.MultiplyFloat64(2.0 * c.halfHeight * c.FocusDistance)
+	c.horizonal = c.u.MultScalar(2.0 * c.halfWidth * c.FocusDistance)
+	c.verical = c.v.MultScalar(2.0 * c.halfHeight * c.FocusDistance)
 
 	return nil
 }
 
 func (c *Camera) GetRay(u float64, v float64, rng *rand.Rand) *geometry.Ray {
-	randomOnLens := geometry.RandomOnUnitDisc(rng).MultiplyFloat64(c.lensRadius)
-	offset := c.u.MultiplyFloat64(randomOnLens.X).Add(c.v.MultiplyFloat64(randomOnLens.Y))
+	randomOnLens := geometry.RandomOnUnitDisc(rng).MultScalarInPlace(c.lensRadius)
+	offset := c.u.MultScalar(randomOnLens.X).AddInPlace(c.v.MultScalar(randomOnLens.Y))
 	return &geometry.Ray{
 		Origin: c.EyeLocation.AddVector(offset),
 		Direction: c.lowerLeftCorner.AddVector(
-			c.horizonal.MultiplyFloat64(u)).AddVector(
-			c.verical.MultiplyFloat64(v)).From(
-			c.EyeLocation).Subtract(
-			offset).Unit(),
+			c.horizonal.MultScalar(u)).AddVectorInPlace(
+			c.verical.MultScalar(v)).FromInPlace(
+			c.EyeLocation).SubInPlace(
+			offset).UnitInPlace(),
 	}
 }

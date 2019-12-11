@@ -6,6 +6,8 @@ import (
 	"math/rand"
 )
 
+// A Camera holds information about the scene's camera
+// and facilitates the casting of Rays into the scene
 type Camera struct {
 	EyeLocation    *geometry.Point  `json:"eye_location"`
 	TargetLocation *geometry.Point  `json:"target_location"`
@@ -15,20 +17,21 @@ type Camera struct {
 	Aperture       float64          `json:"aperture"`
 	FocusDistance  float64          `json:"focus_distance"`
 
-	lensRadius float64 `json:"-"`
-	theta      float64 `json:"-"`
-	halfWidth  float64 `json:"-"`
-	halfHeight float64 `json:"-"`
+	lensRadius float64
+	theta      float64
+	halfWidth  float64
+	halfHeight float64
 
-	w *geometry.Vector `json:"-"`
-	u *geometry.Vector `json:"-"`
-	v *geometry.Vector `json:"-"`
+	w *geometry.Vector
+	u *geometry.Vector
+	v *geometry.Vector
 
-	lowerLeftCorner *geometry.Point  `json:"-"`
-	horizonal       *geometry.Vector `json:"-"`
-	verical         *geometry.Vector `json:"-"`
+	lowerLeftCorner *geometry.Point
+	horizonal       *geometry.Vector
+	verical         *geometry.Vector
 }
 
+// Setup is called after initializing the Camera and filling the exported fields
 func (c *Camera) Setup(p *Parameters) error {
 	c.UpVector = c.UpVector.Unit()
 	c.AspectRatio = float64(p.ImageWidth) / float64(p.ImageHeight)
@@ -53,6 +56,7 @@ func (c *Camera) Setup(p *Parameters) error {
 	return nil
 }
 
+// GetRay returns a Ray from the eye location to a point on the view place u% across and v% up
 func (c *Camera) GetRay(u float64, v float64, rng *rand.Rand) *geometry.Ray {
 	randomOnLens := geometry.RandomOnUnitDisc(rng).MultScalarInPlace(c.lensRadius)
 	offset := c.u.MultScalar(randomOnLens.X).AddInPlace(c.v.MultScalar(randomOnLens.Y))

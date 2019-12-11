@@ -21,10 +21,6 @@
         "camera_name": "main",
         "objects": [
             {
-                "object_name": "far_right_bottom_triangle",
-                "material_name": "glass"
-            },
-            {
                 "object_name": "left_sphere",
                 "material_name": "red_diffuse"
             },

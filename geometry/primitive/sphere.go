@@ -12,7 +12,7 @@ type Sphere struct {
 	Material material.Material `json:"material"`
 }
 
-func (s *Sphere) Intersection(ray *geometry.Ray, tMin float64, tMax float64) (*material.RayHit, bool) {
+func (s *Sphere) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	centerToRayOrigin := s.Center.To(ray.Origin)
 
 	// terms of the quadratic equation we are solving
@@ -47,6 +47,21 @@ func (s *Sphere) Intersection(ray *geometry.Ray, tMin float64, tMax float64) (*m
 	}
 
 	return nil, false
+}
+
+func (s *Sphere) BoundingBox(t0, t1 float64) (*AABB, bool) {
+	return &AABB{
+		A: s.Center.SubVector(&geometry.Vector{
+			X: s.Radius + 0.0000001,
+			Y: s.Radius + 0.0000001,
+			Z: s.Radius + 0.0000001,
+		}),
+		B: s.Center.AddVector(&geometry.Vector{
+			X: s.Radius + 0.0000001,
+			Y: s.Radius + 0.0000001,
+			Z: s.Radius + 0.0000001,
+		}),
+	}, true
 }
 
 func (s *Sphere) SetMaterial(m material.Material) {

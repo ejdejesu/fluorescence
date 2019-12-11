@@ -56,5 +56,5 @@ func (t *Triangle) Copy() Primitive {
 }
 
 func (t *Triangle) normal() *geometry.Vector {
-	return t.A.To(t.B).Cross(t.A.To(t.C)).Unit()
+	return t.A.To(t.B).CrossInPlace(t.A.To(t.C)).UnitInPlace()
 }

@@ -96,7 +96,23 @@
         }
     },
     {
-        "name": "white_light",
+        "name": "white_light_half",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 0.5,
+                "y": 0.5,
+                "z": 0.5
+            }
+        }
+    },
+    {
+        "name": "white_light_full",
         "type": "Lambertian",
         "data": {
             "r": {
@@ -112,7 +128,23 @@
         }
     },
     {
-        "name": "bright_white_light",
+        "name": "white_light_double",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 2.0,
+                "y": 2.0,
+                "z": 2.0
+            }
+        }
+    },
+    {
+        "name": "white_light_five",
         "type": "Lambertian",
         "data": {
             "r": {
@@ -128,7 +160,23 @@
         }
     },
     {
-        "name": "red_light",
+        "name": "red_light_half",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 0.5,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "name": "red_light_full",
         "type": "Lambertian",
         "data": {
             "r": {
@@ -144,7 +192,23 @@
         }
     },
     {
-        "name": "bright_red_light",
+        "name": "red_light_double",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 2.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "name": "red_light_five",
         "type": "Lambertian",
         "data": {
             "r": {
@@ -160,7 +224,23 @@
         }
     },
     {
-        "name": "green_light",
+        "name": "green_light_half",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.5,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "name": "green_light_full",
         "type": "Lambertian",
         "data": {
             "r": {
@@ -176,7 +256,23 @@
         }
     },
     {
-        "name": "bright_green_light",
+        "name": "green_light_double",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 0.0,
+                "y": 2.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "name": "green_light_five",
         "type": "Lambertian",
         "data": {
             "r": {
@@ -192,7 +288,23 @@
         }
     },
     {
-        "name": "blue_light",
+        "name": "blue_light_half",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.5
+            }
+        }
+    },
+    {
+        "name": "blue_light_full",
         "type": "Lambertian",
         "data": {
             "r": {
@@ -208,7 +320,23 @@
         }
     },
     {
-        "name": "bright_blue_light",
+        "name": "blue_light_double",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 2.0
+            }
+        }
+    },
+    {
+        "name": "blue_light_five",
         "type": "Lambertian",
         "data": {
             "r": {

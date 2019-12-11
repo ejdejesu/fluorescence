@@ -3,6 +3,7 @@ GOCMD=go
 GORUN=$(GOCMD) run
 GOINSTALL=$(GOCMD) install
 GOBUILD=$(GOCMD) build
+GOTEST=$(GOCMD) test
 GOCLEAN=$(GOCMD) clean
 GOGET=$(GOCMD) get
 
@@ -23,7 +24,13 @@ install:
 build:
 	# go build
 	$(GOBUILD) -o $(BINARY_NAME) main.go
+test:
+	$(GOTEST) -v ./...
+benchmark:
+	$(GOTEST) -v -bench . -run xxx ./...
 clean:
+	# go clean
+	$(GOCLEAN)
 	# remove binary
 	-rm $(GOPATH)/bin/$(BINARY_NAME)
 clean-output:

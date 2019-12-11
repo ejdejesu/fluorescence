@@ -7,6 +7,7 @@ import (
 	"fluorescence/shading/material"
 	"fmt"
 	"io/ioutil"
+	"reflect"
 )
 
 type Parameters struct {
@@ -91,6 +92,12 @@ func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materials
 		if !exists {
 			return nil, fmt.Errorf("Selected Material (%s) not in %s", om.MaterialName, materialsFileName)
 		}
+		if reflect.TypeOf(selectedMaterial) == reflect.TypeOf(&material.Dielectric{}) &&
+			(reflect.TypeOf(selectedObject) == reflect.TypeOf(&primitive.Triangle{}) ||
+				reflect.TypeOf(selectedObject) == reflect.TypeOf(&primitive.Rectangle{})) {
+			return nil, fmt.Errorf("Cannot attach refractive or volumetric materials (%s) to non-closed geometry (%s)",
+				om.MaterialName, om.ObjectName)
+		}
 		newPrimitive := selectedObject.Copy()
 		newPrimitive.SetMaterial(selectedMaterial)
 		parameters.Scene.Objects = append(parameters.Scene.Objects, newPrimitive)
@@ -145,6 +152,18 @@ func loadObjects(fileName string) (map[string]primitive.Primitive, error) {
 			}
 			json.Unmarshal(dataBytes, &t)
 			objectsMap[o.Name] = &t
+		case "Rectangle":
+			var rd primitive.RectangleData
+			dataBytes, err := json.Marshal(o.Data)
+			if err != nil {
+				return nil, err
+			}
+			json.Unmarshal(dataBytes, &rd)
+			r, err := primitive.NewRectangle(&rd)
+			if err != nil {
+				return nil, err
+			}
+			objectsMap[o.Name] = r
 		default:
 			return nil, fmt.Errorf("Type (%s) not a valid primitive type", o.TypeName)
 		}

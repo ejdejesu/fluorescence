@@ -36,206 +36,8 @@
         }
     },
     {
-        "name": "bottom_triangle_1",
-        "type": "Triangle",
-        "data": {
-            "a": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "b": {
-                "x": 10.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "c": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": -10.0
-            },
-            "intersect_epsilon": 0.0000001
-        }
-    },
-    {
-        "name": "bottom_triangle_2",
-        "type": "Triangle",
-        "data": {
-            "a": {
-                "x": 10.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "b": {
-                "x": 10.0,
-                "y": 0.0,
-                "z": -10.0
-            },
-            "c": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": -10.0
-            },
-            "intersect_epsilon": 0.0000001
-        }
-    },
-    {
-        "name": "right_triangle_1",
-        "type": "Triangle",
-        "data": {
-            "a": {
-                "x": 10.0,
-                "y": 0.0,
-                "z": -10.0
-            },
-            "b": {
-                "x": 10.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "c": {
-                "x": 10.0,
-                "y": 10.0,
-                "z": -10.0
-            },
-            "intersect_epsilon": 0.0000001
-        }
-    },
-    {
-        "name": "right_triangle_2",
-        "type": "Triangle",
-        "data": {
-            "a": {
-                "x": 10.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "b": {
-                "x": 10.0,
-                "y": 10.0,
-                "z": 0.0
-            },
-            "c": {
-                "x": 10.0,
-                "y": 10.0,
-                "z": -10.0
-            },
-            "intersect_epsilon": 0.0000001
-        }
-    },
-    {
-        "name": "far_triangle_1",
-        "type": "Triangle",
-        "data": {
-            "a": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": -10.0
-            },
-            "b": {
-                "x": 10.0,
-                "y": 0.0,
-                "z": -10.0
-            },
-            "c": {
-                "x": 0.0,
-                "y": 10.0,
-                "z": -10.0
-            },
-            "intersect_epsilon": 0.0000001
-        }
-    },
-    {
-        "name": "far_triangle_2",
-        "type": "Triangle",
-        "data": {
-            "a": {
-                "x": 10.0,
-                "y": 0.0,
-                "z": -10.0
-            },
-            "b": {
-                "x": 10.0,
-                "y": 10.0,
-                "z": -10.0
-            },
-            "c": {
-                "x": 0.0,
-                "y": 10.0,
-                "z": -10.0
-            },
-            "intersect_epsilon": 0.0000001
-        }
-    },
-    {
-        "name": "left_triangle_1",
-        "type": "Triangle",
-        "data": {
-            "a": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "b": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": -10.0
-            },
-            "c": {
-                "x": 0.0,
-                "y": 10.0,
-                "z": 0.0
-            },
-            "intersect_epsilon": 0.0000001
-        }
-    },
-    {
-        "name": "left_triangle_2",
-        "type": "Triangle",
-        "data": {
-            "a": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": -10.0
-            },
-            "b": {
-                "x": 0.0,
-                "y": 10.0,
-                "z": -10.0
-            },
-            "c": {
-                "x": 0.0,
-                "y": 10.0,
-                "z": 0.0
-            },
-            "intersect_epsilon": 0.0000001
-        }
-    },
-    {
-        "name": "near_triangle_1",
-        "type": "Triangle",
-        "data": {
-            "a": {
-                "x": 10.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "b": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "c": {
-                "x": 10.0,
-                "y": 10.0,
-                "z": 0.0
-            },
-            "intersect_epsilon": 0.0000001
-        }
-    },
-    {
-        "name": "near_triangle_2",
-        "type": "Triangle",
+        "name": "left_rectangle",
+        "type": "Rectangle",
         "data": {
             "a": {
                 "x": 0.0,
@@ -245,23 +47,91 @@
             "b": {
                 "x": 0.0,
                 "y": 10.0,
-                "z": 0.0
+                "z": -10.0
             },
-            "c": {
-                "x": 10.0,
-                "y": 10.0,
-                "z": 0.0
-            },
-            "intersect_epsilon": 0.0000001
+            "is_culled": true,
+            "has_negative_normal": false
         }
     },
     {
-        "name": "top_triangle_1",
-        "type": "Triangle",
+        "name": "right_rectangle",
+        "type": "Rectangle",
+        "data": {
+            "a": {
+                "x": 10.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "b": {
+                "x": 10.0,
+                "y": 10.0,
+                "z": -10.0
+            },
+            "is_culled": true,
+            "has_negative_normal": true
+        }
+    },
+    {
+        "name": "bottom_rectangle",
+        "type": "Rectangle",
+        "data": {
+            "a": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "b": {
+                "x": 10.0,
+                "y": 0.0,
+                "z": -10.0
+            },
+            "is_culled": true,
+            "has_negative_normal": false
+        }
+    },
+    {
+        "name": "top_rectangle",
+        "type": "Rectangle",
         "data": {
             "a": {
                 "x": 0.0,
                 "y": 10.0,
+                "z": 0.0
+            },
+            "b": {
+                "x": 10.0,
+                "y": 10.0,
+                "z": -10.0
+            },
+            "is_culled": true,
+            "has_negative_normal": true
+        }
+    },
+    {
+        "name": "near_rectangle",
+        "type": "Rectangle",
+        "data": {
+            "a": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "b": {
+                "x": 10.0,
+                "y": 10.0,
+                "z": 0.0
+            },
+            "is_culled": true,
+            "has_negative_normal": true
+        }
+    },
+    {
+        "name": "far_rectangle",
+        "type": "Rectangle",
+        "data": {
+            "a": {
+                "x": 0.0,
+                "y": 0.0,
                 "z": -10.0
             },
             "b": {
@@ -269,208 +139,100 @@
                 "y": 10.0,
                 "z": -10.0
             },
-            "c": {
-                "x": 0.0,
-                "y": 10.0,
-                "z": 0.0
-            },
-            "intersect_epsilon": 0.0000001
+            "is_culled": true,
+            "has_negative_normal": false
         }
     },
     {
-        "name": "top_triangle_2",
-        "type": "Triangle",
-        "data": {
-            "a": {
-                "x": 10.0,
-                "y": 10.0,
-                "z": -10.0
-            },
-            "b": {
-                "x": 10.0,
-                "y": 10.0,
-                "z": 0.0
-            },
-            "c": {
-                "x": 0.0,
-                "y": 10.0,
-                "z": 0.0
-            },
-            "intersect_epsilon": 0.0000001
-        }
-    },
-    {
-        "name": "light_center_triangle_1",
-        "type": "Triangle",
+        "name": "light_center_rectangle",
+        "type": "Rectangle",
         "data": {
             "a": {
                 "x": 2.5,
                 "y": 9.9999,
-                "z": -7.5
+                "z": -2.5
             },
             "b": {
                 "x": 7.5,
                 "y": 9.9999,
-                "z": -7.5
+                "z": 7.5
             },
-            "c": {
-                "x": 2.5,
-                "y": 9.9999,
-                "z": -2.5
-            },
-            "intersect_epsilon": 0.0000001
+            "is_culled": true,
+            "has_negative_normal": true
         }
     },
     {
-        "name": "light_center_triangle_2",
-        "type": "Triangle",
+        "name": "light_far_left_rectangle",
+        "type": "Rectangle",
         "data": {
             "a": {
-                "x": 7.5,
-                "y": 9.9999,
-                "z": -7.5
-            },
-            "b": {
-                "x": 7.5,
-                "y": 9.9999,
-                "z": -2.5
-            },
-            "c": {
-                "x": 2.5,
-                "y": 9.9999,
-                "z": -2.5
-            },
-            "intersect_epsilon": 0.0000001
-        }
-    },
-    {
-        "name": "light_far_left_triangle_1",
-        "type": "Triangle",
-        "data": {
-            "a": {
-                "x": 0,
-                "y": 9.9999,
-                "z": -10.0
-            },
-            "b": {
-                "x": 3.5,
-                "y": 9.9999,
-                "z": -10.0
-            },
-            "c": {
                 "x": 0.0,
                 "y": 9.9999,
-                "z": -6.0
-            },
-            "intersect_epsilon": 0.0000001
-        }
-    },
-    {
-        "name": "light_far_left_triangle_2",
-        "type": "Triangle",
-        "data": {
-            "a": {
-                "x": 3.5,
-                "y": 9.9999,
-                "z": -10.0
+                "z": -5.0
             },
             "b": {
                 "x": 3.5,
                 "y": 9.9999,
-                "z": -6.0
+                "z": -10.0
             },
-            "c": {
-                "x": 0.0,
-                "y": 9.9999,
-                "z": -6.0
-            },
-            "intersect_epsilon": 0.0000001
+            "is_culled": true,
+            "has_negative_normal": true
         }
     },
     {
-        "name": "light_far_center_triangle_1",
-        "type": "Triangle",
+        "name": "light_far_center_rectangle",
+        "type": "Rectangle",
         "data": {
             "a": {
                 "x": 3.5,
                 "y": 9.9999,
-                "z": -10.0
+                "z": -5.0
             },
             "b": {
                 "x": 6.5,
                 "y": 9.9999,
                 "z": -10.0
             },
-            "c": {
-                "x": 3.5,
-                "y": 9.9999,
-                "z": -6.0
-            },
-            "intersect_epsilon": 0.0000001
+            "is_culled": true,
+            "has_negative_normal": true
         }
     },
     {
-        "name": "light_far_center_triangle_2",
-        "type": "Triangle",
+        "name": "light_far_right_rectangle",
+        "type": "Rectangle",
         "data": {
             "a": {
                 "x": 6.5,
                 "y": 9.9999,
-                "z": -10.0
-            },
-            "b": {
-                "x": 6.5,
-                "y": 9.9999,
-                "z": -6.0
-            },
-            "c": {
-                "x": 3.5,
-                "y": 9.9999,
-                "z": -6.0
-            },
-            "intersect_epsilon": 0.0000001
-        }
-    },
-    {
-        "name": "light_far_right_triangle_1",
-        "type": "Triangle",
-        "data": {
-            "a": {
-                "x": 6.5,
-                "y": 9.9999,
-                "z": -10.0
+                "z": -5.0
             },
             "b": {
                 "x": 10.0,
                 "y": 9.9999,
                 "z": -10.0
             },
-            "c": {
-                "x": 6.5,
-                "y": 9.9999,
-                "z": -6.0
-            },
-            "intersect_epsilon": 0.0000001
+            "is_culled": true,
+            "has_negative_normal": true
         }
     },
     {
-        "name": "light_far_right_triangle_2",
+        "name": "far_right_bottom_triangle",
         "type": "Triangle",
         "data": {
             "a": {
                 "x": 10.0,
-                "y": 9.9999,
-                "z": -10.0
+                "y": 0.0,
+                "z": -7.0
             },
             "b": {
                 "x": 10.0,
-                "y": 9.9999,
-                "z": -6.0
+                "y": 3.0,
+                "z": -10.0
             },
             "c": {
-                "x": 6.5,
-                "y": 9.9999,
-                "z": -6.0
+                "x": 7.0,
+                "y": 0.0,
+                "z": -10.0
             },
             "intersect_epsilon": 0.0000001
         }

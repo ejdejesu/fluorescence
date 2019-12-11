@@ -1,12 +1,12 @@
 {
-    "image_width": 256,
-    "image_height": 128,
+    "image_width": 800,
+    "image_height": 800,
     "file_type": "png",
     "file_directory": "./output/",
     "file_name": "0.5",
     "gamma_correction": 2,
     "generate_new_file": true,
-    "sample_count": 2000,
+    "sample_count": 25,
     "max_bounces": 10,
     "background_color": {
         "red": 0.0,
@@ -21,88 +21,60 @@
         "camera_name": "main",
         "objects": [
             {
-                "object_name": "left_sphere",
-                "material_name": "perfect_mirror"
-            },
-            {
-                "object_name": "center_sphere",
+                "object_name": "far_right_bottom_triangle",
                 "material_name": "glass"
             },
             {
+                "object_name": "left_sphere",
+                "material_name": "red_diffuse"
+            },
+            {
+                "object_name": "center_sphere",
+                "material_name": "green_diffuse"
+            },
+            {
                 "object_name": "right_sphere",
-                "material_name": "fuzzy_mirror"
+                "material_name": "blue_diffuse"
             },
             {
-                "object_name": "bottom_triangle_1",
+                "object_name": "far_right_bottom_triangle",
+                "material_name": "perfect_mirror"
+            },
+            {
+                "object_name": "bottom_rectangle",
                 "material_name": "white_diffuse"
             },
             {
-                "object_name": "bottom_triangle_2",
+                "object_name": "top_rectangle",
                 "material_name": "white_diffuse"
             },
             {
-                "object_name": "top_triangle_1",
-                "material_name": "white_diffuse"
-            },
-            {
-                "object_name": "top_triangle_2",
-                "material_name": "white_diffuse"
-            },
-            {
-                "object_name": "right_triangle_1",
+                "object_name": "right_rectangle",
                 "material_name": "green_diffuse"
             },
             {
-                "object_name": "right_triangle_2",
-                "material_name": "green_diffuse"
+                "object_name": "far_rectangle",
+                "material_name": "white_diffuse"
             },
             {
-                "object_name": "far_triangle_1",
-                "material_name": "real_mirror"
-            },
-            {
-                "object_name": "far_triangle_2",
-                "material_name": "real_mirror"
-            },
-            {
-                "object_name": "left_triangle_1",
+                "object_name": "left_rectangle",
                 "material_name": "red_diffuse"
             },
             {
-                "object_name": "left_triangle_2",
-                "material_name": "red_diffuse"
+                "object_name": "near_rectangle",
+                "material_name": "white_diffuse"
             },
             {
-                "object_name": "near_triangle_1",
-                "material_name": "real_mirror"
+                "object_name": "light_far_left_rectangle",
+                "material_name": "red_light_double"
             },
             {
-                "object_name": "near_triangle_2",
-                "material_name": "real_mirror"
+                "object_name": "light_far_center_rectangle",
+                "material_name": "green_light_double"
             },
             {
-                "object_name": "light_far_left_triangle_1",
-                "material_name": "red_light"
-            },
-            {
-                "object_name": "light_far_left_triangle_2",
-                "material_name": "red_light"
-            },
-            {
-                "object_name": "light_far_center_triangle_1",
-                "material_name": "green_light"
-            },
-            {
-                "object_name": "light_far_center_triangle_2",
-                "material_name": "green_light"
-            },
-            {
-                "object_name": "light_far_right_triangle_1",
-                "material_name": "blue_light"
-            },
-            {
-                "object_name": "light_far_right_triangle_2",
-                "material_name": "blue_light"
+                "object_name": "light_far_right_rectangle",
+                "material_name": "blue_light_double"
             }
         ]
     }

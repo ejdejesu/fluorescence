@@ -91,9 +91,15 @@ func (v *Vector) Cross(w *Vector) *Vector {
 }
 
 func (v *Vector) CrossInPlace(w *Vector) *Vector {
-	v.X = v.Y*w.Z - v.Z*w.Y
-	v.Y = v.Z*w.X - v.X*w.Z
-	v.Z = v.X*w.Y - v.Y*w.X
+
+	nX := v.Y*w.Z - v.Z*w.Y
+	nY := v.Z*w.X - v.X*w.Z
+	nZ := v.X*w.Y - v.Y*w.X
+
+	v.X = nX
+	v.Y = nY
+	v.Z = nZ
+
 	return v
 }
 

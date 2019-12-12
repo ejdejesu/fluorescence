@@ -19,6 +19,7 @@ type Parameters struct {
 	GammaCorrection int            `json:"gamma_correction"`
 	SampleCount     int            `json:"sample_count"`
 	MaxBounces      int            `json:"max_bounces"`
+	UseBVH          bool           `json:"use_bvh"`
 	BackgroundColor *shading.Color `json:"background_color"`
 	TMin            float64        `json:"t_min"`
 	TMax            float64        `json:"t_max"`
@@ -26,10 +27,10 @@ type Parameters struct {
 }
 
 type Scene struct {
-	CameraName      string                `json:"camera_name"`
-	Camera          *Camera               `json:"-"`
-	ObjectMaterials []*ObjectMaterial     `json:"objects"`
-	Objects         []primitive.Primitive `json:"-"`
+	CameraName      string              `json:"camera_name"`
+	Camera          *Camera             `json:"-"`
+	ObjectMaterials []*ObjectMaterial   `json:"objects"`
+	Objects         primitive.Primitive `json:"-"`
 }
 
 type ObjectMaterial struct {
@@ -83,6 +84,7 @@ func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materials
 		return nil, err
 	}
 
+	sceneObjects := &primitive.PrimitiveList{}
 	for _, om := range parameters.Scene.ObjectMaterials {
 		selectedObject, exists := totalObjects[om.ObjectName]
 		if !exists {
@@ -100,7 +102,17 @@ func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materials
 		}
 		newPrimitive := selectedObject.Copy()
 		newPrimitive.SetMaterial(selectedMaterial)
-		parameters.Scene.Objects = append(parameters.Scene.Objects, newPrimitive)
+		sceneObjects.List = append(sceneObjects.List, newPrimitive)
+	}
+
+	if parameters.UseBVH {
+		sceneBVH, err := primitive.NewBVH(sceneObjects)
+		if err != nil {
+			return nil, err
+		}
+		parameters.Scene.Objects = sceneBVH
+	} else {
+		parameters.Scene.Objects = sceneObjects
 	}
 
 	return parameters, nil

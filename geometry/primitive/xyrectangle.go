@@ -42,7 +42,7 @@ func newXYRectangle(a, b *geometry.Point, isCulled, hasNegativeNormal bool) *xyR
 	}
 }
 
-func (r *xyRectangle) Intersection(ray *geometry.Ray, tMin float64, tMax float64) (*material.RayHit, bool) {
+func (r *xyRectangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	// Ray is coming from behind rectangle
 	if r.isCulled && (ray.Direction.Dot(r.normal)) > 0 {
 		return nil, false
@@ -68,6 +68,21 @@ func (r *xyRectangle) Intersection(ray *geometry.Ray, tMin float64, tMax float64
 	}
 
 	return &material.RayHit{ray, r.normal, t, r.Material}, true
+}
+
+func (r *xyRectangle) BoundingBox(t0, t1 float64) (*AABB, bool) {
+	return &AABB{
+		A: &geometry.Point{
+			X: r.x0 - 0.0000001,
+			Y: r.y0 - 0.0000001,
+			Z: r.z - 0.0000001,
+		},
+		B: &geometry.Point{
+			X: r.x1 + 0.0000001,
+			Y: r.y1 + 0.0000001,
+			Z: r.z + 0.0000001,
+		},
+	}, true
 }
 
 func (r *xyRectangle) SetMaterial(m material.Material) {

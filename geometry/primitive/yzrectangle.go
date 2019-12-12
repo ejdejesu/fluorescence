@@ -42,14 +42,14 @@ func newYZRectangle(a, b *geometry.Point, isCulled, hasNegativeNormal bool) *yzR
 	}
 }
 
-func (r *yzRectangle) Intersection(ray *geometry.Ray, tMin float64, tMax float64) (*material.RayHit, bool) {
+func (r *yzRectangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	// Ray is coming from behind rectangle
 	if r.isCulled && (ray.Direction.Dot(r.normal)) > 0 {
 		return nil, false
 	}
 
 	// Ray is parallel to plane
-	if ray.Direction.Z == 0 {
+	if ray.Direction.X == 0 {
 		return nil, false
 	}
 
@@ -68,6 +68,21 @@ func (r *yzRectangle) Intersection(ray *geometry.Ray, tMin float64, tMax float64
 	}
 
 	return &material.RayHit{ray, r.normal, t, r.Material}, true
+}
+
+func (r *yzRectangle) BoundingBox(t0, t1 float64) (*AABB, bool) {
+	return &AABB{
+		A: &geometry.Point{
+			X: r.x - 0.0000001,
+			Y: r.y0 - 0.0000001,
+			Z: r.z0 - 0.0000001,
+		},
+		B: &geometry.Point{
+			X: r.x + 0.0000001,
+			Y: r.y1 + 0.0000001,
+			Z: r.z1 + 0.0000001,
+		},
+	}, true
 }
 
 func (r *yzRectangle) SetMaterial(m material.Material) {

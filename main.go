@@ -2,11 +2,9 @@ package main
 
 import (
 	"fluorescence/geometry"
-	"fluorescence/shading/material"
 	"fmt"
 	"image"
 	"image/png"
-	"math"
 	"math/rand"
 	"os"
 	"time"
@@ -36,6 +34,8 @@ func main() {
 
 	// fill image
 	fmt.Printf("Filling in-mem image...\n")
+
+	// spew.Dump(parameters.Scene.Objects)
 
 	// wg := sync.WaitGroup{}
 	pixelCount := parameters.ImageWidth * parameters.ImageHeight
@@ -85,7 +85,7 @@ func main() {
 	for i := 0; i < pixelCount; i++ {
 		<-doneChan
 		doneCount++
-		if doneCount%printInterval == 0 {
+		if pixelCount > 1000 && doneCount%printInterval == 0 {
 			elapsedTime := time.Since(startTime)
 			estimatedTime := time.Duration(float64(elapsedTime) * (float64(pixelCount) / float64(doneCount)))
 			remainingTime := estimatedTime - elapsedTime
@@ -128,18 +128,7 @@ func colorOf(parameters *Parameters, r *geometry.Ray, rng *rand.Rand, depth int)
 	if depth > parameters.MaxBounces {
 		return backgroundColor
 	}
-
-	var rayHit *material.RayHit
-	minT := math.MaxFloat64
-	hitSomething := false
-	for _, p := range parameters.Scene.Objects {
-		rh, wasHit := p.Intersection(r, parameters.TMin, parameters.TMax)
-		if wasHit && rh.T < minT {
-			hitSomething = true
-			rayHit = rh
-			minT = rh.T
-		}
-	}
+	rayHit, hitSomething := parameters.Scene.Objects.Intersection(r, parameters.TMin, parameters.TMax)
 	if !hitSomething {
 		return backgroundColor
 	}

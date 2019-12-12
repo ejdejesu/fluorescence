@@ -29,7 +29,7 @@ func basicTriangle(xOffset, yOffset, zOffset float64) *Triangle {
 	}
 }
 
-func TestTriangleHitIntersection(t *testing.T) {
+func TestTriangleIntersectionHit(t *testing.T) {
 	tri := basicTriangle(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
@@ -49,7 +49,7 @@ func TestTriangleHitIntersection(t *testing.T) {
 	}
 }
 
-func BenchmarkTriangleHitIntersection(b *testing.B) {
+func BenchmarkTriangleIntersectionHit(b *testing.B) {
 	tri := basicTriangle(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
@@ -71,7 +71,7 @@ func BenchmarkTriangleHitIntersection(b *testing.B) {
 	triHit = h
 }
 
-func TestTriangleMissIntersection(t *testing.T) {
+func TestTriangleIntersectionMiss(t *testing.T) {
 	tri := basicTriangle(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
@@ -91,7 +91,7 @@ func TestTriangleMissIntersection(t *testing.T) {
 	}
 }
 
-func BenchmarkTriangleMissIntersection(b *testing.B) {
+func BenchmarkTriangleIntersectionMiss(b *testing.B) {
 	tri := basicTriangle(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{

@@ -31,8 +31,12 @@ func NewRectangle(data *RectangleData) (*Rectangle, error) {
 	return nil, fmt.Errorf("Points do not lie on on axis-aligned plane")
 }
 
-func (r *Rectangle) Intersection(ray *geometry.Ray, tMin float64, tMax float64) (*material.RayHit, bool) {
+func (r *Rectangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	return r.axisAlignedRectangle.Intersection(ray, tMin, tMax)
+}
+
+func (r *Rectangle) BoundingBox(t0, t1 float64) (*AABB, bool) {
+	return r.axisAlignedRectangle.BoundingBox(t0, t1)
 }
 
 func (r *Rectangle) SetMaterial(m material.Material) {
@@ -41,6 +45,5 @@ func (r *Rectangle) SetMaterial(m material.Material) {
 
 func (r *Rectangle) Copy() Primitive {
 	newR := *r
-	newR.axisAlignedRectangle = newR.axisAlignedRectangle.Copy()
 	return &newR
 }

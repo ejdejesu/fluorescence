@@ -1,13 +1,14 @@
 {
-    "image_width": 800,
-    "image_height": 800,
+    "image_width": 1000,
+    "image_height": 1000,
     "file_type": "png",
     "file_directory": "./output/",
     "file_name": "0.5",
     "gamma_correction": 2,
     "generate_new_file": true,
-    "sample_count": 500,
+    "sample_count": 50,
     "max_bounces": 10,
+    "use_bvh": false,
     "background_color": {
         "red": 0.0,
         "green": 0.0,
@@ -21,20 +22,12 @@
         "camera_name": "main",
         "objects": [
             {
-                "object_name": "left_sphere",
-                "material_name": "red_diffuse"
+                "object_name": "large_center_sphere",
+                "material_name": "diamond"
             },
             {
                 "object_name": "center_sphere",
-                "material_name": "green_diffuse"
-            },
-            {
-                "object_name": "right_sphere",
-                "material_name": "blue_diffuse"
-            },
-            {
-                "object_name": "far_right_bottom_triangle",
-                "material_name": "perfect_mirror"
+                "material_name": "real_mirror"
             },
             {
                 "object_name": "bottom_rectangle",

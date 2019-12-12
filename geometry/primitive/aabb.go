@@ -2,7 +2,6 @@ package primitive
 
 import (
 	"fluorescence/geometry"
-	"fluorescence/shading/material"
 	"math"
 )
 
@@ -19,14 +18,16 @@ func SurroundingBox(aabb1, aabb2 *AABB) *AABB {
 			Z: math.Min(aabb1.A.Z, aabb2.A.Z),
 		},
 		B: &geometry.Point{
-			X: math.Min(aabb1.B.X, aabb2.B.X),
-			Y: math.Min(aabb1.B.Y, aabb2.B.Y),
-			Z: math.Min(aabb1.B.Z, aabb2.B.Z),
+			X: math.Max(aabb1.B.X, aabb2.B.X),
+			Y: math.Max(aabb1.B.Y, aabb2.B.Y),
+			Z: math.Max(aabb1.B.Z, aabb2.B.Z),
 		},
 	}
 }
 
-func (aabb *AABB) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+func (aabb *AABB) Intersection(ray *geometry.Ray, t0, t1 float64) bool {
+	tMin := t0
+	tMax := t1
 	// compute X
 	inverseDirectionX := 1.0 / ray.Direction.X
 	tx0 := (aabb.A.X - ray.Origin.X) * inverseDirectionX
@@ -40,11 +41,11 @@ func (aabb *AABB) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material
 	if tx0 > tMin {
 		tMin = tx0
 	}
-	if tx1 > tMax {
+	if tx1 < tMax {
 		tMax = tx1
 	}
 	if tMax <= tMin {
-		return nil, false
+		return false
 	}
 
 	// compute Y
@@ -60,11 +61,11 @@ func (aabb *AABB) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material
 	if ty0 > tMin {
 		tMin = ty0
 	}
-	if ty1 > tMax {
+	if ty1 < tMax {
 		tMax = ty1
 	}
 	if tMax <= tMin {
-		return nil, false
+		return false
 	}
 
 	// compute Z
@@ -80,13 +81,13 @@ func (aabb *AABB) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material
 	if tz0 > tMin {
 		tMin = tz0
 	}
-	if tx1 > tMax {
+	if tz1 < tMax {
 		tMax = tz1
 	}
 	if tMax <= tMin {
-		return nil, false
+		return false
 	}
 
 	// must be a hit!
-	return nil, true
+	return true
 }

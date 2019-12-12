@@ -1,5 +1,17 @@
 [
     {
+        "name": "large_center_sphere",
+        "type": "Sphere",
+        "data": {
+            "center": {
+                "x": 5.0,
+                "y": 5.0,
+                "z": -5.0
+            },
+            "radius": 4.0
+        }
+    },
+    {
         "name": "left_sphere",
         "type": "Sphere",
         "data": {
@@ -8,7 +20,7 @@
                 "y": 2.5,
                 "z": -2.5
             },
-            "radius": 2
+            "radius": 2.0
         }
     },
     {
@@ -20,7 +32,7 @@
                 "y": 5.0,
                 "z": -5.0
             },
-            "radius": 2
+            "radius": 2.0
         }
     },
     {
@@ -32,7 +44,7 @@
                 "y": 7.5,
                 "z": -7.5
             },
-            "radius": 2
+            "radius": 2.0
         }
     },
     {

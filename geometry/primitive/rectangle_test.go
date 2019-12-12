@@ -24,7 +24,7 @@ func basicRectangle(xOffset, yOffset, zOffset float64) *Rectangle {
 	return r
 }
 
-func TestRectangleHitIntersection(t *testing.T) {
+func TestRectangleIntersectionHit(t *testing.T) {
 	rect := basicRectangle(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
@@ -44,7 +44,7 @@ func TestRectangleHitIntersection(t *testing.T) {
 	}
 }
 
-func BenchmarkOneRectangleHitIntersection(b *testing.B) {
+func BenchmarkRectangleIntersectionHit(b *testing.B) {
 	rect := basicRectangle(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
@@ -66,7 +66,7 @@ func BenchmarkOneRectangleHitIntersection(b *testing.B) {
 	rectHit = h
 }
 
-func TestRectangleMissIntersection(t *testing.T) {
+func TestRectangleIntersectionMiss(t *testing.T) {
 	rect := basicRectangle(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
@@ -86,7 +86,7 @@ func TestRectangleMissIntersection(t *testing.T) {
 	}
 }
 
-func BenchmarkOneRectangleMissIntersection(b *testing.B) {
+func BenchmarkRectangleIntersectionMiss(b *testing.B) {
 	rect := basicRectangle(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{

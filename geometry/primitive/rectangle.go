@@ -45,6 +45,5 @@ func (r *Rectangle) SetMaterial(m material.Material) {
 
 func (r *Rectangle) Copy() Primitive {
 	newR := *r
-	newR.axisAlignedRectangle = newR.axisAlignedRectangle.Copy()
 	return &newR
 }

@@ -19,7 +19,7 @@ func basicSphere(xOffset, yOffset, zOffset float64) *Sphere {
 	}
 }
 
-func TestSphereHitIntersection(t *testing.T) {
+func TestSphereIntersectionHit(t *testing.T) {
 	sphere := basicSphere(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
@@ -39,7 +39,7 @@ func TestSphereHitIntersection(t *testing.T) {
 	}
 }
 
-func BenchmarkSphereHitIntersection(b *testing.B) {
+func BenchmarkSphereIntersectionHit(b *testing.B) {
 	sphere := basicSphere(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
@@ -61,7 +61,7 @@ func BenchmarkSphereHitIntersection(b *testing.B) {
 	sphereHit = h
 }
 
-func TestSphereMissIntersection(t *testing.T) {
+func TestSphereIntersectionMiss(t *testing.T) {
 	sphere := basicSphere(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
@@ -81,7 +81,7 @@ func TestSphereMissIntersection(t *testing.T) {
 	}
 }
 
-func BenchmarkSphereMissIntersection(b *testing.B) {
+func BenchmarkSphereIntersectionMiss(b *testing.B) {
 	sphere := basicSphere(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{

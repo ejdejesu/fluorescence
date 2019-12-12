@@ -27,7 +27,7 @@
             },
             {
                 "object_name": "center_sphere",
-                "material_name": "fuzzy_mirror"
+                "material_name": "real_mirror"
             },
             {
                 "object_name": "bottom_rectangle",

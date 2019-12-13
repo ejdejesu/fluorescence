@@ -1,4 +1,4 @@
-package hollowdisk
+package disk
 
 import (
 	"fluorescence/geometry"

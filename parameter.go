@@ -5,7 +5,6 @@ import (
 	"fluorescence/geometry/primitive"
 	"fluorescence/geometry/primitive/bvh"
 	"fluorescence/geometry/primitive/disk"
-	"fluorescence/geometry/primitive/hollowdisk"
 	"fluorescence/geometry/primitive/plane"
 	"fluorescence/geometry/primitive/primitivelist"
 	"fluorescence/geometry/primitive/rectangle"
@@ -109,7 +108,7 @@ func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materials
 			rectangleType := reflect.TypeOf(rectangle.EmptyRectangle())
 			planeType := reflect.TypeOf(plane.EmptyPlane())
 			diskType := reflect.TypeOf(disk.EmptyDisk())
-			hollowDiskType := reflect.TypeOf(hollowdisk.EmptyHollowDisk())
+			hollowDiskType := reflect.TypeOf(disk.EmptyHollowDisk())
 			if objectType == triangleType ||
 				objectType == rectangleType ||
 				objectType == planeType ||
@@ -194,13 +193,13 @@ func loadObjects(fileName string) (map[string]primitive.Primitive, error) {
 			}
 			objectsMap[o.Name] = newDisk
 		case "HollowDisk":
-			var hdd hollowdisk.HollowDiskData
+			var hdd disk.HollowDiskData
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
 			}
 			json.Unmarshal(dataBytes, &hdd)
-			newHollowDisk, err := hollowdisk.NewHollowDisk(&hdd)
+			newHollowDisk, err := disk.NewHollowDisk(&hdd)
 			if err != nil {
 				return nil, err
 			}

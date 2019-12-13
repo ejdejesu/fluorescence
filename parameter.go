@@ -103,28 +103,17 @@ func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materials
 			return nil, fmt.Errorf("Selected Material (%s) not in %s", om.MaterialName, materialsFileName)
 		}
 		if reflect.TypeOf(selectedMaterial) == reflect.TypeOf(&material.Dielectric{}) {
-			objectType := reflect.TypeOf(selectedObject)
-			triangleType := reflect.TypeOf(triangle.EmptyTriangle())
-			rectangleType := reflect.TypeOf(rectangle.EmptyRectangle())
-			planeType := reflect.TypeOf(plane.EmptyPlane())
-			diskType := reflect.TypeOf(disk.EmptyDisk())
-			hollowDiskType := reflect.TypeOf(disk.EmptyHollowDisk())
-			if objectType == triangleType ||
-				objectType == rectangleType ||
-				objectType == planeType ||
-				objectType == diskType ||
-				objectType == hollowDiskType {
+			if !selectedObject.IsClosed() {
 				return nil, fmt.Errorf("Cannot attach refractive or volumetric materials (%s) to non-closed geometry (%s)",
 					om.MaterialName, om.ObjectName)
 			}
 		}
 		newPrimitive := selectedObject.Copy()
 		newPrimitive.SetMaterial(selectedMaterial)
-		_, isBounded := newPrimitive.BoundingBox(0, 0)
-		if isBounded {
-			boundedSceneObjects.List = append(boundedSceneObjects.List, newPrimitive)
-		} else {
+		if newPrimitive.IsInfinite() {
 			unboundedSceneObjects.List = append(unboundedSceneObjects.List, newPrimitive)
+		} else {
+			boundedSceneObjects.List = append(boundedSceneObjects.List, newPrimitive)
 		}
 	}
 

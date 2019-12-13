@@ -100,6 +100,14 @@ func (d *disk) SetMaterial(m material.Material) {
 	d.Material = m
 }
 
+func (d *disk) IsInfinite() bool {
+	return false
+}
+
+func (d *disk) IsClosed() bool {
+	return false
+}
+
 func (d *disk) Copy() primitive.Primitive {
 	newD := *d
 	return &newD

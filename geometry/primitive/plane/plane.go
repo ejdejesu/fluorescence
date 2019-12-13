@@ -69,6 +69,14 @@ func (p *plane) SetMaterial(m material.Material) {
 	p.Material = m
 }
 
+func (p *plane) IsInfinite() bool {
+	return true
+}
+
+func (p *plane) IsClosed() bool {
+	return false
+}
+
 func (p *plane) Copy() primitive.Primitive {
 	newP := *p
 	return &newP

@@ -16,7 +16,7 @@ type xzRectangle struct {
 	y        float64
 	isCulled bool
 	normal   *geometry.Vector
-	Material material.Material
+	mat      material.Material
 }
 
 func newXZRectangle(a, b *geometry.Point, isCulled, hasNegativeNormal bool) *xzRectangle {
@@ -69,7 +69,7 @@ func (r *xzRectangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*mate
 		return nil, false
 	}
 
-	return &material.RayHit{ray, r.normal, t, r.Material}, true
+	return &material.RayHit{ray, r.normal, t, r.mat}, true
 }
 
 func (r *xzRectangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
@@ -88,7 +88,15 @@ func (r *xzRectangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 }
 
 func (r *xzRectangle) SetMaterial(m material.Material) {
-	r.Material = m
+	r.mat = m
+}
+
+func (r *xzRectangle) IsInfinite() bool {
+	return false
+}
+
+func (r *xzRectangle) IsClosed() bool {
+	return false
 }
 
 func (r *xzRectangle) Copy() primitive.Primitive {

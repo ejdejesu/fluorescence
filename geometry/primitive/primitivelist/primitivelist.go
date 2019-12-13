@@ -97,6 +97,24 @@ func (pl *PrimitiveList) SetMaterial(m material.Material) {
 	}
 }
 
+func (pl *PrimitiveList) IsInfinite() bool {
+	for _, p := range pl.List {
+		if p.IsInfinite() {
+			return true
+		}
+	}
+	return false
+}
+
+func (pl *PrimitiveList) IsClosed() bool {
+	for _, p := range pl.List {
+		if !p.IsClosed() {
+			return false
+		}
+	}
+	return false
+}
+
 func (pl *PrimitiveList) Copy() primitive.Primitive {
 	newPL := &PrimitiveList{}
 	for _, p := range pl.List {

@@ -10,11 +10,11 @@ import (
 )
 
 type triangle struct {
-	A        *geometry.Point
-	B        *geometry.Point
-	C        *geometry.Point
-	Normal   *geometry.Vector
-	Material material.Material
+	A      *geometry.Point
+	B      *geometry.Point
+	C      *geometry.Point
+	Normal *geometry.Vector
+	mat    material.Material
 }
 
 type TriangleData struct {
@@ -67,7 +67,7 @@ func (t *triangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*materia
 	time := inverseDeterminant * (ac.Dot(qVector))
 	if time >= tMin && time <= tMax {
 		// ray intersection
-		return &material.RayHit{ray, t.Normal, time, t.Material}, true
+		return &material.RayHit{ray, t.Normal, time, t.mat}, true
 	}
 	return nil, false
 }
@@ -88,7 +88,15 @@ func (t *triangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 }
 
 func (t *triangle) SetMaterial(m material.Material) {
-	t.Material = m
+	t.mat = m
+}
+
+func (t *triangle) IsInfinite() bool {
+	return false
+}
+
+func (t *triangle) IsClosed() bool {
+	return false
 }
 
 func (t *triangle) Copy() primitive.Primitive {
@@ -113,6 +121,6 @@ func BasicTriangle(xOffset, yOffset, zOffset float64) *triangle {
 			Y: 1.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		Material: nil,
+		mat: nil,
 	}
 }

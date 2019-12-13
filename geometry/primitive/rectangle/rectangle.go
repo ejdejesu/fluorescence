@@ -58,6 +58,14 @@ func (r *rectangle) SetMaterial(m material.Material) {
 	r.axisAlignedRectangle.SetMaterial(m)
 }
 
+func (r *rectangle) IsInfinite() bool {
+	return r.axisAlignedRectangle.IsInfinite()
+}
+
+func (r *rectangle) IsClosed() bool {
+	return r.axisAlignedRectangle.IsClosed()
+}
+
 func (r *rectangle) Copy() primitive.Primitive {
 	newR := *r
 	return &newR

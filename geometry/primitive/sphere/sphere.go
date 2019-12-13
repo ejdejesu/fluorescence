@@ -10,9 +10,9 @@ import (
 )
 
 type sphere struct {
-	Center   *geometry.Point
-	Radius   float64
-	Material material.Material
+	Center *geometry.Point
+	Radius float64
+	mat    material.Material
 }
 
 type SphereData struct {
@@ -56,7 +56,7 @@ func (s *sphere) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.
 				Ray:         ray,
 				NormalAtHit: s.normalAt(ray.PointAt(t1)),
 				T:           t1,
-				Material:    s.Material,
+				Material:    s.mat,
 			}, true
 		}
 		// evaluate and return second solution if in range
@@ -66,7 +66,7 @@ func (s *sphere) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.
 				Ray:         ray,
 				NormalAtHit: s.normalAt(ray.PointAt(t2)),
 				T:           t2,
-				Material:    s.Material,
+				Material:    s.mat,
 			}, true
 		}
 	}
@@ -90,7 +90,15 @@ func (s *sphere) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 }
 
 func (s *sphere) SetMaterial(m material.Material) {
-	s.Material = m
+	s.mat = m
+}
+
+func (s *sphere) IsInfinite() bool {
+	return false
+}
+
+func (s *sphere) IsClosed() bool {
+	return true
 }
 
 func (s *sphere) Copy() primitive.Primitive {
@@ -109,7 +117,7 @@ func Basicsphere(xOffset, yOffset, zOffset float64) *sphere {
 			Y: 0.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		Radius:   0.5,
-		Material: nil,
+		Radius: 0.5,
+		mat:    nil,
 	}
 }

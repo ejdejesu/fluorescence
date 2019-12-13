@@ -117,6 +117,14 @@ func (hd *hollowDisk) SetMaterial(m material.Material) {
 	hd.Material = m
 }
 
+func (hd *hollowDisk) IsInfinite() bool {
+	return false
+}
+
+func (hd *hollowDisk) IsClosed() bool {
+	return false
+}
+
 func (hd *hollowDisk) Copy() primitive.Primitive {
 	newHD := *hd
 	return &newHD

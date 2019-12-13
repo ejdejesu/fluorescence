@@ -358,5 +358,24 @@
             "outer_radius": 3.0,
             "is_culled": true
         }
+    },
+    {
+        "name": "test_infinite_cylinder",
+        "type": "InfiniteCylinder",
+        "data": {
+            "point": {
+                "x": 5.0,
+                "y": 0.0,
+                "z": -5.0
+            },
+            "direction": {
+                "x": 0.5,
+                "y": 1.0,
+                "z": -0.5
+            },
+            "radius": 2.0,
+            "is_culled": true,
+            "has_inverted_normals": false
+        }
     }
 ]

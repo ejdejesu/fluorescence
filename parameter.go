@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fluorescence/geometry/primitive"
 	"fluorescence/geometry/primitive/bvh"
+	"fluorescence/geometry/primitive/cylinder"
 	"fluorescence/geometry/primitive/disk"
 	"fluorescence/geometry/primitive/plane"
 	"fluorescence/geometry/primitive/primitivelist"
@@ -169,6 +170,18 @@ func loadObjects(fileName string) (map[string]primitive.Primitive, error) {
 	objectsMap := map[string]primitive.Primitive{}
 	for _, o := range objectsData {
 		switch o.TypeName {
+		case "InfiniteCylinder":
+			var icd cylinder.InfiniteCylinderData
+			dataBytes, err := json.Marshal(o.Data)
+			if err != nil {
+				return nil, err
+			}
+			json.Unmarshal(dataBytes, &icd)
+			newInfiniteCylinder, err := cylinder.NewInfiniteCylinder(&icd)
+			if err != nil {
+				return nil, err
+			}
+			objectsMap[o.Name] = newInfiniteCylinder
 		case "Disk":
 			var dd disk.DiskData
 			dataBytes, err := json.Marshal(o.Data)

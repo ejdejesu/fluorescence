@@ -21,6 +21,10 @@
         "camera_name": "main",
         "objects": [
             {
+                "object_name": "test_infinite_cylinder",
+                "material_name": "white_diffuse"
+            },
+            {
                 "object_name": "top_rectangle",
                 "material_name": "white_diffuse"
             },
@@ -55,10 +59,6 @@
             {
                 "object_name": "small_floor_hollow_disk",
                 "material_name": "blue_light_full"
-            },
-            {
-                "object_name": "large_center_sphere",
-                "material_name": "glass"
             }
         ]
     }

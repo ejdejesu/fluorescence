@@ -148,7 +148,13 @@ func colorOf(parameters *Parameters, r *geometry.Ray, rng *rand.Rand, depth int)
 }
 
 func getImageFile(parameters *Parameters) (*os.File, error) {
-	filename := fmt.Sprintf("%s%s_%s.%s", parameters.FileDirectory, parameters.FileName, time.Now().Format("2006-01-02_T150405"), parameters.FileType)
+	filename := fmt.Sprintf(
+		"%s%s_%ds_%s.%s",
+		parameters.FileDirectory,
+		parameters.FileName,
+		parameters.SampleCount,
+		time.Now().Format("2006-01-02_T150405"),
+		parameters.FileType)
 	os.MkdirAll(parameters.FileDirectory, os.ModePerm)
 	return os.Create(filename)
 }

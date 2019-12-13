@@ -15,7 +15,7 @@ type disk struct {
 	radius        float64
 	isCulled      bool
 	radiusSquared float64
-	Material      material.Material
+	mat           material.Material
 }
 
 type DiskData struct {
@@ -39,10 +39,6 @@ func NewDisk(dd *DiskData) (*disk, error) {
 		isCulled:      dd.IsCulled,
 		radiusSquared: dd.Radius * dd.Radius,
 	}, nil
-}
-
-func EmptyDisk() *disk {
-	return &disk{}
 }
 
 func (d *disk) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
@@ -74,7 +70,7 @@ func (d *disk) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.Ra
 		Ray:         ray,
 		NormalAtHit: d.normal,
 		T:           t,
-		Material:    d.Material,
+		Material:    d.mat,
 	}, true
 }
 
@@ -97,7 +93,7 @@ func (d *disk) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 }
 
 func (d *disk) SetMaterial(m material.Material) {
-	d.Material = m
+	d.mat = m
 }
 
 func (d *disk) IsInfinite() bool {

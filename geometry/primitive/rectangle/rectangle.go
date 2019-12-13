@@ -42,10 +42,6 @@ func NewRectangle(rd *RectangleData) (*rectangle, error) {
 	return nil, fmt.Errorf("Points do not lie on on axis-aligned plane")
 }
 
-func EmptyRectangle() *rectangle {
-	return &rectangle{}
-}
-
 func (r *rectangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	return r.axisAlignedRectangle.Intersection(ray, tMin, tMax)
 }

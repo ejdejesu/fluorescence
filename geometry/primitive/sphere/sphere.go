@@ -33,10 +33,6 @@ func NewSphere(sd *SphereData) (*sphere, error) {
 	}, nil
 }
 
-func EmptySphere() *sphere {
-	return &sphere{}
-}
-
 func (s *sphere) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	centerToRayOrigin := s.Center.To(ray.Origin)
 

@@ -46,7 +46,10 @@ func newXZRectangle(a, b *geometry.Point, isCulled, hasNegativeNormal bool) *xzR
 
 func (r *xzRectangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	// Ray is coming from behind rectangle
-	if r.isCulled && (ray.Direction.Dot(r.normal)) > 0 {
+	denominator := ray.Direction.Dot(r.normal)
+	if r.isCulled && denominator > -1e-7 {
+		return nil, false
+	} else if denominator < 1e-7 && denominator > -1e-7 {
 		return nil, false
 	}
 

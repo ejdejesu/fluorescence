@@ -20,7 +20,7 @@ run:
 	$(GOPATH)/bin/$(BINARY_NAME)
 install:
 	# go install
-	$(GOINSTALL)
+	$(GOINSTALL) 
 build:
 	# go build
 	$(GOBUILD) -o $(BINARY_NAME) main.go

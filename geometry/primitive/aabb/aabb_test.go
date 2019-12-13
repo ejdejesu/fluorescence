@@ -1,4 +1,4 @@
-package primitive
+package aabb
 
 import (
 	"fluorescence/geometry"
@@ -36,7 +36,7 @@ func TestAABBIntersectionXAxisHit(t *testing.T) {
 			Z: 0.0,
 		},
 	}
-	h := aabb.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+	h := aabb.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	if !h {
 		t.Errorf("Expected true (hit) but got %t\n", h)
 	}
@@ -59,7 +59,7 @@ func BenchmarkAABBIntersectionXAxisHit(b *testing.B) {
 	var h bool
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		h = aabb.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+		h = aabb.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	}
 	aabbHit = h
 }
@@ -78,7 +78,7 @@ func TestAABBIntersectionXAxisMiss(t *testing.T) {
 			Z: 0.0,
 		},
 	}
-	h := aabb.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+	h := aabb.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	if h {
 		t.Errorf("Expected false (miss) but got %t\n", h)
 	}
@@ -101,7 +101,7 @@ func BenchmarkAABBIntersectionXAxisMiss(b *testing.B) {
 	var h bool
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		h = aabb.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+		h = aabb.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	}
 	aabbHit = h
 }
@@ -120,7 +120,7 @@ func TestAABBIntersectionYAxisHit(t *testing.T) {
 			Z: 0.0,
 		},
 	}
-	h := aabb.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+	h := aabb.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	if !h {
 		t.Errorf("Expected true (hit) but got %t\n", h)
 	}
@@ -143,7 +143,7 @@ func BenchmarkAABBIntersectionYAxisHit(b *testing.B) {
 	var h bool
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		h = aabb.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+		h = aabb.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	}
 	aabbHit = h
 }
@@ -162,7 +162,7 @@ func TestAABBIntersectionYAxisMiss(t *testing.T) {
 			Z: 0.0,
 		},
 	}
-	h := aabb.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+	h := aabb.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	if h {
 		t.Errorf("Expected false (miss) but got %t\n", h)
 	}
@@ -185,7 +185,7 @@ func BenchmarkAABBIntersectionYAxisMiss(b *testing.B) {
 	var h bool
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		h = aabb.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+		h = aabb.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	}
 	aabbHit = h
 }
@@ -204,7 +204,7 @@ func TestAABBIntersectionZAxisHit(t *testing.T) {
 			Z: 1.0,
 		},
 	}
-	h := aabb.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+	h := aabb.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	if !h {
 		t.Errorf("Expected true (hit) but got %t\n", h)
 	}
@@ -227,7 +227,7 @@ func BenchmarkAABBIntersectionZAxisHit(b *testing.B) {
 	var h bool
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		h = aabb.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+		h = aabb.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	}
 	aabbHit = h
 }
@@ -246,7 +246,7 @@ func TestAABBIntersectionZAxisMiss(t *testing.T) {
 			Z: 1.0,
 		},
 	}
-	h := aabb.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+	h := aabb.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	if h {
 		t.Errorf("Expected false (miss) but got %t\n", h)
 	}
@@ -269,7 +269,7 @@ func BenchmarkAABBIntersectionZAxisMiss(b *testing.B) {
 	var h bool
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		h = aabb.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+		h = aabb.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	}
 	aabbHit = h
 }

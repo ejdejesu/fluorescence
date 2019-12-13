@@ -3,6 +3,14 @@ package main
 import (
 	"encoding/json"
 	"fluorescence/geometry/primitive"
+	"fluorescence/geometry/primitive/bvh"
+	"fluorescence/geometry/primitive/disk"
+	"fluorescence/geometry/primitive/hollowdisk"
+	"fluorescence/geometry/primitive/plane"
+	"fluorescence/geometry/primitive/primitivelist"
+	"fluorescence/geometry/primitive/rectangle"
+	"fluorescence/geometry/primitive/sphere"
+	"fluorescence/geometry/primitive/triangle"
 	"fluorescence/shading"
 	"fluorescence/shading/material"
 	"fmt"
@@ -84,7 +92,8 @@ func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materials
 		return nil, err
 	}
 
-	sceneObjects := &primitive.PrimitiveList{}
+	boundedSceneObjects := &primitivelist.PrimitiveList{}
+	unboundedSceneObjects := &primitivelist.PrimitiveList{}
 	for _, om := range parameters.Scene.ObjectMaterials {
 		selectedObject, exists := totalObjects[om.ObjectName]
 		if !exists {
@@ -94,25 +103,49 @@ func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materials
 		if !exists {
 			return nil, fmt.Errorf("Selected Material (%s) not in %s", om.MaterialName, materialsFileName)
 		}
-		if reflect.TypeOf(selectedMaterial) == reflect.TypeOf(&material.Dielectric{}) &&
-			(reflect.TypeOf(selectedObject) == reflect.TypeOf(&primitive.Triangle{}) ||
-				reflect.TypeOf(selectedObject) == reflect.TypeOf(&primitive.Rectangle{})) {
-			return nil, fmt.Errorf("Cannot attach refractive or volumetric materials (%s) to non-closed geometry (%s)",
-				om.MaterialName, om.ObjectName)
+		if reflect.TypeOf(selectedMaterial) == reflect.TypeOf(&material.Dielectric{}) {
+			objectType := reflect.TypeOf(selectedObject)
+			triangleType := reflect.TypeOf(triangle.EmptyTriangle())
+			rectangleType := reflect.TypeOf(rectangle.EmptyRectangle())
+			planeType := reflect.TypeOf(plane.EmptyPlane())
+			diskType := reflect.TypeOf(disk.EmptyDisk())
+			hollowDiskType := reflect.TypeOf(hollowdisk.EmptyHollowDisk())
+			if objectType == triangleType ||
+				objectType == rectangleType ||
+				objectType == planeType ||
+				objectType == diskType ||
+				objectType == hollowDiskType {
+				return nil, fmt.Errorf("Cannot attach refractive or volumetric materials (%s) to non-closed geometry (%s)",
+					om.MaterialName, om.ObjectName)
+			}
 		}
 		newPrimitive := selectedObject.Copy()
 		newPrimitive.SetMaterial(selectedMaterial)
-		sceneObjects.List = append(sceneObjects.List, newPrimitive)
+		_, isBounded := newPrimitive.BoundingBox(0, 0)
+		if isBounded {
+			boundedSceneObjects.List = append(boundedSceneObjects.List, newPrimitive)
+		} else {
+			unboundedSceneObjects.List = append(unboundedSceneObjects.List, newPrimitive)
+		}
 	}
 
 	if parameters.UseBVH {
-		sceneBVH, err := primitive.NewBVH(sceneObjects)
+		sceneBVH, err := bvh.NewBVH(boundedSceneObjects)
 		if err != nil {
 			return nil, err
 		}
-		parameters.Scene.Objects = sceneBVH
+		if len(unboundedSceneObjects.List) == 0 {
+			parameters.Scene.Objects = sceneBVH
+		} else {
+			rootNode := &primitivelist.PrimitiveList{
+				List: append(unboundedSceneObjects.List, sceneBVH),
+			}
+			parameters.Scene.Objects = rootNode
+		}
 	} else {
-		parameters.Scene.Objects = sceneObjects
+		parameters.Scene.Objects = &primitivelist.PrimitiveList{
+			List: append(boundedSceneObjects.List, unboundedSceneObjects.List...),
+		}
 	}
 
 	return parameters, nil
@@ -148,34 +181,78 @@ func loadObjects(fileName string) (map[string]primitive.Primitive, error) {
 	objectsMap := map[string]primitive.Primitive{}
 	for _, o := range objectsData {
 		switch o.TypeName {
-		case "Sphere":
-			var s primitive.Sphere
+		case "Disk":
+			var dd disk.DiskData
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
 			}
-			json.Unmarshal(dataBytes, &s)
-			objectsMap[o.Name] = &s
-		case "Triangle":
-			var t primitive.Triangle
+			json.Unmarshal(dataBytes, &dd)
+			newDisk, err := disk.NewDisk(&dd)
+			if err != nil {
+				return nil, err
+			}
+			objectsMap[o.Name] = newDisk
+		case "HollowDisk":
+			var hdd hollowdisk.HollowDiskData
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
 			}
-			json.Unmarshal(dataBytes, &t)
-			objectsMap[o.Name] = &t
+			json.Unmarshal(dataBytes, &hdd)
+			newHollowDisk, err := hollowdisk.NewHollowDisk(&hdd)
+			if err != nil {
+				return nil, err
+			}
+			objectsMap[o.Name] = newHollowDisk
+		case "Plane":
+			var pd plane.PlaneData
+			dataBytes, err := json.Marshal(o.Data)
+			if err != nil {
+				return nil, err
+			}
+			json.Unmarshal(dataBytes, &pd)
+			newPlane, err := plane.NewPlane(&pd)
+			if err != nil {
+				return nil, err
+			}
+			objectsMap[o.Name] = newPlane
 		case "Rectangle":
-			var rd primitive.RectangleData
+			var rd rectangle.RectangleData
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
 			}
 			json.Unmarshal(dataBytes, &rd)
-			r, err := primitive.NewRectangle(&rd)
+			newRectangle, err := rectangle.NewRectangle(&rd)
 			if err != nil {
 				return nil, err
 			}
-			objectsMap[o.Name] = r
+			objectsMap[o.Name] = newRectangle
+		case "Sphere":
+			var sd sphere.SphereData
+			dataBytes, err := json.Marshal(o.Data)
+			if err != nil {
+				return nil, err
+			}
+			json.Unmarshal(dataBytes, &sd)
+			newSphere, err := sphere.NewSphere(&sd)
+			if err != nil {
+				return nil, err
+			}
+			objectsMap[o.Name] = newSphere
+		case "Triangle":
+			var td triangle.TriangleData
+			dataBytes, err := json.Marshal(o.Data)
+			if err != nil {
+				return nil, err
+			}
+			json.Unmarshal(dataBytes, &td)
+			newTriangle, err := triangle.NewTriangle(&td)
+			if err != nil {
+				return nil, err
+			}
+			objectsMap[o.Name] = newTriangle
 		default:
 			return nil, fmt.Errorf("Type (%s) not a valid primitive type", o.TypeName)
 		}

@@ -1,7 +1,10 @@
-package primitive
+package bvh
 
 import (
 	"fluorescence/geometry"
+	"fluorescence/geometry/primitive"
+	"fluorescence/geometry/primitive/aabb"
+	"fluorescence/geometry/primitive/primitivelist"
 	"fluorescence/shading/material"
 	"fmt"
 	"math/rand"
@@ -9,23 +12,29 @@ import (
 )
 
 type bvh struct {
-	Left   Primitive
-	Right  Primitive
+	Left   primitive.Primitive
+	Right  primitive.Primitive
 	single bool
-	box    *AABB
+	box    *aabb.AABB
 }
 
-func NewBVH(pl *PrimitiveList) (*bvh, error) {
+func NewBVH(pl *primitivelist.PrimitiveList) (*bvh, error) {
 	newBVH := &bvh{}
+
+	// can we do the sort?
+	_, ok := pl.BoundingBox(0, 0)
+	if !ok {
+		return nil, fmt.Errorf("no bounding box for input Primitive List")
+	}
 
 	// do the sort
 	axisNum := rand.Intn(3)
 	if axisNum == 0 {
-		sort.Sort(ByXPos(*pl))
+		sort.Sort(primitivelist.ByXPos(*pl))
 	} else if axisNum == 1 {
-		sort.Sort(ByYPos(*pl))
+		sort.Sort(primitivelist.ByYPos(*pl))
 	} else {
-		sort.Sort(ByZPos(*pl))
+		sort.Sort(primitivelist.ByZPos(*pl))
 	}
 
 	// fill children
@@ -59,7 +68,7 @@ func NewBVH(pl *PrimitiveList) (*bvh, error) {
 		if !leftOk || !rightOk {
 			return nil, fmt.Errorf("no bounding box for some leaf of BVH")
 		}
-		newBVH.box = SurroundingBox(leftBox, rightBox)
+		newBVH.box = aabb.SurroundingBox(leftBox, rightBox)
 	}
 	return newBVH, nil
 }
@@ -90,7 +99,7 @@ func (b *bvh) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.Ray
 	return nil, false
 }
 
-func (b *bvh) BoundingBox(t0, t1 float64) (*AABB, bool) {
+func (b *bvh) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return b.box, true
 }
 
@@ -99,7 +108,7 @@ func (b *bvh) SetMaterial(m material.Material) {
 	b.Right.SetMaterial(m)
 }
 
-func (b *bvh) Copy() Primitive {
+func (b *bvh) Copy() primitive.Primitive {
 	newB := *b
 	return &newB
 }

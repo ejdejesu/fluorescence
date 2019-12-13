@@ -1,42 +1,46 @@
-package primitive
+package bvh
 
 import (
 	"fluorescence/geometry"
+	"fluorescence/geometry/primitive/primitivelist"
+	"fluorescence/geometry/primitive/rectangle"
+	"fluorescence/geometry/primitive/sphere"
+	"fluorescence/geometry/primitive/triangle"
 	"math/rand"
 	"testing"
 )
 
 var bvhHit bool
 
-func basicBVHNTriangles(n int, xOffset, yOffset, zOffset float64) *bvh {
-	pl := &PrimitiveList{}
+func BasicBVHNTriangles(n int, xOffset, yOffset, zOffset float64) *bvh {
+	pl := &primitivelist.PrimitiveList{}
 	for i := 0; i < n; i++ {
-		pl.List = append(pl.List, basicTriangle(xOffset+float64(i), yOffset, zOffset))
+		pl.List = append(pl.List, triangle.BasicTriangle(xOffset+float64(i), yOffset, zOffset))
 	}
 	bvh, _ := NewBVH(pl)
 	return bvh
 }
 
-func basicBVHNRectangles(n int, xOffset, yOffset, zOffset float64) *bvh {
-	pl := &PrimitiveList{}
+func BasicBVHNRectangles(n int, xOffset, yOffset, zOffset float64) *bvh {
+	pl := &primitivelist.PrimitiveList{}
 	for i := 0; i < n; i++ {
-		pl.List = append(pl.List, basicRectangle(xOffset+float64(i), yOffset, zOffset))
+		pl.List = append(pl.List, rectangle.BasicRectangle(xOffset+float64(i), yOffset, zOffset))
 	}
 	bvh, _ := NewBVH(pl)
 	return bvh
 }
 
-func basicBVHNSpheres(n int, xOffset, yOffset, zOffset float64) *bvh {
-	pl := &PrimitiveList{}
+func BasicBVHNSpheres(n int, xOffset, yOffset, zOffset float64) *bvh {
+	pl := &primitivelist.PrimitiveList{}
 	for i := 0; i < n; i++ {
-		pl.List = append(pl.List, basicSphere(xOffset+float64(i), yOffset, zOffset))
+		pl.List = append(pl.List, sphere.BasicSphere(xOffset+float64(i), yOffset, zOffset))
 	}
 	bvh, _ := NewBVH(pl)
 	return bvh
 }
 
 func ithTriangleOfNBVHTest(i int, n int, shouldHit bool, t *testing.T) {
-	pl := basicBVHNTriangles(n, 0.0, 0.0, 0.0)
+	pl := BasicBVHNTriangles(n, 0.0, 0.0, 0.0)
 	var r *geometry.Ray
 	if shouldHit {
 		r = &geometry.Ray{
@@ -66,7 +70,7 @@ func ithTriangleOfNBVHTest(i int, n int, shouldHit bool, t *testing.T) {
 			},
 		}
 	}
-	_, h := pl.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+	_, h := pl.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	if shouldHit && !h {
 		t.Errorf("Expected true (hit) but got %t\n", h)
 	} else if !shouldHit && h {
@@ -75,7 +79,7 @@ func ithTriangleOfNBVHTest(i int, n int, shouldHit bool, t *testing.T) {
 }
 
 func ithTriangleOfNBVHBenchmark(i int, n int, shouldHit bool, b *testing.B) {
-	pl := basicBVHNTriangles(n, 0.0, 0.0, 0.0)
+	pl := BasicBVHNTriangles(n, 0.0, 0.0, 0.0)
 	var r *geometry.Ray
 	if shouldHit {
 		r = &geometry.Ray{
@@ -108,13 +112,13 @@ func ithTriangleOfNBVHBenchmark(i int, n int, shouldHit bool, b *testing.B) {
 	b.ResetTimer()
 	var h bool
 	for i := 0; i < b.N; i++ {
-		_, h = pl.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+		_, h = pl.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	}
 	bvhHit = h
 }
 
 func ithSphereOfNBVHTest(i int, n int, shouldHit bool, t *testing.T) {
-	pl := basicBVHNSpheres(n, 0.0, 0.0, 0.0)
+	pl := BasicBVHNSpheres(n, 0.0, 0.0, 0.0)
 	var r *geometry.Ray
 	if shouldHit {
 		r = &geometry.Ray{
@@ -144,7 +148,7 @@ func ithSphereOfNBVHTest(i int, n int, shouldHit bool, t *testing.T) {
 			},
 		}
 	}
-	_, h := pl.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+	_, h := pl.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	if shouldHit && !h {
 		t.Errorf("Expected true (hit) but got %t\n", h)
 	} else if !shouldHit && h {
@@ -153,7 +157,7 @@ func ithSphereOfNBVHTest(i int, n int, shouldHit bool, t *testing.T) {
 }
 
 func ithSphereOfNBVHBenchmark(i int, n int, shouldHit bool, b *testing.B) {
-	pl := basicBVHNSpheres(n, 0.0, 0.0, 0.0)
+	pl := BasicBVHNSpheres(n, 0.0, 0.0, 0.0)
 	var r *geometry.Ray
 	if shouldHit {
 		r = &geometry.Ray{
@@ -186,13 +190,13 @@ func ithSphereOfNBVHBenchmark(i int, n int, shouldHit bool, b *testing.B) {
 	b.ResetTimer()
 	var h bool
 	for i := 0; i < b.N; i++ {
-		_, h = pl.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+		_, h = pl.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	}
 	bvhHit = h
 }
 
 func ithRectangleOfNBVHTest(i int, n int, shouldHit bool, t *testing.T) {
-	pl := basicBVHNRectangles(n, 0.0, 0.0, 0.0)
+	pl := BasicBVHNRectangles(n, 0.0, 0.0, 0.0)
 	var r *geometry.Ray
 	if shouldHit {
 		r = &geometry.Ray{
@@ -222,7 +226,7 @@ func ithRectangleOfNBVHTest(i int, n int, shouldHit bool, t *testing.T) {
 			},
 		}
 	}
-	_, h := pl.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+	_, h := pl.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	if shouldHit && !h {
 		t.Errorf("Expected true (hit) but got %t\n", h)
 	} else if !shouldHit && h {
@@ -231,7 +235,7 @@ func ithRectangleOfNBVHTest(i int, n int, shouldHit bool, t *testing.T) {
 }
 
 func ithRectangleOfNBVHBenchmark(i int, n int, shouldHit bool, b *testing.B) {
-	pl := basicBVHNRectangles(n, 0.0, 0.0, 0.0)
+	pl := BasicBVHNRectangles(n, 0.0, 0.0, 0.0)
 	var r *geometry.Ray
 	if shouldHit {
 		r = &geometry.Ray{
@@ -264,7 +268,7 @@ func ithRectangleOfNBVHBenchmark(i int, n int, shouldHit bool, b *testing.B) {
 	b.ResetTimer()
 	var h bool
 	for i := 0; i < b.N; i++ {
-		_, h = pl.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+		_, h = pl.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	}
 	bvhHit = h
 }

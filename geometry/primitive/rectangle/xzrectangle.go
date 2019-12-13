@@ -1,7 +1,9 @@
-package primitive
+package rectangle
 
 import (
 	"fluorescence/geometry"
+	"fluorescence/geometry/primitive"
+	"fluorescence/geometry/primitive/aabb"
 	"fluorescence/shading/material"
 	"math"
 )
@@ -70,17 +72,17 @@ func (r *xzRectangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*mate
 	return &material.RayHit{ray, r.normal, t, r.Material}, true
 }
 
-func (r *xzRectangle) BoundingBox(t0, t1 float64) (*AABB, bool) {
-	return &AABB{
+func (r *xzRectangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
+	return &aabb.AABB{
 		A: &geometry.Point{
-			X: r.x0 - 0.0000001,
-			Y: r.y - 0.0000001,
-			Z: r.z0 - 0.0000001,
+			X: r.x0 - 1e-7,
+			Y: r.y - 1e-7,
+			Z: r.z0 - 1e-7,
 		},
 		B: &geometry.Point{
-			X: r.x1 + 0.0000001,
-			Y: r.y + 0.0000001,
-			Z: r.z1 + 0.0000001,
+			X: r.x1 + 1e-7,
+			Y: r.y + 1e-7,
+			Z: r.z1 + 1e-7,
 		},
 	}, true
 }
@@ -89,7 +91,7 @@ func (r *xzRectangle) SetMaterial(m material.Material) {
 	r.Material = m
 }
 
-func (r *xzRectangle) Copy() Primitive {
+func (r *xzRectangle) Copy() primitive.Primitive {
 	newR := *r
 	return &newR
 }

@@ -1,39 +1,42 @@
-package primitive
+package primitivelist
 
 import (
 	"fluorescence/geometry"
+	"fluorescence/geometry/primitive/rectangle"
+	"fluorescence/geometry/primitive/sphere"
+	"fluorescence/geometry/primitive/triangle"
 	"math/rand"
 	"testing"
 )
 
 var plHit bool
 
-func basicPrimitiveListNTriangles(n int, xOffset, yOffset, zOffset float64) *PrimitiveList {
+func BasicPrimitiveListNTriangles(n int, xOffset, yOffset, zOffset float64) *PrimitiveList {
 	pl := &PrimitiveList{}
 	for i := 0; i < n; i++ {
-		pl.List = append(pl.List, basicTriangle(xOffset+float64(i), yOffset, zOffset))
+		pl.List = append(pl.List, triangle.BasicTriangle(xOffset+float64(i), yOffset, zOffset))
 	}
 	return pl
 }
 
-func basicPrimitiveListNRectangles(n int, xOffset, yOffset, zOffset float64) *PrimitiveList {
+func BasicPrimitiveListNRectangles(n int, xOffset, yOffset, zOffset float64) *PrimitiveList {
 	pl := &PrimitiveList{}
 	for i := 0; i < n; i++ {
-		pl.List = append(pl.List, basicRectangle(xOffset+float64(i), yOffset, zOffset))
+		pl.List = append(pl.List, rectangle.BasicRectangle(xOffset+float64(i), yOffset, zOffset))
 	}
 	return pl
 }
 
-func basicPrimitiveListNSpheres(n int, xOffset, yOffset, zOffset float64) *PrimitiveList {
+func BasicPrimitiveListNSpheres(n int, xOffset, yOffset, zOffset float64) *PrimitiveList {
 	pl := &PrimitiveList{}
 	for i := 0; i < n; i++ {
-		pl.List = append(pl.List, basicSphere(xOffset+float64(i), yOffset, zOffset))
+		pl.List = append(pl.List, sphere.BasicSphere(xOffset+float64(i), yOffset, zOffset))
 	}
 	return pl
 }
 
 func ithTriangleOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T) {
-	pl := basicPrimitiveListNTriangles(n, 0.0, 0.0, 0.0)
+	pl := BasicPrimitiveListNTriangles(n, 0.0, 0.0, 0.0)
 	var r *geometry.Ray
 	if shouldHit {
 		r = &geometry.Ray{
@@ -63,7 +66,7 @@ func ithTriangleOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T)
 			},
 		}
 	}
-	_, h := pl.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+	_, h := pl.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	if shouldHit && !h {
 		t.Errorf("Expected true (hit) but got %t\n", h)
 	} else if !shouldHit && h {
@@ -72,7 +75,7 @@ func ithTriangleOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T)
 }
 
 func ithTriangleOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *testing.B) {
-	pl := basicPrimitiveListNTriangles(n, 0.0, 0.0, 0.0)
+	pl := BasicPrimitiveListNTriangles(n, 0.0, 0.0, 0.0)
 	var r *geometry.Ray
 	if shouldHit {
 		r = &geometry.Ray{
@@ -105,13 +108,13 @@ func ithTriangleOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *testi
 	b.ResetTimer()
 	var h bool
 	for i := 0; i < b.N; i++ {
-		_, h = pl.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+		_, h = pl.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	}
 	plHit = h
 }
 
 func ithSphereOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T) {
-	pl := basicPrimitiveListNSpheres(n, 0.0, 0.0, 0.0)
+	pl := BasicPrimitiveListNSpheres(n, 0.0, 0.0, 0.0)
 	var r *geometry.Ray
 	if shouldHit {
 		r = &geometry.Ray{
@@ -141,7 +144,7 @@ func ithSphereOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T) {
 			},
 		}
 	}
-	_, h := pl.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+	_, h := pl.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	if shouldHit && !h {
 		t.Errorf("Expected true (hit) but got %t\n", h)
 	} else if !shouldHit && h {
@@ -150,7 +153,7 @@ func ithSphereOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T) {
 }
 
 func ithSphereOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *testing.B) {
-	pl := basicPrimitiveListNSpheres(n, 0.0, 0.0, 0.0)
+	pl := BasicPrimitiveListNSpheres(n, 0.0, 0.0, 0.0)
 	var r *geometry.Ray
 	if shouldHit {
 		r = &geometry.Ray{
@@ -183,13 +186,13 @@ func ithSphereOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *testing
 	b.ResetTimer()
 	var h bool
 	for i := 0; i < b.N; i++ {
-		_, h = pl.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+		_, h = pl.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	}
 	plHit = h
 }
 
 func ithRectangleOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T) {
-	pl := basicPrimitiveListNRectangles(n, 0.0, 0.0, 0.0)
+	pl := BasicPrimitiveListNRectangles(n, 0.0, 0.0, 0.0)
 	var r *geometry.Ray
 	if shouldHit {
 		r = &geometry.Ray{
@@ -219,7 +222,7 @@ func ithRectangleOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T
 			},
 		}
 	}
-	_, h := pl.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+	_, h := pl.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	if shouldHit && !h {
 		t.Errorf("Expected true (hit) but got %t\n", h)
 	} else if !shouldHit && h {
@@ -228,7 +231,7 @@ func ithRectangleOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T
 }
 
 func ithRectangleOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *testing.B) {
-	pl := basicPrimitiveListNRectangles(n, 0.0, 0.0, 0.0)
+	pl := BasicPrimitiveListNRectangles(n, 0.0, 0.0, 0.0)
 	var r *geometry.Ray
 	if shouldHit {
 		r = &geometry.Ray{
@@ -261,7 +264,7 @@ func ithRectangleOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *test
 	b.ResetTimer()
 	var h bool
 	for i := 0; i < b.N; i++ {
-		_, h = pl.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+		_, h = pl.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	}
 	plHit = h
 }

@@ -75,14 +75,14 @@ func (r *xzRectangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*mate
 func (r *xzRectangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return &aabb.AABB{
 		A: &geometry.Point{
-			X: r.x0 - 0.0000001,
-			Y: r.y - 0.0000001,
-			Z: r.z0 - 0.0000001,
+			X: r.x0 - 1e-7,
+			Y: r.y - 1e-7,
+			Z: r.z0 - 1e-7,
 		},
 		B: &geometry.Point{
-			X: r.x1 + 0.0000001,
-			Y: r.y + 0.0000001,
-			Z: r.z1 + 0.0000001,
+			X: r.x1 + 1e-7,
+			Y: r.y + 1e-7,
+			Z: r.z1 + 1e-7,
 		},
 	}, true
 }

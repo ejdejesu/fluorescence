@@ -5,23 +5,46 @@ import (
 	"fluorescence/geometry/primitive"
 	"fluorescence/geometry/primitive/aabb"
 	"fluorescence/shading/material"
+	"fmt"
 	"math"
 )
 
-type Triangle struct {
-	A                *geometry.Point   `json:"a"`
-	B                *geometry.Point   `json:"b"`
-	C                *geometry.Point   `json:"c"`
-	IntersectEpsilon float64           `json:"intersect_epsilon"`
-	Material         material.Material `json:"material"`
+type triangle struct {
+	A        *geometry.Point
+	B        *geometry.Point
+	C        *geometry.Point
+	Normal   *geometry.Vector
+	Material material.Material
 }
 
-func (t *Triangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+type TriangleData struct {
+	A *geometry.Point `json:"a"`
+	B *geometry.Point `json:"b"`
+	C *geometry.Point `json:"c"`
+}
+
+func NewTriangle(td *TriangleData) (*triangle, error) {
+	if td.A == td.B || td.A == td.C || td.B == td.C {
+		return nil, fmt.Errorf("Triangle resolves to line or point")
+	}
+	return &triangle{
+		A:      td.A,
+		B:      td.B,
+		C:      td.C,
+		Normal: td.A.To(td.B).CrossInPlace(td.A.To(td.C)).UnitInPlace(),
+	}, nil
+}
+
+func EmptyTriangle() *triangle {
+	return &triangle{}
+}
+
+func (t *triangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	ab := t.A.To(t.B)
 	ac := t.A.To(t.C)
 	pVector := ray.Direction.Cross(ac)
 	determinant := ab.Dot(pVector)
-	if determinant < t.IntersectEpsilon {
+	if determinant < 1e-7 {
 		// This ray is parallel to this triangle or back-facing.
 		return nil, false
 	}
@@ -44,41 +67,37 @@ func (t *Triangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*materia
 	time := inverseDeterminant * (ac.Dot(qVector))
 	if time >= tMin && time <= tMax {
 		// ray intersection
-		return &material.RayHit{ray, t.normal(), time, t.Material}, true
+		return &material.RayHit{ray, t.Normal, time, t.Material}, true
 	}
 	return nil, false
 }
 
-func (t *Triangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
+func (t *triangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return &aabb.AABB{
 		A: &geometry.Point{
-			X: math.Min(math.Min(t.A.X, t.B.X), t.C.X) - 0.0000001,
-			Y: math.Min(math.Min(t.A.Y, t.B.Y), t.C.Y) - 0.0000001,
-			Z: math.Min(math.Min(t.A.Z, t.B.Z), t.C.Z) - 0.0000001,
+			X: math.Min(math.Min(t.A.X, t.B.X), t.C.X) - 1e-7,
+			Y: math.Min(math.Min(t.A.Y, t.B.Y), t.C.Y) - 1e-7,
+			Z: math.Min(math.Min(t.A.Z, t.B.Z), t.C.Z) - 1e-7,
 		},
 		B: &geometry.Point{
-			X: math.Max(math.Max(t.A.X, t.B.X), t.C.X) + 0.0000001,
-			Y: math.Max(math.Max(t.A.Y, t.B.Y), t.C.Y) + 0.0000001,
-			Z: math.Max(math.Max(t.A.Z, t.B.Z), t.C.Z) + 0.0000001,
+			X: math.Max(math.Max(t.A.X, t.B.X), t.C.X) + 1e-7,
+			Y: math.Max(math.Max(t.A.Y, t.B.Y), t.C.Y) + 1e-7,
+			Z: math.Max(math.Max(t.A.Z, t.B.Z), t.C.Z) + 1e-7,
 		},
 	}, true
 }
 
-func (t *Triangle) SetMaterial(m material.Material) {
+func (t *triangle) SetMaterial(m material.Material) {
 	t.Material = m
 }
 
-func (t *Triangle) Copy() primitive.Primitive {
+func (t *triangle) Copy() primitive.Primitive {
 	newT := *t
 	return &newT
 }
 
-func (t *Triangle) normal() *geometry.Vector {
-	return t.A.To(t.B).CrossInPlace(t.A.To(t.C)).UnitInPlace()
-}
-
-func BasicTriangle(xOffset, yOffset, zOffset float64) *Triangle {
-	return &Triangle{
+func BasicTriangle(xOffset, yOffset, zOffset float64) *triangle {
+	return &triangle{
 		A: &geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
@@ -94,7 +113,6 @@ func BasicTriangle(xOffset, yOffset, zOffset float64) *Triangle {
 			Y: 1.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		IntersectEpsilon: 0.0000001,
-		Material:         nil,
+		Material: nil,
 	}
 }

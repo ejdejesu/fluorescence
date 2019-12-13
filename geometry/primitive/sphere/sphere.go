@@ -5,16 +5,39 @@ import (
 	"fluorescence/geometry/primitive"
 	"fluorescence/geometry/primitive/aabb"
 	"fluorescence/shading/material"
+	"fmt"
 	"math"
 )
 
-type Sphere struct {
-	Center   *geometry.Point   `json:"center"`
-	Radius   float64           `json:"radius"`
-	Material material.Material `json:"material"`
+type sphere struct {
+	Center   *geometry.Point
+	Radius   float64
+	Material material.Material
 }
 
-func (s *Sphere) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+type SphereData struct {
+	Center *geometry.Point `json:"center"`
+	Radius float64         `json:"radius"`
+}
+
+func NewSphere(sd *SphereData) (*sphere, error) {
+	if sd.Center == nil {
+		return nil, fmt.Errorf("Sphere center is nil")
+	}
+	if sd.Radius <= 0 {
+		return nil, fmt.Errorf("Sphere radius is 0 or negative")
+	}
+	return &sphere{
+		Center: sd.Center,
+		Radius: sd.Radius,
+	}, nil
+}
+
+func EmptySphere() *sphere {
+	return &sphere{}
+}
+
+func (s *sphere) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	centerToRayOrigin := s.Center.To(ray.Origin)
 
 	// terms of the quadratic equation we are solving
@@ -51,36 +74,36 @@ func (s *Sphere) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.
 	return nil, false
 }
 
-func (s *Sphere) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
+func (s *sphere) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return &aabb.AABB{
 		A: s.Center.SubVector(&geometry.Vector{
-			X: s.Radius + 0.0000001,
-			Y: s.Radius + 0.0000001,
-			Z: s.Radius + 0.0000001,
+			X: s.Radius + 1e-7,
+			Y: s.Radius + 1e-7,
+			Z: s.Radius + 1e-7,
 		}),
 		B: s.Center.AddVector(&geometry.Vector{
-			X: s.Radius + 0.0000001,
-			Y: s.Radius + 0.0000001,
-			Z: s.Radius + 0.0000001,
+			X: s.Radius + 1e-7,
+			Y: s.Radius + 1e-7,
+			Z: s.Radius + 1e-7,
 		}),
 	}, true
 }
 
-func (s *Sphere) SetMaterial(m material.Material) {
+func (s *sphere) SetMaterial(m material.Material) {
 	s.Material = m
 }
 
-func (s *Sphere) Copy() primitive.Primitive {
+func (s *sphere) Copy() primitive.Primitive {
 	newS := *s
 	return &newS
 }
 
-func (s *Sphere) normalAt(p *geometry.Point) *geometry.Vector {
+func (s *sphere) normalAt(p *geometry.Point) *geometry.Vector {
 	return s.Center.To(p).Unit()
 }
 
-func BasicSphere(xOffset, yOffset, zOffset float64) *Sphere {
-	return &Sphere{
+func Basicsphere(xOffset, yOffset, zOffset float64) *sphere {
+	return &sphere{
 		Center: &geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,

@@ -66,7 +66,7 @@ func ithTriangleOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T)
 			},
 		}
 	}
-	_, h := pl.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+	_, h := pl.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	if shouldHit && !h {
 		t.Errorf("Expected true (hit) but got %t\n", h)
 	} else if !shouldHit && h {
@@ -108,7 +108,7 @@ func ithTriangleOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *testi
 	b.ResetTimer()
 	var h bool
 	for i := 0; i < b.N; i++ {
-		_, h = pl.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+		_, h = pl.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	}
 	plHit = h
 }
@@ -144,7 +144,7 @@ func ithSphereOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T) {
 			},
 		}
 	}
-	_, h := pl.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+	_, h := pl.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	if shouldHit && !h {
 		t.Errorf("Expected true (hit) but got %t\n", h)
 	} else if !shouldHit && h {
@@ -186,7 +186,7 @@ func ithSphereOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *testing
 	b.ResetTimer()
 	var h bool
 	for i := 0; i < b.N; i++ {
-		_, h = pl.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+		_, h = pl.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	}
 	plHit = h
 }
@@ -222,7 +222,7 @@ func ithRectangleOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T
 			},
 		}
 	}
-	_, h := pl.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+	_, h := pl.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	if shouldHit && !h {
 		t.Errorf("Expected true (hit) but got %t\n", h)
 	} else if !shouldHit && h {
@@ -264,7 +264,7 @@ func ithRectangleOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *test
 	b.ResetTimer()
 	var h bool
 	for i := 0; i < b.N; i++ {
-		_, h = pl.Intersection(r, 0.0000001, 1.797693134862315708145274237317043567981e+308)
+		_, h = pl.Intersection(r, 1e-7, 1.797693134862315708145274237317043567981e+308)
 	}
 	plHit = h
 }

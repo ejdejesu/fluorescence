@@ -21,6 +21,12 @@ type bvh struct {
 func NewBVH(pl *primitivelist.PrimitiveList) (*bvh, error) {
 	newBVH := &bvh{}
 
+	// can we do the sort?
+	_, ok := pl.BoundingBox(0, 0)
+	if !ok {
+		return nil, fmt.Errorf("no bounding box for input Primitive List")
+	}
+
 	// do the sort
 	axisNum := rand.Intn(3)
 	if axisNum == 0 {

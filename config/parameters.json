@@ -1,12 +1,12 @@
 {
-    "image_width": 500,
-    "image_height": 500,
+    "image_width": 800,
+    "image_height": 800,
     "file_type": "png",
     "file_directory": "./output/",
     "file_name": "0.5",
     "gamma_correction": 2,
     "generate_new_file": true,
-    "sample_count": 50,
+    "sample_count": 500,
     "max_bounces": 10,
     "use_bvh": false,
     "background_color": {
@@ -15,16 +15,11 @@
         "blue": 0.0,
         "alpha": 1.0
     },
-    "t_min": 0.0000001,
-    "t_max": 1.797693134862315708145274237317043567981e+308,
-    "triangle_intersect_epsilon": 0.0000001,
+    "t_min": 1e-7,
+    "t_max": 1e+300,
     "scene": {
         "camera_name": "main",
         "objects": [
-            {
-                "object_name": "large_center_sphere",
-                "material_name": "glass"
-            },
             {
                 "object_name": "top_rectangle",
                 "material_name": "white_diffuse"
@@ -50,16 +45,20 @@
                 "material_name": "white_diffuse"
             },
             {
-                "object_name": "light_far_left_rectangle",
-                "material_name": "red_light_double"
+                "object_name": "large_floor_hollow_disk",
+                "material_name": "red_light_full"
             },
             {
-                "object_name": "light_far_center_rectangle",
-                "material_name": "green_light_double"
+                "object_name": "medium_floor_hollow_disk",
+                "material_name": "green_light_full"
             },
             {
-                "object_name": "light_far_right_rectangle",
-                "material_name": "blue_light_double"
+                "object_name": "small_floor_hollow_disk",
+                "material_name": "blue_light_full"
+            },
+            {
+                "object_name": "large_center_sphere",
+                "material_name": "glass"
             }
         ]
     }

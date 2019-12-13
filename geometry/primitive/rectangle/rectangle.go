@@ -8,7 +8,7 @@ import (
 	"fmt"
 )
 
-type Rectangle struct {
+type rectangle struct {
 	axisAlignedRectangle primitive.Primitive
 }
 
@@ -19,38 +19,51 @@ type RectangleData struct {
 	HasNegativeNormal bool            `json:"has_negative_normal"`
 }
 
-func NewRectangle(data *RectangleData) (*Rectangle, error) {
-	if data.A.X == data.B.X {
+func NewRectangle(rd *RectangleData) (*rectangle, error) {
+	if rd.A == nil || rd.B == nil {
+		return nil, fmt.Errorf("Rectangle a or b is nil")
+	}
+	if (rd.A.X == rd.B.X && rd.A.Y == rd.B.Y) ||
+		(rd.A.X == rd.B.X && rd.A.Z == rd.B.Z) ||
+		(rd.A.Y == rd.B.Y && rd.A.Z == rd.B.Z) {
+		return nil, fmt.Errorf("Rectangle resolves to line or point")
+	}
+
+	if rd.A.X == rd.B.X {
 		// lies on YZ plane
-		return &Rectangle{newYZRectangle(data.A, data.B, data.IsCulled, data.HasNegativeNormal)}, nil
-	} else if data.A.Y == data.B.Y {
+		return &rectangle{newYZRectangle(rd.A, rd.B, rd.IsCulled, rd.HasNegativeNormal)}, nil
+	} else if rd.A.Y == rd.B.Y {
 		// lies on XZ Plane
-		return &Rectangle{newXZRectangle(data.A, data.B, data.IsCulled, data.HasNegativeNormal)}, nil
-	} else if data.A.Z == data.B.Z {
+		return &rectangle{newXZRectangle(rd.A, rd.B, rd.IsCulled, rd.HasNegativeNormal)}, nil
+	} else if rd.A.Z == rd.B.Z {
 		// lies on XY Plane
-		return &Rectangle{newXYRectangle(data.A, data.B, data.IsCulled, data.HasNegativeNormal)}, nil
+		return &rectangle{newXYRectangle(rd.A, rd.B, rd.IsCulled, rd.HasNegativeNormal)}, nil
 	}
 	return nil, fmt.Errorf("Points do not lie on on axis-aligned plane")
 }
 
-func (r *Rectangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+func EmptyRectangle() *rectangle {
+	return &rectangle{}
+}
+
+func (r *rectangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	return r.axisAlignedRectangle.Intersection(ray, tMin, tMax)
 }
 
-func (r *Rectangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
+func (r *rectangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return r.axisAlignedRectangle.BoundingBox(t0, t1)
 }
 
-func (r *Rectangle) SetMaterial(m material.Material) {
+func (r *rectangle) SetMaterial(m material.Material) {
 	r.axisAlignedRectangle.SetMaterial(m)
 }
 
-func (r *Rectangle) Copy() primitive.Primitive {
+func (r *rectangle) Copy() primitive.Primitive {
 	newR := *r
 	return &newR
 }
 
-func BasicRectangle(xOffset, yOffset, zOffset float64) *Rectangle {
+func BasicRectangle(xOffset, yOffset, zOffset float64) *rectangle {
 	rd := RectangleData{
 		A: &geometry.Point{
 			X: 0.0 + xOffset,

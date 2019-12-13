@@ -1,4 +1,4 @@
-package primitive
+package triangle
 
 import (
 	"fluorescence/geometry"
@@ -7,30 +7,8 @@ import (
 
 var triHit bool
 
-func basicTriangle(xOffset, yOffset, zOffset float64) *Triangle {
-	return &Triangle{
-		A: &geometry.Point{
-			X: 0.0 + xOffset,
-			Y: 0.0 + yOffset,
-			Z: 0.0 + zOffset,
-		},
-		B: &geometry.Point{
-			X: 1.0 + xOffset,
-			Y: 0.0 + yOffset,
-			Z: 0.0 + zOffset,
-		},
-		C: &geometry.Point{
-			X: 0.0 + xOffset,
-			Y: 1.0 + yOffset,
-			Z: 0.0 + zOffset,
-		},
-		IntersectEpsilon: 0.0000001,
-		Material:         nil,
-	}
-}
-
 func TestTriangleIntersectionHit(t *testing.T) {
-	tri := basicTriangle(0.0, 0.0, 0.0)
+	tri := BasicTriangle(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
 			X: 0.1,
@@ -50,7 +28,7 @@ func TestTriangleIntersectionHit(t *testing.T) {
 }
 
 func BenchmarkTriangleIntersectionHit(b *testing.B) {
-	tri := basicTriangle(0.0, 0.0, 0.0)
+	tri := BasicTriangle(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
 			X: 0.1,
@@ -72,7 +50,7 @@ func BenchmarkTriangleIntersectionHit(b *testing.B) {
 }
 
 func TestTriangleIntersectionMiss(t *testing.T) {
-	tri := basicTriangle(0.0, 0.0, 0.0)
+	tri := BasicTriangle(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
 			X: 0.9,
@@ -92,7 +70,7 @@ func TestTriangleIntersectionMiss(t *testing.T) {
 }
 
 func BenchmarkTriangleIntersectionMiss(b *testing.B) {
-	tri := basicTriangle(0.0, 0.0, 0.0)
+	tri := BasicTriangle(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
 			X: 0.9,

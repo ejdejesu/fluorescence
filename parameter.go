@@ -3,6 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fluorescence/geometry/primitive"
+	"fluorescence/geometry/primitive/bvh"
+	"fluorescence/geometry/primitive/primitivelist"
+	"fluorescence/geometry/primitive/rectangle"
+	"fluorescence/geometry/primitive/sphere"
+	"fluorescence/geometry/primitive/triangle"
 	"fluorescence/shading"
 	"fluorescence/shading/material"
 	"fmt"
@@ -84,7 +89,7 @@ func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materials
 		return nil, err
 	}
 
-	sceneObjects := &primitive.PrimitiveList{}
+	sceneObjects := &primitivelist.PrimitiveList{}
 	for _, om := range parameters.Scene.ObjectMaterials {
 		selectedObject, exists := totalObjects[om.ObjectName]
 		if !exists {
@@ -95,8 +100,8 @@ func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materials
 			return nil, fmt.Errorf("Selected Material (%s) not in %s", om.MaterialName, materialsFileName)
 		}
 		if reflect.TypeOf(selectedMaterial) == reflect.TypeOf(&material.Dielectric{}) &&
-			(reflect.TypeOf(selectedObject) == reflect.TypeOf(&primitive.Triangle{}) ||
-				reflect.TypeOf(selectedObject) == reflect.TypeOf(&primitive.Rectangle{})) {
+			(reflect.TypeOf(selectedObject) == reflect.TypeOf(&triangle.Triangle{}) ||
+				reflect.TypeOf(selectedObject) == reflect.TypeOf(&rectangle.Rectangle{})) {
 			return nil, fmt.Errorf("Cannot attach refractive or volumetric materials (%s) to non-closed geometry (%s)",
 				om.MaterialName, om.ObjectName)
 		}
@@ -106,7 +111,7 @@ func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materials
 	}
 
 	if parameters.UseBVH {
-		sceneBVH, err := primitive.NewBVH(sceneObjects)
+		sceneBVH, err := bvh.NewBVH(sceneObjects)
 		if err != nil {
 			return nil, err
 		}
@@ -149,7 +154,7 @@ func loadObjects(fileName string) (map[string]primitive.Primitive, error) {
 	for _, o := range objectsData {
 		switch o.TypeName {
 		case "Sphere":
-			var s primitive.Sphere
+			var s sphere.Sphere
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
@@ -157,7 +162,7 @@ func loadObjects(fileName string) (map[string]primitive.Primitive, error) {
 			json.Unmarshal(dataBytes, &s)
 			objectsMap[o.Name] = &s
 		case "Triangle":
-			var t primitive.Triangle
+			var t triangle.Triangle
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
@@ -165,13 +170,13 @@ func loadObjects(fileName string) (map[string]primitive.Primitive, error) {
 			json.Unmarshal(dataBytes, &t)
 			objectsMap[o.Name] = &t
 		case "Rectangle":
-			var rd primitive.RectangleData
+			var rd rectangle.RectangleData
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
 			}
 			json.Unmarshal(dataBytes, &rd)
-			r, err := primitive.NewRectangle(&rd)
+			r, err := rectangle.NewRectangle(&rd)
 			if err != nil {
 				return nil, err
 			}

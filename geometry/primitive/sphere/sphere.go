@@ -1,7 +1,9 @@
-package primitive
+package sphere
 
 import (
 	"fluorescence/geometry"
+	"fluorescence/geometry/primitive"
+	"fluorescence/geometry/primitive/aabb"
 	"fluorescence/shading/material"
 	"math"
 )
@@ -49,8 +51,8 @@ func (s *Sphere) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.
 	return nil, false
 }
 
-func (s *Sphere) BoundingBox(t0, t1 float64) (*AABB, bool) {
-	return &AABB{
+func (s *Sphere) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
+	return &aabb.AABB{
 		A: s.Center.SubVector(&geometry.Vector{
 			X: s.Radius + 0.0000001,
 			Y: s.Radius + 0.0000001,
@@ -68,11 +70,23 @@ func (s *Sphere) SetMaterial(m material.Material) {
 	s.Material = m
 }
 
-func (s *Sphere) Copy() Primitive {
+func (s *Sphere) Copy() primitive.Primitive {
 	newS := *s
 	return &newS
 }
 
 func (s *Sphere) normalAt(p *geometry.Point) *geometry.Vector {
 	return s.Center.To(p).Unit()
+}
+
+func BasicSphere(xOffset, yOffset, zOffset float64) *Sphere {
+	return &Sphere{
+		Center: &geometry.Point{
+			X: 0.0 + xOffset,
+			Y: 0.0 + yOffset,
+			Z: 0.0 + zOffset,
+		},
+		Radius:   0.5,
+		Material: nil,
+	}
 }

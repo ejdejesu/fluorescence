@@ -1,13 +1,15 @@
-package primitive
+package rectangle
 
 import (
 	"fluorescence/geometry"
+	"fluorescence/geometry/primitive"
+	"fluorescence/geometry/primitive/aabb"
 	"fluorescence/shading/material"
 	"fmt"
 )
 
 type Rectangle struct {
-	axisAlignedRectangle Primitive
+	axisAlignedRectangle primitive.Primitive
 }
 
 type RectangleData struct {
@@ -35,7 +37,7 @@ func (r *Rectangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*materi
 	return r.axisAlignedRectangle.Intersection(ray, tMin, tMax)
 }
 
-func (r *Rectangle) BoundingBox(t0, t1 float64) (*AABB, bool) {
+func (r *Rectangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return r.axisAlignedRectangle.BoundingBox(t0, t1)
 }
 
@@ -43,7 +45,24 @@ func (r *Rectangle) SetMaterial(m material.Material) {
 	r.axisAlignedRectangle.SetMaterial(m)
 }
 
-func (r *Rectangle) Copy() Primitive {
+func (r *Rectangle) Copy() primitive.Primitive {
 	newR := *r
 	return &newR
+}
+
+func BasicRectangle(xOffset, yOffset, zOffset float64) *Rectangle {
+	rd := RectangleData{
+		A: &geometry.Point{
+			X: 0.0 + xOffset,
+			Y: 0.0 + yOffset,
+			Z: 0.0 + zOffset,
+		},
+		B: &geometry.Point{
+			X: 1.0 + xOffset,
+			Y: 1.0 + yOffset,
+			Z: 0.0 + zOffset,
+		},
+	}
+	r, _ := NewRectangle(&rd)
+	return r
 }

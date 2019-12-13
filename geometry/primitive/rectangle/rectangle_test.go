@@ -1,4 +1,4 @@
-package primitive
+package rectangle
 
 import (
 	"fluorescence/geometry"
@@ -7,25 +7,8 @@ import (
 
 var rectHit bool
 
-func basicRectangle(xOffset, yOffset, zOffset float64) *Rectangle {
-	rd := RectangleData{
-		A: &geometry.Point{
-			X: 0.0 + xOffset,
-			Y: 0.0 + yOffset,
-			Z: 0.0 + zOffset,
-		},
-		B: &geometry.Point{
-			X: 1.0 + xOffset,
-			Y: 1.0 + yOffset,
-			Z: 0.0 + zOffset,
-		},
-	}
-	r, _ := NewRectangle(&rd)
-	return r
-}
-
 func TestRectangleIntersectionHit(t *testing.T) {
-	rect := basicRectangle(0.0, 0.0, 0.0)
+	rect := BasicRectangle(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
 			X: 0.5,
@@ -45,7 +28,7 @@ func TestRectangleIntersectionHit(t *testing.T) {
 }
 
 func BenchmarkRectangleIntersectionHit(b *testing.B) {
-	rect := basicRectangle(0.0, 0.0, 0.0)
+	rect := BasicRectangle(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
 			X: 0.5,
@@ -67,7 +50,7 @@ func BenchmarkRectangleIntersectionHit(b *testing.B) {
 }
 
 func TestRectangleIntersectionMiss(t *testing.T) {
-	rect := basicRectangle(0.0, 0.0, 0.0)
+	rect := BasicRectangle(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
 			X: 1.5,
@@ -87,7 +70,7 @@ func TestRectangleIntersectionMiss(t *testing.T) {
 }
 
 func BenchmarkRectangleIntersectionMiss(b *testing.B) {
-	rect := basicRectangle(0.0, 0.0, 0.0)
+	rect := BasicRectangle(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
 			X: 1.5,

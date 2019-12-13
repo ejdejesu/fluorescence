@@ -1,7 +1,9 @@
-package primitive
+package triangle
 
 import (
 	"fluorescence/geometry"
+	"fluorescence/geometry/primitive"
+	"fluorescence/geometry/primitive/aabb"
 	"fluorescence/shading/material"
 	"math"
 )
@@ -47,8 +49,8 @@ func (t *Triangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*materia
 	return nil, false
 }
 
-func (t *Triangle) BoundingBox(t0, t1 float64) (*AABB, bool) {
-	return &AABB{
+func (t *Triangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
+	return &aabb.AABB{
 		A: &geometry.Point{
 			X: math.Min(math.Min(t.A.X, t.B.X), t.C.X) - 0.0000001,
 			Y: math.Min(math.Min(t.A.Y, t.B.Y), t.C.Y) - 0.0000001,
@@ -66,11 +68,33 @@ func (t *Triangle) SetMaterial(m material.Material) {
 	t.Material = m
 }
 
-func (t *Triangle) Copy() Primitive {
+func (t *Triangle) Copy() primitive.Primitive {
 	newT := *t
 	return &newT
 }
 
 func (t *Triangle) normal() *geometry.Vector {
 	return t.A.To(t.B).CrossInPlace(t.A.To(t.C)).UnitInPlace()
+}
+
+func BasicTriangle(xOffset, yOffset, zOffset float64) *Triangle {
+	return &Triangle{
+		A: &geometry.Point{
+			X: 0.0 + xOffset,
+			Y: 0.0 + yOffset,
+			Z: 0.0 + zOffset,
+		},
+		B: &geometry.Point{
+			X: 1.0 + xOffset,
+			Y: 0.0 + yOffset,
+			Z: 0.0 + zOffset,
+		},
+		C: &geometry.Point{
+			X: 0.0 + xOffset,
+			Y: 1.0 + yOffset,
+			Z: 0.0 + zOffset,
+		},
+		IntersectEpsilon: 0.0000001,
+		Material:         nil,
+	}
 }

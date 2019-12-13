@@ -1,13 +1,15 @@
-package primitive
+package primitivelist
 
 import (
 	"fluorescence/geometry"
+	"fluorescence/geometry/primitive"
+	"fluorescence/geometry/primitive/aabb"
 	"fluorescence/shading/material"
 	"math"
 )
 
 type PrimitiveList struct {
-	List []Primitive
+	List []primitive.Primitive
 }
 
 type ByXPos PrimitiveList
@@ -74,7 +76,7 @@ func (pl *PrimitiveList) Intersection(ray *geometry.Ray, tMin, tMax float64) (*m
 	return nil, false
 }
 
-func (pl *PrimitiveList) BoundingBox(t0, t1 float64) (*AABB, bool) {
+func (pl *PrimitiveList) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	box, ok := pl.List[0].BoundingBox(t0, t1)
 	if !ok {
 		return nil, false
@@ -84,7 +86,7 @@ func (pl *PrimitiveList) BoundingBox(t0, t1 float64) (*AABB, bool) {
 		if !ok {
 			return nil, false
 		}
-		box = SurroundingBox(box, newBox)
+		box = aabb.SurroundingBox(box, newBox)
 	}
 	return box, true
 }
@@ -95,7 +97,7 @@ func (pl *PrimitiveList) SetMaterial(m material.Material) {
 	}
 }
 
-func (pl *PrimitiveList) Copy() Primitive {
+func (pl *PrimitiveList) Copy() primitive.Primitive {
 	newPL := &PrimitiveList{}
 	for _, p := range pl.List {
 		newPL.List = append(newPL.List, p.Copy())

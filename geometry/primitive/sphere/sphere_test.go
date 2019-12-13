@@ -1,4 +1,4 @@
-package primitive
+package sphere
 
 import (
 	"fluorescence/geometry"
@@ -7,20 +7,8 @@ import (
 
 var sphereHit bool
 
-func basicSphere(xOffset, yOffset, zOffset float64) *Sphere {
-	return &Sphere{
-		Center: &geometry.Point{
-			X: 0.0 + xOffset,
-			Y: 0.0 + yOffset,
-			Z: 0.0 + zOffset,
-		},
-		Radius:   0.5,
-		Material: nil,
-	}
-}
-
 func TestSphereIntersectionHit(t *testing.T) {
-	sphere := basicSphere(0.0, 0.0, 0.0)
+	sphere := BasicSphere(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
 			X: 0.0,
@@ -40,7 +28,7 @@ func TestSphereIntersectionHit(t *testing.T) {
 }
 
 func BenchmarkSphereIntersectionHit(b *testing.B) {
-	sphere := basicSphere(0.0, 0.0, 0.0)
+	sphere := BasicSphere(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
 			X: 0.0,
@@ -62,7 +50,7 @@ func BenchmarkSphereIntersectionHit(b *testing.B) {
 }
 
 func TestSphereIntersectionMiss(t *testing.T) {
-	sphere := basicSphere(0.0, 0.0, 0.0)
+	sphere := BasicSphere(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
 			X: 1.0,
@@ -82,7 +70,7 @@ func TestSphereIntersectionMiss(t *testing.T) {
 }
 
 func BenchmarkSphereIntersectionMiss(b *testing.B) {
-	sphere := basicSphere(0.0, 0.0, 0.0)
+	sphere := BasicSphere(0.0, 0.0, 0.0)
 	r := &geometry.Ray{
 		Origin: &geometry.Point{
 			X: 1.0,

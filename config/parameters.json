@@ -1,6 +1,6 @@
 {
-    "image_width": 1000,
-    "image_height": 1000,
+    "image_width": 500,
+    "image_height": 500,
     "file_type": "png",
     "file_directory": "./output/",
     "file_name": "0.5",
@@ -23,26 +23,14 @@
         "objects": [
             {
                 "object_name": "large_center_sphere",
-                "material_name": "diamond"
-            },
-            {
-                "object_name": "center_sphere",
-                "material_name": "real_mirror"
-            },
-            {
-                "object_name": "bottom_rectangle",
-                "material_name": "white_diffuse"
+                "material_name": "glass"
             },
             {
                 "object_name": "top_rectangle",
                 "material_name": "white_diffuse"
             },
             {
-                "object_name": "right_rectangle",
-                "material_name": "green_diffuse"
-            },
-            {
-                "object_name": "far_rectangle",
+                "object_name": "bottom_rectangle",
                 "material_name": "white_diffuse"
             },
             {
@@ -50,7 +38,15 @@
                 "material_name": "red_diffuse"
             },
             {
+                "object_name": "right_rectangle",
+                "material_name": "green_diffuse"
+            },
+            {
                 "object_name": "near_rectangle",
+                "material_name": "white_diffuse"
+            },
+            {
+                "object_name": "far_rectangle",
                 "material_name": "white_diffuse"
             },
             {

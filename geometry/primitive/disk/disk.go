@@ -121,7 +121,7 @@ func BasicDisk(xOffset, yOffset, zOffset float64) *disk {
 			Y: 0.0 + yOffset,
 			Z: -1.0 + zOffset,
 		},
-		Radius: 0.5,
+		Radius: 1.0,
 	}
 	d, _ := NewDisk(&dd)
 	return d

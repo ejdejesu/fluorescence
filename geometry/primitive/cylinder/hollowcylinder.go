@@ -97,3 +97,22 @@ func (hc *hollowCylinder) Copy() primitive.Primitive {
 	newHC := *hc
 	return &newHC
 }
+
+func BasicHollowCylinder(xOffset, yOffset, zOffset float64) *hollowCylinder {
+	hcd := HollowCylinderData{
+		A: &geometry.Point{
+			X: 0.0 + xOffset,
+			Y: 0.0 + yOffset,
+			Z: 0.0 + zOffset,
+		},
+		B: &geometry.Point{
+			X: 0.0 + xOffset,
+			Y: 1.0 + yOffset,
+			Z: 0.0 + zOffset,
+		},
+		InnerRadius: 0.5,
+		OuterRadius: 1.0,
+	}
+	hc, _ := NewHollowCylinder(&hcd)
+	return hc
+}

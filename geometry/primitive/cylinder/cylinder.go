@@ -84,3 +84,21 @@ func (c *cylinder) Copy() primitive.Primitive {
 	newC := *c
 	return &newC
 }
+
+func BasicCylinder(xOffset, yOffset, zOffset float64) *cylinder {
+	cd := CylinderData{
+		A: &geometry.Point{
+			X: 0.0 + xOffset,
+			Y: 0.0 + yOffset,
+			Z: 0.0 + zOffset,
+		},
+		B: &geometry.Point{
+			X: 0.0 + xOffset,
+			Y: 1.0 + yOffset,
+			Z: 0.0 + zOffset,
+		},
+		Radius: 1.0,
+	}
+	c, _ := NewCylinder(&cd)
+	return c
+}

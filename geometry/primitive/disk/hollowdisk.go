@@ -125,3 +125,22 @@ func (hd *hollowDisk) Copy() primitive.Primitive {
 	newHD := *hd
 	return &newHD
 }
+
+func BasicHollowDisk(xOffset, yOffset, zOffset float64) *hollowDisk {
+	hdd := HollowDiskData{
+		Center: &geometry.Point{
+			X: 0.0 + xOffset,
+			Y: 0.0 + yOffset,
+			Z: 0.0 + zOffset,
+		},
+		Normal: &geometry.Vector{
+			X: 0.0 + xOffset,
+			Y: 0.0 + yOffset,
+			Z: -1.0 + zOffset,
+		},
+		InnerRadius: 0.5,
+		OuterRadius: 1.0,
+	}
+	hd, _ := NewHollowDisk(&hdd)
+	return hd
+}

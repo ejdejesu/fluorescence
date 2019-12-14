@@ -107,7 +107,7 @@ func (s *sphere) normalAt(p *geometry.Point) *geometry.Vector {
 	return s.Center.To(p).Unit()
 }
 
-func Basicsphere(xOffset, yOffset, zOffset float64) *sphere {
+func BasicSphere(xOffset, yOffset, zOffset float64) *sphere {
 	return &sphere{
 		Center: &geometry.Point{
 			X: 0.0 + xOffset,

@@ -110,3 +110,23 @@ func (ic *infiniteCylinder) normalAt(p *geometry.Point) *geometry.Vector {
 	}
 	return ic.ray.ClosestPoint(p).To(p).UnitInPlace()
 }
+
+func BasicInfiniteCylinder(xOffset, yOffset, zOffset float64) *infiniteCylinder {
+	icd := InfiniteCylinderData{
+		Ray: &geometry.Ray{
+			Origin: &geometry.Point{
+				X: 0.0 + xOffset,
+				Y: 0.0 + yOffset,
+				Z: 0.0 + zOffset,
+			},
+			Direction: &geometry.Vector{
+				X: 0.0 + xOffset,
+				Y: 1.0 + yOffset,
+				Z: 0.0 + zOffset,
+			},
+		},
+		Radius: 1.0,
+	}
+	ic, _ := NewInfiniteCylinder(&icd)
+	return ic
+}

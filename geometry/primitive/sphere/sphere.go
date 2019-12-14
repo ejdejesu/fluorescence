@@ -10,9 +10,9 @@ import (
 )
 
 type sphere struct {
-	Center   *geometry.Point
-	Radius   float64
-	Material material.Material
+	Center *geometry.Point
+	Radius float64
+	mat    material.Material
 }
 
 type SphereData struct {
@@ -33,10 +33,6 @@ func NewSphere(sd *SphereData) (*sphere, error) {
 	}, nil
 }
 
-func EmptySphere() *sphere {
-	return &sphere{}
-}
-
 func (s *sphere) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	centerToRayOrigin := s.Center.To(ray.Origin)
 
@@ -48,25 +44,26 @@ func (s *sphere) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.
 	preDiscriminant := b*b - a*c
 
 	if preDiscriminant > 0 {
+		root := math.Sqrt(preDiscriminant)
 		// evaluate first solution, which will be smaller
-		t1 := (-b - math.Sqrt(preDiscriminant)) / a
+		t1 := (-b - root) / a
 		// return if within range
 		if t1 >= tMin && t1 <= tMax {
 			return &material.RayHit{
 				Ray:         ray,
 				NormalAtHit: s.normalAt(ray.PointAt(t1)),
 				T:           t1,
-				Material:    s.Material,
+				Material:    s.mat,
 			}, true
 		}
 		// evaluate and return second solution if in range
-		t2 := (-b + math.Sqrt(preDiscriminant)) / a
+		t2 := (-b + root) / a
 		if t2 >= tMin && t2 <= tMax {
 			return &material.RayHit{
 				Ray:         ray,
 				NormalAtHit: s.normalAt(ray.PointAt(t2)),
 				T:           t2,
-				Material:    s.Material,
+				Material:    s.mat,
 			}, true
 		}
 	}
@@ -90,7 +87,15 @@ func (s *sphere) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 }
 
 func (s *sphere) SetMaterial(m material.Material) {
-	s.Material = m
+	s.mat = m
+}
+
+func (s *sphere) IsInfinite() bool {
+	return false
+}
+
+func (s *sphere) IsClosed() bool {
+	return true
 }
 
 func (s *sphere) Copy() primitive.Primitive {
@@ -109,7 +114,7 @@ func Basicsphere(xOffset, yOffset, zOffset float64) *sphere {
 			Y: 0.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		Radius:   0.5,
-		Material: nil,
+		Radius: 0.5,
+		mat:    nil,
 	}
 }

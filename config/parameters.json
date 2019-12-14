@@ -21,6 +21,30 @@
         "camera_name": "main",
         "objects": [
             {
+                "object_name": "light_center_rectangle",
+                "material_name": "white_light_full"
+            },
+            {
+                "object_name": "target_inner_cylinder",
+                "material_name": "red_glow"
+            },
+            {
+                "object_name": "target_outer_cylinder",
+                "material_name": "red_glow"
+            },
+            {
+                "object_name": "near_left_cylinder",
+                "material_name": "water"
+            },
+            {
+                "object_name": "center_cylinder",
+                "material_name": "glass"
+            },
+            {
+                "object_name": "far_right_cylinder",
+                "material_name": "diamond"
+            },
+            {
                 "object_name": "top_rectangle",
                 "material_name": "white_diffuse"
             },
@@ -43,22 +67,6 @@
             {
                 "object_name": "far_rectangle",
                 "material_name": "white_diffuse"
-            },
-            {
-                "object_name": "large_floor_hollow_disk",
-                "material_name": "red_light_full"
-            },
-            {
-                "object_name": "medium_floor_hollow_disk",
-                "material_name": "green_light_full"
-            },
-            {
-                "object_name": "small_floor_hollow_disk",
-                "material_name": "blue_light_full"
-            },
-            {
-                "object_name": "large_center_sphere",
-                "material_name": "glass"
             }
         ]
     }

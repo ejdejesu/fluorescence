@@ -12,10 +12,10 @@ import (
 )
 
 type bvh struct {
-	Left   primitive.Primitive
-	Right  primitive.Primitive
-	single bool
-	box    *aabb.AABB
+	Left     primitive.Primitive
+	Right    primitive.Primitive
+	isSingle bool
+	box      *aabb.AABB
 }
 
 func NewBVH(pl *primitivelist.PrimitiveList) (*bvh, error) {
@@ -40,7 +40,7 @@ func NewBVH(pl *primitivelist.PrimitiveList) (*bvh, error) {
 	// fill children
 	if len(pl.List) == 1 {
 		newBVH.Left = pl.List[0]
-		newBVH.single = true
+		newBVH.isSingle = true
 	} else if len(pl.List) == 2 {
 		newBVH.Left = pl.List[0]
 		newBVH.Right = pl.List[1]
@@ -58,7 +58,7 @@ func NewBVH(pl *primitivelist.PrimitiveList) (*bvh, error) {
 	}
 	// est. box
 	leftBox, leftOk := newBVH.Left.BoundingBox(0, 0)
-	if newBVH.single {
+	if newBVH.isSingle {
 		if !leftOk {
 			return nil, fmt.Errorf("no bounding box for some leaf of BVH")
 		}
@@ -77,7 +77,7 @@ func (b *bvh) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.Ray
 	hitBox := b.box.Intersection(ray, tMin, tMax)
 	if hitBox {
 		leftRayHit, doesHitLeft := b.Left.Intersection(ray, tMin, tMax)
-		if b.single {
+		if b.isSingle {
 			if doesHitLeft {
 				return leftRayHit, true
 			}
@@ -105,7 +105,23 @@ func (b *bvh) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 
 func (b *bvh) SetMaterial(m material.Material) {
 	b.Left.SetMaterial(m)
-	b.Right.SetMaterial(m)
+	if !b.isSingle {
+		b.Right.SetMaterial(m)
+	}
+}
+
+func (b *bvh) IsInfinite() bool {
+	if b.isSingle {
+		return b.Left.IsInfinite()
+	}
+	return b.Left.IsInfinite() || b.Right.IsInfinite()
+}
+
+func (b *bvh) IsClosed() bool {
+	if b.isSingle {
+		return b.Left.IsClosed()
+	}
+	return b.Left.IsClosed() && b.Right.IsClosed()
 }
 
 func (b *bvh) Copy() primitive.Primitive {

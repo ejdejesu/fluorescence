@@ -1,4 +1,4 @@
-package hollowdisk
+package disk
 
 import (
 	"fluorescence/geometry"
@@ -17,7 +17,7 @@ type hollowDisk struct {
 	isCulled           bool
 	innerRadiusSquared float64
 	outerRadiusSquared float64
-	Material           material.Material
+	mat                material.Material
 }
 
 type HollowDiskData struct {
@@ -55,10 +55,6 @@ func NewHollowDisk(hdd *HollowDiskData) (*hollowDisk, error) {
 	}, nil
 }
 
-func EmptyHollowDisk() *hollowDisk {
-	return &hollowDisk{}
-}
-
 func (hd *hollowDisk) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	denominator := ray.Direction.Dot(hd.normal)
 	if hd.isCulled && denominator > -1e-7 {
@@ -91,7 +87,7 @@ func (hd *hollowDisk) Intersection(ray *geometry.Ray, tMin, tMax float64) (*mate
 		Ray:         ray,
 		NormalAtHit: hd.normal,
 		T:           t,
-		Material:    hd.Material,
+		Material:    hd.mat,
 	}, true
 }
 
@@ -114,7 +110,15 @@ func (hd *hollowDisk) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 }
 
 func (hd *hollowDisk) SetMaterial(m material.Material) {
-	hd.Material = m
+	hd.mat = m
+}
+
+func (hd *hollowDisk) IsInfinite() bool {
+	return false
+}
+
+func (hd *hollowDisk) IsClosed() bool {
+	return false
 }
 
 func (hd *hollowDisk) Copy() primitive.Primitive {

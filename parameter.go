@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fluorescence/geometry/primitive"
 	"fluorescence/geometry/primitive/bvh"
+	"fluorescence/geometry/primitive/cylinder"
 	"fluorescence/geometry/primitive/disk"
-	"fluorescence/geometry/primitive/hollowdisk"
 	"fluorescence/geometry/primitive/plane"
 	"fluorescence/geometry/primitive/primitivelist"
 	"fluorescence/geometry/primitive/rectangle"
@@ -104,28 +104,17 @@ func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materials
 			return nil, fmt.Errorf("Selected Material (%s) not in %s", om.MaterialName, materialsFileName)
 		}
 		if reflect.TypeOf(selectedMaterial) == reflect.TypeOf(&material.Dielectric{}) {
-			objectType := reflect.TypeOf(selectedObject)
-			triangleType := reflect.TypeOf(triangle.EmptyTriangle())
-			rectangleType := reflect.TypeOf(rectangle.EmptyRectangle())
-			planeType := reflect.TypeOf(plane.EmptyPlane())
-			diskType := reflect.TypeOf(disk.EmptyDisk())
-			hollowDiskType := reflect.TypeOf(hollowdisk.EmptyHollowDisk())
-			if objectType == triangleType ||
-				objectType == rectangleType ||
-				objectType == planeType ||
-				objectType == diskType ||
-				objectType == hollowDiskType {
+			if !selectedObject.IsClosed() {
 				return nil, fmt.Errorf("Cannot attach refractive or volumetric materials (%s) to non-closed geometry (%s)",
 					om.MaterialName, om.ObjectName)
 			}
 		}
 		newPrimitive := selectedObject.Copy()
 		newPrimitive.SetMaterial(selectedMaterial)
-		_, isBounded := newPrimitive.BoundingBox(0, 0)
-		if isBounded {
-			boundedSceneObjects.List = append(boundedSceneObjects.List, newPrimitive)
-		} else {
+		if newPrimitive.IsInfinite() {
 			unboundedSceneObjects.List = append(unboundedSceneObjects.List, newPrimitive)
+		} else {
+			boundedSceneObjects.List = append(boundedSceneObjects.List, newPrimitive)
 		}
 	}
 
@@ -181,6 +170,54 @@ func loadObjects(fileName string) (map[string]primitive.Primitive, error) {
 	objectsMap := map[string]primitive.Primitive{}
 	for _, o := range objectsData {
 		switch o.TypeName {
+		case "Cylinder":
+			var cd cylinder.CylinderData
+			dataBytes, err := json.Marshal(o.Data)
+			if err != nil {
+				return nil, err
+			}
+			json.Unmarshal(dataBytes, &cd)
+			newCylinder, err := cylinder.NewCylinder(&cd)
+			if err != nil {
+				return nil, err
+			}
+			objectsMap[o.Name] = newCylinder
+		case "HollowCylinder":
+			var hcd cylinder.HollowCylinderData
+			dataBytes, err := json.Marshal(o.Data)
+			if err != nil {
+				return nil, err
+			}
+			json.Unmarshal(dataBytes, &hcd)
+			newHollowCylinder, err := cylinder.NewHollowCylinder(&hcd)
+			if err != nil {
+				return nil, err
+			}
+			objectsMap[o.Name] = newHollowCylinder
+		case "InfiniteCylinder":
+			var icd cylinder.InfiniteCylinderData
+			dataBytes, err := json.Marshal(o.Data)
+			if err != nil {
+				return nil, err
+			}
+			json.Unmarshal(dataBytes, &icd)
+			newInfiniteCylinder, err := cylinder.NewInfiniteCylinder(&icd)
+			if err != nil {
+				return nil, err
+			}
+			objectsMap[o.Name] = newInfiniteCylinder
+		case "UncappedCylinder":
+			var ucd cylinder.UncappedCylinderData
+			dataBytes, err := json.Marshal(o.Data)
+			if err != nil {
+				return nil, err
+			}
+			json.Unmarshal(dataBytes, &ucd)
+			newUncappedCylinder, err := cylinder.NewUncappedCylinder(&ucd)
+			if err != nil {
+				return nil, err
+			}
+			objectsMap[o.Name] = newUncappedCylinder
 		case "Disk":
 			var dd disk.DiskData
 			dataBytes, err := json.Marshal(o.Data)
@@ -194,13 +231,13 @@ func loadObjects(fileName string) (map[string]primitive.Primitive, error) {
 			}
 			objectsMap[o.Name] = newDisk
 		case "HollowDisk":
-			var hdd hollowdisk.HollowDiskData
+			var hdd disk.HollowDiskData
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
 			}
 			json.Unmarshal(dataBytes, &hdd)
-			newHollowDisk, err := hollowdisk.NewHollowDisk(&hdd)
+			newHollowDisk, err := disk.NewHollowDisk(&hdd)
 			if err != nil {
 				return nil, err
 			}

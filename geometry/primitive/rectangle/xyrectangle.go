@@ -16,7 +16,7 @@ type xyRectangle struct {
 	z        float64
 	isCulled bool
 	normal   *geometry.Vector
-	Material material.Material
+	mat      material.Material
 }
 
 func newXYRectangle(a, b *geometry.Point, isCulled, hasNegativeNormal bool) *xyRectangle {
@@ -46,7 +46,10 @@ func newXYRectangle(a, b *geometry.Point, isCulled, hasNegativeNormal bool) *xyR
 
 func (r *xyRectangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	// Ray is coming from behind rectangle
-	if r.isCulled && (ray.Direction.Dot(r.normal)) > 0 {
+	denominator := ray.Direction.Dot(r.normal)
+	if r.isCulled && denominator > -1e-7 {
+		return nil, false
+	} else if denominator < 1e-7 && denominator > -1e-7 {
 		return nil, false
 	}
 
@@ -69,7 +72,7 @@ func (r *xyRectangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*mate
 		return nil, false
 	}
 
-	return &material.RayHit{ray, r.normal, t, r.Material}, true
+	return &material.RayHit{ray, r.normal, t, r.mat}, true
 }
 
 func (r *xyRectangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
@@ -88,7 +91,15 @@ func (r *xyRectangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 }
 
 func (r *xyRectangle) SetMaterial(m material.Material) {
-	r.Material = m
+	r.mat = m
+}
+
+func (r *xyRectangle) IsInfinite() bool {
+	return false
+}
+
+func (r *xyRectangle) IsClosed() bool {
+	return false
 }
 
 func (r *xyRectangle) Copy() primitive.Primitive {

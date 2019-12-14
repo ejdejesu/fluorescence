@@ -58,6 +58,14 @@ func (a ByZPos) Less(i, j int) bool {
 	return box1.A.Z < box2.A.Z
 }
 
+func NewPrimitiveList(primitives ...primitive.Primitive) (*PrimitiveList, error) {
+	primitiveList := &PrimitiveList{}
+	for _, p := range primitives {
+		primitiveList.List = append(primitiveList.List, p)
+	}
+	return primitiveList, nil
+}
+
 func (pl *PrimitiveList) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	var rayHit *material.RayHit
 	minT := math.MaxFloat64
@@ -95,6 +103,24 @@ func (pl *PrimitiveList) SetMaterial(m material.Material) {
 	for _, p := range pl.List {
 		p.SetMaterial(m)
 	}
+}
+
+func (pl *PrimitiveList) IsInfinite() bool {
+	for _, p := range pl.List {
+		if p.IsInfinite() {
+			return true
+		}
+	}
+	return false
+}
+
+func (pl *PrimitiveList) IsClosed() bool {
+	for _, p := range pl.List {
+		if !p.IsClosed() {
+			return false
+		}
+	}
+	return false
 }
 
 func (pl *PrimitiveList) Copy() primitive.Primitive {

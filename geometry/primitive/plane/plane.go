@@ -12,7 +12,7 @@ type plane struct {
 	point    *geometry.Point
 	normal   *geometry.Vector
 	isCulled bool
-	Material material.Material
+	mat      material.Material
 }
 
 type PlaneData struct {
@@ -35,10 +35,6 @@ func NewPlane(pd *PlaneData) (*plane, error) {
 	}, nil
 }
 
-func EmptyPlane() *plane {
-	return &plane{}
-}
-
 func (p *plane) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	denominator := ray.Direction.Dot(p.normal)
 	if p.isCulled && denominator > -1e-7 {
@@ -57,7 +53,7 @@ func (p *plane) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.R
 		Ray:         ray,
 		NormalAtHit: p.normal,
 		T:           t,
-		Material:    p.Material,
+		Material:    p.mat,
 	}, true
 }
 
@@ -66,7 +62,15 @@ func (p *plane) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 }
 
 func (p *plane) SetMaterial(m material.Material) {
-	p.Material = m
+	p.mat = m
+}
+
+func (p *plane) IsInfinite() bool {
+	return true
+}
+
+func (p *plane) IsClosed() bool {
+	return false
 }
 
 func (p *plane) Copy() primitive.Primitive {

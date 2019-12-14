@@ -167,7 +167,7 @@
             "b": {
                 "x": 7.5,
                 "y": 9.9999,
-                "z": 7.5
+                "z": -7.5
             },
             "is_culled": true,
             "has_negative_normal": true
@@ -266,116 +266,89 @@
         }
     },
     {
-        "name": "test_disk",
-        "type": "Disk",
+        "name": "target_inner_cylinder",
+        "type": "Cylinder",
         "data": {
-            "center": {
-                "x": 8.0,
-                "y": 8.0,
-                "z": -8.0
-            },
-            "normal": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": -1.0
-            },
-            "radius": 2.0,
-            "is_culled": false
-        }
-    },
-    {
-        "name": "test_hollow_disk",
-        "type": "HollowDisk",
-        "data": {
-            "center": {
-                "x": 8.0,
-                "y": 8.0,
-                "z": -8.0
-            },
-            "normal": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": -1.0
-            },
-            "inner_radius": 1.0,
-            "outer_radius": 2.0,
-            "is_culled": false
-        }
-    },
-    {
-        "name": "large_floor_hollow_disk",
-        "type": "HollowDisk",
-        "data": {
-            "center": {
+            "a": {
                 "x": 5.0,
-                "y": 0.0001,
-                "z": -5.0
+                "y": 5.0,
+                "z": -10.0
             },
-            "normal": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0
+            "b": {
+                "x": 5.0,
+                "y": 5.0,
+                "z": -9.0
             },
-            "inner_radius": 4.0,
-            "outer_radius": 5.0,
-            "is_culled": true
+            "radius": 1.5
         }
     },
     {
-        "name": "medium_floor_hollow_disk",
-        "type": "HollowDisk",
+        "name": "target_outer_cylinder",
+        "type": "HollowCylinder",
         "data": {
-            "center": {
+            "a": {
                 "x": 5.0,
-                "y": 0.0001,
-                "z": -5.0
+                "y": 5.0,
+                "z": -10.0
             },
-            "normal": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0
+            "b": {
+                "x": 5.0,
+                "y": 5.0,
+                "z": -9.0
             },
             "inner_radius": 3.0,
-            "outer_radius": 4.0,
-            "is_culled": true
+            "outer_radius": 4.5
         }
     },
     {
-        "name": "small_floor_hollow_disk",
-        "type": "HollowDisk",
+        "name": "near_left_cylinder",
+        "type": "Cylinder",
         "data": {
-            "center": {
-                "x": 5.0,
-                "y": 0.0001,
-                "z": -5.0
+            "a": {
+                "x": 2.0,
+                "y": 0.0,
+                "z": -2.0
             },
-            "normal": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0
+            "b": {
+                "x": 2.0,
+                "y": 2.5,
+                "z": -2.0
             },
-            "inner_radius": 2.0,
-            "outer_radius": 3.0,
-            "is_culled": true
+            "radius": 1.5
         }
     },
     {
-        "name": "test_infinite_cylinder",
-        "type": "InfiniteCylinder",
+        "name": "center_cylinder",
+        "type": "Cylinder",
         "data": {
-            "point": {
+            "a": {
                 "x": 5.0,
                 "y": 0.0,
                 "z": -5.0
             },
-            "direction": {
-                "x": 0.5,
-                "y": 1.0,
-                "z": -0.5
+            "b": {
+                "x": 5.0,
+                "y": 5.0,
+                "z": -5.0
             },
-            "radius": 2.0,
-            "is_culled": true,
-            "has_inverted_normals": false
+            "radius": 1.5
+        }
+    },
+    {
+        "name": "far_right_cylinder",
+        "type": "Cylinder",
+        "data": {
+            "a": {
+                "x": 8.0,
+                "y": 0.0,
+                "z": -8.0
+            },
+            "b": {
+                "x": 8.0,
+                "y": 7.5,
+                "z": -8.0
+            },
+            "radius": 1.5
         }
     }
 ]

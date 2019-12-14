@@ -80,14 +80,14 @@ func (d *disk) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	eZ := d.radius * math.Sqrt(1.0-d.normal.Z*d.normal.Z)
 	return &aabb.AABB{
 		A: &geometry.Point{
-			X: d.center.X - eX,
-			Y: d.center.Y - eY,
-			Z: d.center.Z - eZ,
+			X: d.center.X - eX - 1e-7,
+			Y: d.center.Y - eY - 1e-7,
+			Z: d.center.Z - eZ - 1e-7,
 		},
 		B: &geometry.Point{
-			X: d.center.X + eX,
-			Y: d.center.Y + eY,
-			Z: d.center.Z + eZ,
+			X: d.center.X + eX + 1e-7,
+			Y: d.center.Y + eY + 1e-7,
+			Z: d.center.Z + eZ + 1e-7,
 		},
 	}, true
 }

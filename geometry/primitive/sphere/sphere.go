@@ -44,8 +44,9 @@ func (s *sphere) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.
 	preDiscriminant := b*b - a*c
 
 	if preDiscriminant > 0 {
+		root := math.Sqrt(preDiscriminant)
 		// evaluate first solution, which will be smaller
-		t1 := (-b - math.Sqrt(preDiscriminant)) / a
+		t1 := (-b - root) / a
 		// return if within range
 		if t1 >= tMin && t1 <= tMax {
 			return &material.RayHit{
@@ -56,7 +57,7 @@ func (s *sphere) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.
 			}, true
 		}
 		// evaluate and return second solution if in range
-		t2 := (-b + math.Sqrt(preDiscriminant)) / a
+		t2 := (-b + root) / a
 		if t2 >= tMin && t2 <= tMax {
 			return &material.RayHit{
 				Ray:         ray,

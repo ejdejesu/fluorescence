@@ -144,7 +144,7 @@ func colorOf(parameters *Parameters, r *geometry.Ray, rng *rand.Rand, depth int)
 		return backgroundColor
 	}
 	incomingColor := colorOf(parameters, scatteredRay, rng, depth+1)
-	return material.Reflectance().MultVector(incomingColor)
+	return material.Emittance().Add(material.Reflectance().MultVector(incomingColor))
 }
 
 func getImageFile(parameters *Parameters) (*os.File, error) {

@@ -64,6 +64,22 @@
         }
     },
     {
+        "name": "red_glow",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.9,
+                "y": 0.1,
+                "z": 0.1
+            },
+            "e": {
+                "x": 0.5,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
         "name": "green_diffuse",
         "type": "Lambertian",
         "data": {

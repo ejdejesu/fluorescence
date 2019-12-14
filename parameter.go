@@ -170,6 +170,30 @@ func loadObjects(fileName string) (map[string]primitive.Primitive, error) {
 	objectsMap := map[string]primitive.Primitive{}
 	for _, o := range objectsData {
 		switch o.TypeName {
+		case "Cylinder":
+			var cd cylinder.CylinderData
+			dataBytes, err := json.Marshal(o.Data)
+			if err != nil {
+				return nil, err
+			}
+			json.Unmarshal(dataBytes, &cd)
+			newCylinder, err := cylinder.NewCylinder(&cd)
+			if err != nil {
+				return nil, err
+			}
+			objectsMap[o.Name] = newCylinder
+		case "HollowCylinder":
+			var hcd cylinder.HollowCylinderData
+			dataBytes, err := json.Marshal(o.Data)
+			if err != nil {
+				return nil, err
+			}
+			json.Unmarshal(dataBytes, &hcd)
+			newHollowCylinder, err := cylinder.NewHollowCylinder(&hcd)
+			if err != nil {
+				return nil, err
+			}
+			objectsMap[o.Name] = newHollowCylinder
 		case "InfiniteCylinder":
 			var icd cylinder.InfiniteCylinderData
 			dataBytes, err := json.Marshal(o.Data)
@@ -182,6 +206,18 @@ func loadObjects(fileName string) (map[string]primitive.Primitive, error) {
 				return nil, err
 			}
 			objectsMap[o.Name] = newInfiniteCylinder
+		case "UncappedCylinder":
+			var ucd cylinder.UncappedCylinderData
+			dataBytes, err := json.Marshal(o.Data)
+			if err != nil {
+				return nil, err
+			}
+			json.Unmarshal(dataBytes, &ucd)
+			newUncappedCylinder, err := cylinder.NewUncappedCylinder(&ucd)
+			if err != nil {
+				return nil, err
+			}
+			objectsMap[o.Name] = newUncappedCylinder
 		case "Disk":
 			var dd disk.DiskData
 			dataBytes, err := json.Marshal(o.Data)

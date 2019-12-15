@@ -41,9 +41,6 @@ func NewBVH(pl *primitivelist.PrimitiveList) (*bvh, error) {
 	if len(pl.List) == 1 {
 		newBVH.Left = pl.List[0]
 		newBVH.isSingle = true
-	} else if len(pl.List) == 2 {
-		newBVH.Left = pl.List[0]
-		newBVH.Right = pl.List[1]
 	} else {
 		left, err := NewBVH(pl.FirstHalfCopy())
 		if err != nil {

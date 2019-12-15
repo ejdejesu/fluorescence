@@ -11,6 +11,7 @@ import (
 
 type hollowCylinder struct {
 	list *primitivelist.PrimitiveList
+	box  *aabb.AABB
 }
 
 type HollowCylinderData struct {
@@ -68,13 +69,18 @@ func NewHollowCylinder(hcd *HollowCylinderData) (*hollowCylinder, error) {
 	if err != nil {
 		return nil, err
 	}
+	box, _ := primitiveList.BoundingBox(0, 0)
 	return &hollowCylinder{
 		list: primitiveList,
+		box:  box,
 	}, nil
 }
 
 func (hc *hollowCylinder) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
-	return hc.list.Intersection(ray, tMin, tMax)
+	if hc.box.Intersection(ray, tMin, tMax) {
+		return hc.list.Intersection(ray, tMin, tMax)
+	}
+	return nil, false
 }
 
 func (hc *hollowCylinder) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {

@@ -11,6 +11,7 @@ import (
 
 type cylinder struct {
 	list *primitivelist.PrimitiveList
+	box  *aabb.AABB
 }
 
 type CylinderData struct {
@@ -55,13 +56,18 @@ func NewCylinder(cd *CylinderData) (*cylinder, error) {
 	if err != nil {
 		return nil, err
 	}
+	box, _ := primitiveList.BoundingBox(0, 0)
 	return &cylinder{
 		list: primitiveList,
+		box:  box,
 	}, nil
 }
 
 func (c *cylinder) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
-	return c.list.Intersection(ray, tMin, tMax)
+	if c.box.Intersection(ray, tMin, tMax) {
+		return c.list.Intersection(ray, tMin, tMax)
+	}
+	return nil, false
 }
 
 func (c *cylinder) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
@@ -83,4 +89,22 @@ func (c *cylinder) IsClosed() bool {
 func (c *cylinder) Copy() primitive.Primitive {
 	newC := *c
 	return &newC
+}
+
+func BasicCylinder(xOffset, yOffset, zOffset float64) *cylinder {
+	cd := CylinderData{
+		A: &geometry.Point{
+			X: 0.0 + xOffset,
+			Y: 0.0 + yOffset,
+			Z: 0.0 + zOffset,
+		},
+		B: &geometry.Point{
+			X: 0.0 + xOffset,
+			Y: 1.0 + yOffset,
+			Z: 0.0 + zOffset,
+		},
+		Radius: 1.0,
+	}
+	c, _ := NewCylinder(&cd)
+	return c
 }

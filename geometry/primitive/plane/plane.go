@@ -77,3 +77,20 @@ func (p *plane) Copy() primitive.Primitive {
 	newP := *p
 	return &newP
 }
+
+func BasicPlane(xOffset, yOffset, zOffset float64) *plane {
+	pd := PlaneData{
+		Point: &geometry.Point{
+			X: 0.0 + xOffset,
+			Y: 0.0 + yOffset,
+			Z: 0.0 + zOffset,
+		},
+		Normal: &geometry.Vector{
+			X: 0.0 + xOffset,
+			Y: 0.0 + yOffset,
+			Z: -1.0 + zOffset,
+		},
+	}
+	p, _ := NewPlane(&pd)
+	return p
+}

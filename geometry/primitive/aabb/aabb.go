@@ -25,7 +25,82 @@ func SurroundingBox(aabb1, aabb2 *AABB) *AABB {
 	}
 }
 
+// func (aabb *AABB) Intersection(ray *geometry.Ray, t0, t1 float64) bool {
+// 	return aabb.IntersectionNew(ray, t0, t1)
+// 	// return aabb.IntersectionClassic(ray, t0, t1)
+// }
+
 func (aabb *AABB) Intersection(ray *geometry.Ray, t0, t1 float64) bool {
+	var tx0, tx1, ty0, ty1, tz0, tz1 float64
+
+	tMin := t0
+	tMax := t1
+	// compute X
+	inverseDirectionX := 1.0 / ray.Direction.X
+	if inverseDirectionX < 0.0 {
+		// swap
+		tx0 = (aabb.B.X - ray.Origin.X) * inverseDirectionX
+		tx1 = (aabb.A.X - ray.Origin.X) * inverseDirectionX
+	} else {
+		tx0 = (aabb.A.X - ray.Origin.X) * inverseDirectionX
+		tx1 = (aabb.B.X - ray.Origin.X) * inverseDirectionX
+	}
+	if tx0 > tMin {
+		tMin = tx0
+	}
+	if tx1 < tMax {
+		tMax = tx1
+	}
+	if tMax <= tMin {
+		return false
+	}
+
+	// compute Y
+	inverseDirectionY := 1.0 / ray.Direction.Y
+	if inverseDirectionY < 0.0 {
+		// swap
+		ty0 = (aabb.B.Y - ray.Origin.Y) * inverseDirectionY
+		ty1 = (aabb.A.Y - ray.Origin.Y) * inverseDirectionY
+	} else {
+		ty0 = (aabb.A.Y - ray.Origin.Y) * inverseDirectionY
+		ty1 = (aabb.B.Y - ray.Origin.Y) * inverseDirectionY
+
+	}
+	if ty0 > tMin {
+		tMin = ty0
+	}
+	if ty1 < tMax {
+		tMax = ty1
+	}
+	if tMax <= tMin {
+		return false
+	}
+
+	// compute Z
+	inverseDirectionZ := 1.0 / ray.Direction.Z
+	if inverseDirectionZ < 0.0 {
+		// swap
+		tz0 = (aabb.B.Z - ray.Origin.Z) * inverseDirectionZ
+		tz1 = (aabb.A.Z - ray.Origin.Z) * inverseDirectionZ
+	} else {
+		tz0 = (aabb.A.Z - ray.Origin.Z) * inverseDirectionZ
+		tz1 = (aabb.B.Z - ray.Origin.Z) * inverseDirectionZ
+	}
+	if tz0 > tMin {
+		tMin = tz0
+	}
+	if tz1 < tMax {
+		tMax = tz1
+	}
+	if tMax <= tMin {
+		return false
+	}
+
+	// must be a hit!
+	return true
+}
+
+func (aabb *AABB) IntersectionClassic(ray *geometry.Ray, t0, t1 float64) bool {
 	tMin := t0
 	tMax := t1
 	// compute X
@@ -34,9 +109,7 @@ func (aabb *AABB) Intersection(ray *geometry.Ray, t0, t1 float64) bool {
 	tx1 := (aabb.B.X - ray.Origin.X) * inverseDirectionX
 	if inverseDirectionX < 0.0 {
 		// swap
-		temp := tx0
-		tx0 = tx1
-		tx1 = temp
+		tx0, tx1 = tx1, tx0
 	}
 	if tx0 > tMin {
 		tMin = tx0
@@ -54,9 +127,7 @@ func (aabb *AABB) Intersection(ray *geometry.Ray, t0, t1 float64) bool {
 	ty1 := (aabb.B.Y - ray.Origin.Y) * inverseDirectionY
 	if inverseDirectionY < 0.0 {
 		// swap
-		temp := ty0
-		ty0 = ty1
-		ty1 = temp
+		ty0, ty1 = ty1, ty0
 	}
 	if ty0 > tMin {
 		tMin = ty0
@@ -74,9 +145,7 @@ func (aabb *AABB) Intersection(ray *geometry.Ray, t0, t1 float64) bool {
 	tz1 := (aabb.B.Z - ray.Origin.Z) * inverseDirectionZ
 	if inverseDirectionZ < 0.0 {
 		// swap
-		temp := tz0
-		tz0 = tz1
-		tz1 = temp
+		tz0, tz1 = tz1, tz0
 	}
 	if tz0 > tMin {
 		tMin = tz0

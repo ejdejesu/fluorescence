@@ -138,3 +138,21 @@ func (uc *uncappedCylinder) normalAt(p *geometry.Point) *geometry.Vector {
 	}
 	return uc.ray.ClosestPoint(p).To(p).UnitInPlace()
 }
+
+func BasicUncappedCylinder(xOffset, yOffset, zOffset float64) *uncappedCylinder {
+	ucd := UncappedCylinderData{
+		A: &geometry.Point{
+			X: 0.0 + xOffset,
+			Y: 0.0 + yOffset,
+			Z: 0.0 + zOffset,
+		},
+		B: &geometry.Point{
+			X: 0.0 + xOffset,
+			Y: 1.0 + yOffset,
+			Z: 0.0 + zOffset,
+		},
+		Radius: 1.0,
+	}
+	uc, _ := NewUncappedCylinder(&ucd)
+	return uc
+}

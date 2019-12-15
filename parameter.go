@@ -118,6 +118,30 @@ func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materials
 		}
 	}
 
+	// START MANUAL INSERT
+
+	// for x := 0.5; x < 10.0; x++ {
+	// 	for y := 0.5; y < 10.0; y++ {
+	// 		for z := -0.5; z > -10.0; z-- {
+	// 			newSphere, err := sphere.NewSphere(&sphere.SphereData{
+	// 				Center: &geometry.Point{
+	// 					X: x,
+	// 					Y: y,
+	// 					Z: z,
+	// 				},
+	// 				Radius: 0.2,
+	// 			})
+	// 			if err != nil {
+	// 				return nil, err
+	// 			}
+	// 			newSphere.SetMaterial(totalMaterials["glass"])
+	// 			boundedSceneObjects.List = append(boundedSceneObjects.List, newSphere)
+	// 		}
+	// 	}
+	// }
+
+	// END MANUAL INSERT
+
 	if parameters.UseBVH {
 		sceneBVH, err := bvh.NewBVH(boundedSceneObjects)
 		if err != nil {

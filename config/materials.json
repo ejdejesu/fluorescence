@@ -96,6 +96,22 @@
         }
     },
     {
+        "name": "green_glow",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.1,
+                "y": 0.9,
+                "z": 0.1
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.5,
+                "z": 0.0
+            }
+        }
+    },
+    {
         "name": "blue_diffuse",
         "type": "Lambertian",
         "data": {
@@ -108,6 +124,22 @@
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
+            }
+        }
+    },
+    {
+        "name": "blue_glow",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.1,
+                "y": 0.1,
+                "z": 0.9
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.5
             }
         }
     },
@@ -442,6 +474,57 @@
             "r": {
                 "x": 1.0,
                 "y": 1.0,
+                "z": 1.0
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "refractive_index": 1.5
+        }
+    },
+    {
+        "name": "red_glass",
+        "type": "Dielectric",
+        "data": {
+            "r": {
+                "x": 1.0,
+                "y": 0.5,
+                "z": 0.5
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "refractive_index": 1.5
+        }
+    },
+    {
+        "name": "green_glass",
+        "type": "Dielectric",
+        "data": {
+            "r": {
+                "x": 0.5,
+                "y": 1.0,
+                "z": 0.5
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "refractive_index": 1.5
+        }
+    },
+    {
+        "name": "blue_glass",
+        "type": "Dielectric",
+        "data": {
+            "r": {
+                "x": 0.5,
+                "y": 0.5,
                 "z": 1.0
             },
             "e": {

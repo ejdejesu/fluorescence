@@ -156,6 +156,24 @@
         }
     },
     {
+        "name": "far_mirror_rectangle",
+        "type": "Rectangle",
+        "data": {
+            "a": {
+                "x": 0.1,
+                "y": 0.1,
+                "z": -9.9999
+            },
+            "b": {
+                "x": 9.9,
+                "y": 9.9,
+                "z": -9.9999
+            },
+            "is_culled": true,
+            "has_negative_normal": false
+        }
+    },
+    {
         "name": "light_center_rectangle",
         "type": "Rectangle",
         "data": {

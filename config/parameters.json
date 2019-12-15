@@ -1,12 +1,12 @@
 {
-    "image_width": 300,
-    "image_height": 300,
+    "image_width": 3000,
+    "image_height": 3000,
     "file_type": "png",
     "file_directory": "./output/",
     "file_name": "0.5",
     "gamma_correction": 2,
     "generate_new_file": true,
-    "sample_count": 30,
+    "sample_count": 2000,
     "max_bounces": 10,
     "use_bvh": false,
     "background_color": {
@@ -21,28 +21,24 @@
         "camera_name": "main",
         "objects": [
             {
-                "object_name": "light_center_rectangle",
+                "object_name": "target_inner_cylinder",
                 "material_name": "white_light_full"
             },
             {
-                "object_name": "target_inner_cylinder",
-                "material_name": "red_glow"
-            },
-            {
                 "object_name": "target_outer_cylinder",
-                "material_name": "red_glow"
+                "material_name": "white_light_full"
             },
             {
                 "object_name": "near_left_cylinder",
-                "material_name": "water"
+                "material_name": "red_glass"
             },
             {
                 "object_name": "center_cylinder",
-                "material_name": "glass"
+                "material_name": "green_glass"
             },
             {
                 "object_name": "far_right_cylinder",
-                "material_name": "diamond"
+                "material_name": "blue_glass"
             },
             {
                 "object_name": "top_rectangle",
@@ -54,11 +50,11 @@
             },
             {
                 "object_name": "left_rectangle",
-                "material_name": "red_diffuse"
+                "material_name": "red_glow"
             },
             {
                 "object_name": "right_rectangle",
-                "material_name": "green_diffuse"
+                "material_name": "green_glow"
             },
             {
                 "object_name": "near_rectangle",
@@ -67,6 +63,10 @@
             {
                 "object_name": "far_rectangle",
                 "material_name": "white_diffuse"
+            },
+            {
+                "object_name": "far_mirror_rectangle",
+                "material_name": "fuzzy_mirror"
             }
         ]
     }

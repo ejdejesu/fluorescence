@@ -1,12 +1,12 @@
 {
-    "image_width": 3000,
-    "image_height": 3000,
+    "image_width": 500,
+    "image_height": 500,
     "file_type": "png",
     "file_directory": "./output/",
     "file_name": "0.5",
     "gamma_correction": 2,
     "generate_new_file": true,
-    "sample_count": 2000,
+    "sample_count": 50,
     "max_bounces": 10,
     "use_bvh": false,
     "background_color": {
@@ -21,24 +21,8 @@
         "camera_name": "main",
         "objects": [
             {
-                "object_name": "target_inner_cylinder",
+                "object_name": "light_center_rectangle",
                 "material_name": "white_light_full"
-            },
-            {
-                "object_name": "target_outer_cylinder",
-                "material_name": "white_light_full"
-            },
-            {
-                "object_name": "near_left_cylinder",
-                "material_name": "red_glass"
-            },
-            {
-                "object_name": "center_cylinder",
-                "material_name": "green_glass"
-            },
-            {
-                "object_name": "far_right_cylinder",
-                "material_name": "blue_glass"
             },
             {
                 "object_name": "top_rectangle",
@@ -50,11 +34,11 @@
             },
             {
                 "object_name": "left_rectangle",
-                "material_name": "red_glow"
+                "material_name": "red_diffuse"
             },
             {
                 "object_name": "right_rectangle",
-                "material_name": "green_glow"
+                "material_name": "green_diffuse"
             },
             {
                 "object_name": "near_rectangle",

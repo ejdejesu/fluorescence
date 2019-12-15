@@ -7,7 +7,7 @@ import (
 	"fluorescence/geometry/primitive/primitivelist"
 	"fluorescence/shading/material"
 	"fmt"
-	"math/rand"
+	"math"
 	"sort"
 )
 
@@ -27,8 +27,24 @@ func NewBVH(pl *primitivelist.PrimitiveList) (*bvh, error) {
 		return nil, fmt.Errorf("no bounding box for input Primitive List")
 	}
 
+	// pick the best axis
+	var axisNum int
+	firstBox, _ := pl.List[0].BoundingBox(0, 0)
+	lastBox, _ := pl.List[len(pl.List)-1].BoundingBox(0, 0)
+
+	xDif := math.Abs(firstBox.A.X - lastBox.A.X)
+	yDif := math.Abs(firstBox.A.Y - lastBox.A.Y)
+	zDif := math.Abs(firstBox.A.Z - lastBox.A.Z)
+	if xDif > yDif && xDif > zDif {
+		axisNum = 0
+	} else if yDif > xDif && yDif > zDif {
+		axisNum = 1
+	} else {
+		axisNum = 2
+	}
+
 	// do the sort
-	axisNum := rand.Intn(3)
+	// axisNum := rand.Intn(3)
 	if axisNum == 0 {
 		sort.Sort(primitivelist.ByXPos(*pl))
 	} else if axisNum == 1 {

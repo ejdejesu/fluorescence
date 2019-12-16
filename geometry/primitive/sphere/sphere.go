@@ -10,14 +10,17 @@ import (
 )
 
 type sphere struct {
-	Center *geometry.Point
-	Radius float64
-	mat    material.Material
+	center             *geometry.Point
+	radius             float64
+	hasInvertedNormals bool
+	box                *aabb.AABB
+	mat                material.Material
 }
 
 type SphereData struct {
-	Center *geometry.Point `json:"center"`
-	Radius float64         `json:"radius"`
+	Center             *geometry.Point `json:"center"`
+	Radius             float64         `json:"radius"`
+	HasInvertedNormals bool            `json:"has_inverted_normals"`
 }
 
 func NewSphere(sd *SphereData) (*sphere, error) {
@@ -27,19 +30,26 @@ func NewSphere(sd *SphereData) (*sphere, error) {
 	if sd.Radius <= 0 {
 		return nil, fmt.Errorf("Sphere radius is 0 or negative")
 	}
-	return &sphere{
-		Center: sd.Center,
-		Radius: sd.Radius,
-	}, nil
+	newSphere := &sphere{
+		center:             sd.Center,
+		radius:             sd.Radius,
+		hasInvertedNormals: sd.HasInvertedNormals,
+	}
+	newSphere.box, _ = newSphere.BoundingBox(0, 0)
+	return newSphere, nil
 }
 
 func (s *sphere) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
-	centerToRayOrigin := s.Center.To(ray.Origin)
+	// if !s.box.Intersection(ray, tMin, tMax) {
+	// 	return nil, false
+	// }
+
+	centerToRayOrigin := s.center.To(ray.Origin)
 
 	// terms of the quadratic equation we are solving
 	a := ray.Direction.Dot(ray.Direction)
 	b := ray.Direction.Dot(centerToRayOrigin)
-	c := centerToRayOrigin.Dot(centerToRayOrigin) - (s.Radius * s.Radius)
+	c := centerToRayOrigin.Dot(centerToRayOrigin) - (s.radius * s.radius)
 
 	preDiscriminant := b*b - a*c
 
@@ -73,15 +83,15 @@ func (s *sphere) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.
 
 func (s *sphere) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return &aabb.AABB{
-		A: s.Center.SubVector(&geometry.Vector{
-			X: s.Radius + 1e-7,
-			Y: s.Radius + 1e-7,
-			Z: s.Radius + 1e-7,
+		A: s.center.SubVector(&geometry.Vector{
+			X: s.radius + 1e-7,
+			Y: s.radius + 1e-7,
+			Z: s.radius + 1e-7,
 		}),
-		B: s.Center.AddVector(&geometry.Vector{
-			X: s.Radius + 1e-7,
-			Y: s.Radius + 1e-7,
-			Z: s.Radius + 1e-7,
+		B: s.center.AddVector(&geometry.Vector{
+			X: s.radius + 1e-7,
+			Y: s.radius + 1e-7,
+			Z: s.radius + 1e-7,
 		}),
 	}, true
 }
@@ -104,17 +114,20 @@ func (s *sphere) Copy() primitive.Primitive {
 }
 
 func (s *sphere) normalAt(p *geometry.Point) *geometry.Vector {
-	return s.Center.To(p).Unit()
+	if s.hasInvertedNormals {
+		return p.To(s.center).Unit()
+	}
+	return s.center.To(p).Unit()
 }
 
 func BasicSphere(xOffset, yOffset, zOffset float64) *sphere {
-	return &sphere{
+	s, _ := NewSphere(&SphereData{
 		Center: &geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
 		Radius: 0.5,
-		mat:    nil,
-	}
+	})
+	return s
 }

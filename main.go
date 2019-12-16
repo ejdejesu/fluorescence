@@ -89,7 +89,7 @@ func main() {
 			elapsedTime := time.Since(startTime)
 			estimatedTime := time.Duration(float64(elapsedTime) * (float64(pixelCount) / float64(doneCount)))
 			remainingTime := estimatedTime - elapsedTime
-			fmt.Printf("\t\t%5.1f%% - Est. Remaining: ~%v\n", 100*float64(doneCount)/float64(pixelCount), remainingTime)
+			fmt.Printf("\t\t%5.1f%% - Est. Rem: ~%v,\tTotal: ~%v\n", 100*float64(doneCount)/float64(pixelCount), remainingTime, estimatedTime)
 		}
 	}
 	// wg.Wait()

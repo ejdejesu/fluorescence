@@ -16,6 +16,22 @@
         }
     },
     {
+        "name": "white_glow",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.9,
+                "y": 0.9,
+                "z": 0.9
+            },
+            "e": {
+                "x": 0.5,
+                "y": 0.5,
+                "z": 0.5
+            }
+        }
+    },
+    {
         "name": "grey_diffuse",
         "type": "Lambertian",
         "data": {
@@ -144,6 +160,54 @@
         }
     },
     {
+        "name": "yellow_diffuse",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.9,
+                "y": 0.9,
+                "z": 0.1
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "name": "magenta_diffuse",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.9,
+                "y": 0.1,
+                "z": 0.9
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "name": "cyan_diffuse",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.1,
+                "y": 0.9,
+                "z": 0.9
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
         "name": "white_light_half",
         "type": "Lambertian",
         "data": {
@@ -208,6 +272,22 @@
         }
     },
     {
+        "name": "white_light_fifty",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 50.0,
+                "y": 50.0,
+                "z": 50.0
+            }
+        }
+    },
+    {
         "name": "red_light_half",
         "type": "Lambertian",
         "data": {
@@ -266,6 +346,22 @@
             },
             "e": {
                 "x": 5.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "name": "red_light_fifty",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 50.0,
                 "y": 0.0,
                 "z": 0.0
             }
@@ -336,6 +432,22 @@
         }
     },
     {
+        "name": "green_light_fifty",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 0.0,
+                "y": 50.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
         "name": "blue_light_half",
         "type": "Lambertian",
         "data": {
@@ -396,6 +508,22 @@
                 "x": 0.0,
                 "y": 0.0,
                 "z": 5.0
+            }
+        }
+    },
+    {
+        "name": "blue_light_fifty",
+        "type": "Lambertian",
+        "data": {
+            "r": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "e": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 50.0
             }
         }
     },

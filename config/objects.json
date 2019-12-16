@@ -12,7 +12,31 @@
         }
     },
     {
-        "name": "left_sphere",
+        "name": "large_near_center_sphere",
+        "type": "Sphere",
+        "data": {
+            "center": {
+                "x": 5.0,
+                "y": 3.0,
+                "z": -4.0
+            },
+            "radius": 3.0
+        }
+    },
+    {
+        "name": "planetary_sphere",
+        "type": "Sphere",
+        "data": {
+            "center": {
+                "x": 500.0,
+                "y": 500.0,
+                "z": -600.0
+            },
+            "radius": 500.0
+        }
+    },
+    {
+        "name": "near_left_sphere",
         "type": "Sphere",
         "data": {
             "center": {
@@ -36,12 +60,36 @@
         }
     },
     {
-        "name": "right_sphere",
+        "name": "far_right_sphere",
         "type": "Sphere",
         "data": {
             "center": {
                 "x": 7.5,
                 "y": 7.5,
+                "z": -7.5
+            },
+            "radius": 2.0
+        }
+    },
+    {
+        "name": "near_right_sphere",
+        "type": "Sphere",
+        "data": {
+            "center": {
+                "x": 7.5,
+                "y": 2.0,
+                "z": -2.5
+            },
+            "radius": 2.0
+        }
+    },
+    {
+        "name": "far_left_sphere",
+        "type": "Sphere",
+        "data": {
+            "center": {
+                "x": 2.5,
+                "y": 2.0,
                 "z": -7.5
             },
             "radius": 2.0
@@ -284,6 +332,40 @@
         }
     },
     {
+        "name": "floor_plane",
+        "type": "Plane",
+        "data": {
+            "point": {
+                "x": 5.0,
+                "y": 0.0,
+                "z": -5.0
+            },
+            "normal": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+            },
+            "is_culled": true
+        }
+    },
+    {
+        "name": "ceiling_plane",
+        "type": "Plane",
+        "data": {
+            "point": {
+                "x": 5.0,
+                "y": 10.0,
+                "z": -5.0
+            },
+            "normal": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 0.0
+            },
+            "is_culled": true
+        }
+    },
+    {
         "name": "target_inner_cylinder",
         "type": "Cylinder",
         "data": {
@@ -350,6 +432,23 @@
                 "z": -5.0
             },
             "radius": 1.5
+        }
+    },
+    {
+        "name": "far_center_cylinder",
+        "type": "Cylinder",
+        "data": {
+            "a": {
+                "x": 5.0,
+                "y": 0.0,
+                "z": -9.0
+            },
+            "b": {
+                "x": 5.0,
+                "y": 2.0,
+                "z": -9.0
+            },
+            "radius": 0.8
         }
     },
     {

@@ -15,10 +15,10 @@ type hollowCylinder struct {
 }
 
 type HollowCylinderData struct {
-	A           *geometry.Point `json:"a"`
-	B           *geometry.Point `json:"b"`
-	InnerRadius float64         `json:"inner_radius"`
-	OuterRadius float64         `json:"outer_radius"`
+	A           geometry.Point `json:"a"`
+	B           geometry.Point `json:"b"`
+	InnerRadius float64        `json:"inner_radius"`
+	OuterRadius float64        `json:"outer_radius"`
 }
 
 func NewHollowCylinder(hcd *HollowCylinderData) (*hollowCylinder, error) {
@@ -76,7 +76,7 @@ func NewHollowCylinder(hcd *HollowCylinderData) (*hollowCylinder, error) {
 	}, nil
 }
 
-func (hc *hollowCylinder) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+func (hc *hollowCylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	if hc.box.Intersection(ray, tMin, tMax) {
 		return hc.list.Intersection(ray, tMin, tMax)
 	}
@@ -106,12 +106,12 @@ func (hc *hollowCylinder) Copy() primitive.Primitive {
 
 func BasicHollowCylinder(xOffset, yOffset, zOffset float64) *hollowCylinder {
 	hcd := HollowCylinderData{
-		A: &geometry.Point{
+		A: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		B: &geometry.Point{
+		B: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 1.0 + yOffset,
 			Z: 0.0 + zOffset,

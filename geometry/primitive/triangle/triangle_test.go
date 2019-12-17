@@ -9,13 +9,13 @@ var triHit bool
 
 func TestTriangleIntersectionHit(t *testing.T) {
 	tri := BasicTriangle(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 0.1,
 			Y: 0.1,
 			Z: 1.0,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -29,13 +29,13 @@ func TestTriangleIntersectionHit(t *testing.T) {
 
 func BenchmarkTriangleIntersectionHit(b *testing.B) {
 	tri := BasicTriangle(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 0.1,
 			Y: 0.1,
 			Z: 1.0,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -51,13 +51,13 @@ func BenchmarkTriangleIntersectionHit(b *testing.B) {
 
 func TestTriangleIntersectionMiss(t *testing.T) {
 	tri := BasicTriangle(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 0.9,
 			Y: 0.9,
 			Z: 1.0,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -71,13 +71,13 @@ func TestTriangleIntersectionMiss(t *testing.T) {
 
 func BenchmarkTriangleIntersectionMiss(b *testing.B) {
 	tri := BasicTriangle(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 0.9,
 			Y: 0.9,
 			Z: 1.0,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,

@@ -10,8 +10,8 @@ import (
 )
 
 type hollowDisk struct {
-	center             *geometry.Point
-	normal             *geometry.Vector
+	center             geometry.Point
+	normal             geometry.Vector
 	innerRadius        float64
 	outerRadius        float64
 	isCulled           bool
@@ -21,17 +21,17 @@ type hollowDisk struct {
 }
 
 type HollowDiskData struct {
-	Center      *geometry.Point  `json:"center"`
-	Normal      *geometry.Vector `json:"normal"`
-	InnerRadius float64          `json:"inner_radius"`
-	OuterRadius float64          `json:"outer_radius"`
-	IsCulled    bool             `json:"is_culled"`
+	Center      geometry.Point  `json:"center"`
+	Normal      geometry.Vector `json:"normal"`
+	InnerRadius float64         `json:"inner_radius"`
+	OuterRadius float64         `json:"outer_radius"`
+	IsCulled    bool            `json:"is_culled"`
 }
 
 func NewHollowDisk(hdd *HollowDiskData) (*hollowDisk, error) {
-	if hdd.Center == nil || hdd.Normal == nil {
-		return nil, fmt.Errorf("HollowDisk center or normal is nil")
-	}
+	// if hdd.Center == nil || hdd.Normal == nil {
+	// 	return nil, fmt.Errorf("HollowDisk center or normal is nil")
+	// }
 	if hdd.InnerRadius > hdd.OuterRadius {
 		return nil, fmt.Errorf("HollowDisk inner radius is lesser than radius")
 	}
@@ -55,7 +55,7 @@ func NewHollowDisk(hdd *HollowDiskData) (*hollowDisk, error) {
 	}, nil
 }
 
-func (hd *hollowDisk) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+func (hd *hollowDisk) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	denominator := ray.Direction.Dot(hd.normal)
 	if hd.isCulled && denominator > -1e-7 {
 		return nil, false
@@ -96,12 +96,12 @@ func (hd *hollowDisk) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	eY := hd.outerRadius * math.Sqrt(1.0-hd.normal.Y*hd.normal.Y)
 	eZ := hd.outerRadius * math.Sqrt(1.0-hd.normal.Z*hd.normal.Z)
 	return &aabb.AABB{
-		A: &geometry.Point{
+		A: geometry.Point{
 			X: hd.center.X - eX,
 			Y: hd.center.Y - eY,
 			Z: hd.center.Z - eZ,
 		},
-		B: &geometry.Point{
+		B: geometry.Point{
 			X: hd.center.X + eX,
 			Y: hd.center.Y + eY,
 			Z: hd.center.Z + eZ,
@@ -128,12 +128,12 @@ func (hd *hollowDisk) Copy() primitive.Primitive {
 
 func BasicHollowDisk(xOffset, yOffset, zOffset float64) *hollowDisk {
 	hdd := HollowDiskData{
-		Center: &geometry.Point{
+		Center: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		Normal: &geometry.Vector{
+		Normal: geometry.Vector{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: -1.0 + zOffset,

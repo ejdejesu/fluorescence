@@ -9,13 +9,13 @@ var icHit bool
 
 func TestInfiniteCylinderIntersectionHit(t *testing.T) {
 	ic := BasicInfiniteCylinder(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 0.0,
 			Y: 0.0,
 			Z: 1.5,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -29,13 +29,13 @@ func TestInfiniteCylinderIntersectionHit(t *testing.T) {
 
 func BenchmarkInfiniteCylinderIntersectionHit(b *testing.B) {
 	ic := BasicInfiniteCylinder(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 0.0,
 			Y: 0.0,
 			Z: 1.5,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -51,13 +51,13 @@ func BenchmarkInfiniteCylinderIntersectionHit(b *testing.B) {
 
 func TestInfiniteCylinderIntersectionSecondHit(t *testing.T) {
 	ic := BasicInfiniteCylinder(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 0.0,
 			Y: 0.0,
 			Z: 0.0,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -71,13 +71,13 @@ func TestInfiniteCylinderIntersectionSecondHit(t *testing.T) {
 
 func BenchmarkInfiniteCylinderIntersectionSecondHit(b *testing.B) {
 	ic := BasicInfiniteCylinder(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 0.0,
 			Y: 0.0,
 			Z: 0.0,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -93,13 +93,13 @@ func BenchmarkInfiniteCylinderIntersectionSecondHit(b *testing.B) {
 
 func TestInfiniteCylinderIntersectionSideMiss(t *testing.T) {
 	ic := BasicInfiniteCylinder(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 1.5,
 			Y: 0.0,
 			Z: 1.5,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -113,13 +113,13 @@ func TestInfiniteCylinderIntersectionSideMiss(t *testing.T) {
 
 func BenchmarkInfiniteCylinderIntersectionSideMiss(b *testing.B) {
 	ic := BasicInfiniteCylinder(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 1.5,
 			Y: 0.0,
 			Z: 1.5,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -135,13 +135,13 @@ func BenchmarkInfiniteCylinderIntersectionSideMiss(b *testing.B) {
 
 func TestInfiniteCylinderIntersectionBehindMiss(t *testing.T) {
 	ic := BasicInfiniteCylinder(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.5,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -155,13 +155,13 @@ func TestInfiniteCylinderIntersectionBehindMiss(t *testing.T) {
 
 func BenchmarkInfiniteCylinderIntersectionBehindMiss(b *testing.B) {
 	ic := BasicInfiniteCylinder(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.5,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -177,13 +177,13 @@ func BenchmarkInfiniteCylinderIntersectionBehindMiss(b *testing.B) {
 
 func TestInfiniteCylinderIntersectionParallelMiss(t *testing.T) {
 	ic := BasicInfiniteCylinder(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 0.0,
 			Y: 0.0,
 			Z: 1.5,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 1.0,
 			Z: 0.0,
@@ -197,13 +197,13 @@ func TestInfiniteCylinderIntersectionParallelMiss(t *testing.T) {
 
 func BenchmarkInfiniteCylinderIntersectionParallelMiss(b *testing.B) {
 	ic := BasicInfiniteCylinder(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 0.0,
 			Y: 0.0,
 			Z: 1.5,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 1.0,
 			Z: 0.0,
@@ -219,13 +219,13 @@ func BenchmarkInfiniteCylinderIntersectionParallelMiss(b *testing.B) {
 
 func TestInfiniteCylinderIntersectionInsideParallelMiss(t *testing.T) {
 	ic := BasicInfiniteCylinder(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 0.0,
 			Y: 0.0,
 			Z: 0.0,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 1.0,
 			Z: 0.0,
@@ -239,13 +239,13 @@ func TestInfiniteCylinderIntersectionInsideParallelMiss(t *testing.T) {
 
 func BenchmarkInfiniteCylinderIntersectionInsideParallelMiss(b *testing.B) {
 	ic := BasicInfiniteCylinder(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 0.0,
 			Y: 0.0,
 			Z: 0.0,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 1.0,
 			Z: 0.0,

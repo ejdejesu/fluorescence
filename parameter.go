@@ -124,7 +124,7 @@ func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materials
 	// 	for y := 0.5; y < 10.0; y++ {
 	// 		for z := -0.5; z > -10.0; z-- {
 	// 			newSphere, err := sphere.NewSphere(&sphere.SphereData{
-	// 				Center: &geometry.Point{
+	// 				Center: geometry.Point{
 	// 					X: x,
 	// 					Y: y,
 	// 					Z: z,

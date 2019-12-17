@@ -10,7 +10,7 @@ import (
 )
 
 type sphere struct {
-	center             *geometry.Point
+	center             geometry.Point
 	radius             float64
 	hasInvertedNormals bool
 	box                *aabb.AABB
@@ -18,15 +18,15 @@ type sphere struct {
 }
 
 type SphereData struct {
-	Center             *geometry.Point `json:"center"`
-	Radius             float64         `json:"radius"`
-	HasInvertedNormals bool            `json:"has_inverted_normals"`
+	Center             geometry.Point `json:"center"`
+	Radius             float64        `json:"radius"`
+	HasInvertedNormals bool           `json:"has_inverted_normals"`
 }
 
 func NewSphere(sd *SphereData) (*sphere, error) {
-	if sd.Center == nil {
-		return nil, fmt.Errorf("Sphere center is nil")
-	}
+	// if sd.Center == nil {
+	// 	return nil, fmt.Errorf("Sphere center is nil")
+	// }
 	if sd.Radius <= 0 {
 		return nil, fmt.Errorf("Sphere radius is 0 or negative")
 	}
@@ -39,7 +39,7 @@ func NewSphere(sd *SphereData) (*sphere, error) {
 	return newSphere, nil
 }
 
-func (s *sphere) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+func (s *sphere) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	// if !s.box.Intersection(ray, tMin, tMax) {
 	// 	return nil, false
 	// }
@@ -83,12 +83,12 @@ func (s *sphere) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.
 
 func (s *sphere) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return &aabb.AABB{
-		A: s.center.SubVector(&geometry.Vector{
+		A: s.center.SubVector(geometry.Vector{
 			X: s.radius + 1e-7,
 			Y: s.radius + 1e-7,
 			Z: s.radius + 1e-7,
 		}),
-		B: s.center.AddVector(&geometry.Vector{
+		B: s.center.AddVector(geometry.Vector{
 			X: s.radius + 1e-7,
 			Y: s.radius + 1e-7,
 			Z: s.radius + 1e-7,
@@ -113,7 +113,7 @@ func (s *sphere) Copy() primitive.Primitive {
 	return &newS
 }
 
-func (s *sphere) normalAt(p *geometry.Point) *geometry.Vector {
+func (s *sphere) normalAt(p geometry.Point) geometry.Vector {
 	if s.hasInvertedNormals {
 		return p.To(s.center).Unit()
 	}
@@ -122,7 +122,7 @@ func (s *sphere) normalAt(p *geometry.Point) *geometry.Vector {
 
 func BasicSphere(xOffset, yOffset, zOffset float64) *sphere {
 	s, _ := NewSphere(&SphereData{
-		Center: &geometry.Point{
+		Center: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: 0.0 + zOffset,

@@ -11,7 +11,7 @@ import (
 )
 
 type uncappedCylinder struct {
-	ray                *geometry.Ray
+	ray                geometry.Ray
 	minT               float64
 	maxT               float64
 	radius             float64
@@ -20,23 +20,23 @@ type uncappedCylinder struct {
 }
 
 type UncappedCylinderData struct {
-	A                  *geometry.Point `json:"a"`
-	B                  *geometry.Point `json:"b"`
-	Radius             float64         `json:"radius"`
-	HasInvertedNormals bool            `json:"has_inverted_normals"`
+	A                  geometry.Point `json:"a"`
+	B                  geometry.Point `json:"b"`
+	Radius             float64        `json:"radius"`
+	HasInvertedNormals bool           `json:"has_inverted_normals"`
 }
 
 func NewUncappedCylinder(ucd *UncappedCylinderData) (*uncappedCylinder, error) {
-	if ucd.A == nil || ucd.B == nil {
-		return nil, fmt.Errorf("UncappedCylinder ray is nil")
-	}
+	// if ucd.A == nil || ucd.B == nil {
+	// 	return nil, fmt.Errorf("UncappedCylinder ray is nil")
+	// }
 	if ucd.A.To(ucd.B).Magnitude() == 0 {
 		return nil, fmt.Errorf("UncappedCylinder length is zero vector")
 	}
 	if ucd.Radius <= 0.0 {
 		return nil, fmt.Errorf("UncappedCylinder radius is 0 or negative")
 	}
-	r := &geometry.Ray{
+	r := geometry.Ray{
 		Origin:    ucd.A,
 		Direction: ucd.A.To(ucd.B).Unit(),
 	}
@@ -51,7 +51,7 @@ func NewUncappedCylinder(ucd *UncappedCylinderData) (*uncappedCylinder, error) {
 	}, nil
 }
 
-func (uc *uncappedCylinder) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+func (uc *uncappedCylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	deltaP := uc.ray.Origin.To(ray.Origin)
 	preA := ray.Direction.Sub(uc.ray.Direction.MultScalar(ray.Direction.Dot(uc.ray.Direction)))
 	preB := deltaP.Sub(uc.ray.Direction.MultScalar(deltaP.Dot(uc.ray.Direction)))
@@ -132,21 +132,21 @@ func (uc *uncappedCylinder) Copy() primitive.Primitive {
 	return &newUC
 }
 
-func (uc *uncappedCylinder) normalAt(p *geometry.Point) *geometry.Vector {
+func (uc *uncappedCylinder) normalAt(p geometry.Point) geometry.Vector {
 	if uc.hasInvertedNormals {
-		return geometry.ZERO.Sub(uc.ray.ClosestPoint(p).To(p).UnitInPlace())
+		return uc.ray.ClosestPoint(p).To(p).Unit().Negate()
 	}
-	return uc.ray.ClosestPoint(p).To(p).UnitInPlace()
+	return uc.ray.ClosestPoint(p).To(p).Unit()
 }
 
 func BasicUncappedCylinder(xOffset, yOffset, zOffset float64) *uncappedCylinder {
 	ucd := UncappedCylinderData{
-		A: &geometry.Point{
+		A: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		B: &geometry.Point{
+		B: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 1.0 + yOffset,
 			Z: 0.0 + zOffset,

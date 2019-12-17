@@ -66,7 +66,7 @@ func NewPrimitiveList(primitives ...primitive.Primitive) (*PrimitiveList, error)
 	return primitiveList, nil
 }
 
-func (pl *PrimitiveList) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+func (pl *PrimitiveList) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	var rayHit *material.RayHit
 	minT := math.MaxFloat64
 	hitSomething := false

@@ -51,7 +51,7 @@ func main() {
 			// defer wg.Done()
 			for x := 0; x < parameters.ImageWidth; x++ {
 				// defer sem.Release(1)
-				colorAccumulator := geometry.ZERO.Copy()
+				colorAccumulator := geometry.VECTOR_ZERO
 				for s := 0; s < parameters.SampleCount; s++ {
 					u := (float64(x) + rng.Float64()) / float64(parameters.ImageWidth)
 					v := (float64(y) + rng.Float64()) / float64(parameters.ImageHeight)
@@ -59,13 +59,13 @@ func main() {
 					ray := parameters.Scene.Camera.GetRay(u, v, rng)
 
 					tempColor := colorOf(parameters, ray, rng, 0)
-					colorAccumulator.AddInPlace(tempColor)
+					colorAccumulator.Add(tempColor)
 				}
-				colorAccumulator.DivScalarInPlace(float64(parameters.SampleCount)).ClampInPlace(0, 1).PowInPlace(1.0 / float64(parameters.GammaCorrection))
+				colorAccumulator.DivScalar(float64(parameters.SampleCount)).Clamp(0, 1).Pow(1.0 / float64(parameters.GammaCorrection))
 				color := colorAccumulator.ToColor()
 				// pixelsChan <- geometry.Pixel{x, parameters.ImageHeight - y - 1, *color}
 
-				img.SetRGBA64(x, parameters.ImageHeight-y-1, *color.ToRGBA64())
+				img.SetRGBA64(x, parameters.ImageHeight-y-1, color.ToRGBA64())
 				dc <- 1
 			}
 			// fmt.Printf("ok\n")
@@ -117,9 +117,9 @@ func main() {
 	return
 }
 
-func colorOf(parameters *Parameters, r *geometry.Ray, rng *rand.Rand, depth int) *geometry.Vector {
+func colorOf(parameters *Parameters, r geometry.Ray, rng *rand.Rand, depth int) geometry.Vector {
 
-	backgroundColor := &geometry.Vector{
+	backgroundColor := geometry.Vector{
 		X: parameters.BackgroundColor.Red,
 		Y: parameters.BackgroundColor.Green,
 		Z: parameters.BackgroundColor.Blue,
@@ -135,11 +135,11 @@ func colorOf(parameters *Parameters, r *geometry.Ray, rng *rand.Rand, depth int)
 
 	material := rayHit.Material
 
-	if *material.Reflectance() == *geometry.ZERO {
+	if material.Reflectance() == geometry.VECTOR_ZERO {
 		return material.Emittance()
 	}
 
-	scatteredRay, wasScattered := rayHit.Material.Scatter(rayHit, rng)
+	scatteredRay, wasScattered := rayHit.Material.Scatter(*rayHit, rng)
 	if !wasScattered {
 		return backgroundColor
 	}

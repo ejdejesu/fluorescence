@@ -13,16 +13,16 @@ type rectangle struct {
 }
 
 type RectangleData struct {
-	A                 *geometry.Point `json:"a"`
-	B                 *geometry.Point `json"b"`
-	IsCulled          bool            `json:"is_culled"`
-	HasNegativeNormal bool            `json:"has_negative_normal"`
+	A                 geometry.Point `json:"a"`
+	B                 geometry.Point `json"b"`
+	IsCulled          bool           `json:"is_culled"`
+	HasNegativeNormal bool           `json:"has_negative_normal"`
 }
 
 func NewRectangle(rd *RectangleData) (*rectangle, error) {
-	if rd.A == nil || rd.B == nil {
-		return nil, fmt.Errorf("Rectangle a or b is nil")
-	}
+	// if rd.A == nil || rd.B == nil {
+	// 	return nil, fmt.Errorf("Rectangle a or b is nil")
+	// }
 	if (rd.A.X == rd.B.X && rd.A.Y == rd.B.Y) ||
 		(rd.A.X == rd.B.X && rd.A.Z == rd.B.Z) ||
 		(rd.A.Y == rd.B.Y && rd.A.Z == rd.B.Z) {
@@ -42,7 +42,7 @@ func NewRectangle(rd *RectangleData) (*rectangle, error) {
 	return nil, fmt.Errorf("Points do not lie on on axis-aligned plane")
 }
 
-func (r *rectangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+func (r *rectangle) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	return r.axisAlignedRectangle.Intersection(ray, tMin, tMax)
 }
 
@@ -69,12 +69,12 @@ func (r *rectangle) Copy() primitive.Primitive {
 
 func BasicRectangle(xOffset, yOffset, zOffset float64) *rectangle {
 	rd := RectangleData{
-		A: &geometry.Point{
+		A: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		B: &geometry.Point{
+		B: geometry.Point{
 			X: 1.0 + xOffset,
 			Y: 1.0 + yOffset,
 			Z: 0.0 + zOffset,

@@ -10,32 +10,32 @@ import (
 )
 
 type infiniteCylinder struct {
-	ray                *geometry.Ray
+	ray                geometry.Ray
 	radius             float64
 	hasInvertedNormals bool
 	mat                material.Material
 }
 
 type InfiniteCylinderData struct {
-	Ray                *geometry.Ray `json:"ray"`
-	Radius             float64       `json:"radius"`
-	HasInvertedNormals bool          `json:"has_inverted_normals"`
+	Ray                geometry.Ray `json:"ray"`
+	Radius             float64      `json:"radius"`
+	HasInvertedNormals bool         `json:"has_inverted_normals"`
 }
 
 func NewInfiniteCylinder(icd *InfiniteCylinderData) (*infiniteCylinder, error) {
-	if icd.Ray == nil {
-		return nil, fmt.Errorf("InfiniteCylinder ray is nil")
-	}
-	if icd.Ray.Origin == nil || icd.Ray.Direction == nil {
-		return nil, fmt.Errorf("InfiniteCylinder ray origin or ray direction is nil")
-	}
+	// if icd.Ray == nil {
+	// 	return nil, fmt.Errorf("InfiniteCylinder ray is nil")
+	// }
+	// if icd.Ray.Origin == nil || icd.Ray.Direction == nil {
+	// 	return nil, fmt.Errorf("InfiniteCylinder ray origin or ray direction is nil")
+	// }
 	if icd.Ray.Direction.Magnitude() == 0 {
 		return nil, fmt.Errorf("InfiniteCylinder ray direction is zero vector")
 	}
 	if icd.Radius <= 0.0 {
 		return nil, fmt.Errorf("InfiniteCylinder radius is 0 or negative")
 	}
-	icd.Ray.Direction.UnitInPlace()
+	icd.Ray.Direction.Unit()
 	return &infiniteCylinder{
 		ray:                icd.Ray,
 		radius:             icd.Radius,
@@ -43,7 +43,7 @@ func NewInfiniteCylinder(icd *InfiniteCylinderData) (*infiniteCylinder, error) {
 	}, nil
 }
 
-func (ic *infiniteCylinder) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+func (ic *infiniteCylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	deltaP := ic.ray.Origin.To(ray.Origin)
 	preA := ray.Direction.Sub(ic.ray.Direction.MultScalar(ray.Direction.Dot(ic.ray.Direction)))
 	preB := deltaP.Sub(ic.ray.Direction.MultScalar(deltaP.Dot(ic.ray.Direction)))
@@ -104,22 +104,22 @@ func (ic *infiniteCylinder) Copy() primitive.Primitive {
 	return &newIC
 }
 
-func (ic *infiniteCylinder) normalAt(p *geometry.Point) *geometry.Vector {
+func (ic *infiniteCylinder) normalAt(p geometry.Point) geometry.Vector {
 	if ic.hasInvertedNormals {
-		return geometry.ZERO.Sub(ic.ray.ClosestPoint(p).To(p).UnitInPlace())
+		return ic.ray.ClosestPoint(p).To(p).Unit().Negate()
 	}
-	return ic.ray.ClosestPoint(p).To(p).UnitInPlace()
+	return ic.ray.ClosestPoint(p).To(p).Unit()
 }
 
 func BasicInfiniteCylinder(xOffset, yOffset, zOffset float64) *infiniteCylinder {
 	icd := InfiniteCylinderData{
-		Ray: &geometry.Ray{
-			Origin: &geometry.Point{
+		Ray: geometry.Ray{
+			Origin: geometry.Point{
 				X: 0.0 + xOffset,
 				Y: 0.0 + yOffset,
 				Z: 0.0 + zOffset,
 			},
-			Direction: &geometry.Vector{
+			Direction: geometry.Vector{
 				X: 0.0 + xOffset,
 				Y: 1.0 + yOffset,
 				Z: 0.0 + zOffset,

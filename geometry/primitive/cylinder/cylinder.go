@@ -15,9 +15,9 @@ type cylinder struct {
 }
 
 type CylinderData struct {
-	A      *geometry.Point `json:"a"`
-	B      *geometry.Point `json:"b"`
-	Radius float64         `json:"radius"`
+	A      geometry.Point `json:"a"`
+	B      geometry.Point `json:"b"`
+	Radius float64        `json:"radius"`
 }
 
 func NewCylinder(cd *CylinderData) (*cylinder, error) {
@@ -63,7 +63,7 @@ func NewCylinder(cd *CylinderData) (*cylinder, error) {
 	}, nil
 }
 
-func (c *cylinder) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+func (c *cylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	if c.box.Intersection(ray, tMin, tMax) {
 		return c.list.Intersection(ray, tMin, tMax)
 	}
@@ -93,12 +93,12 @@ func (c *cylinder) Copy() primitive.Primitive {
 
 func BasicCylinder(xOffset, yOffset, zOffset float64) *cylinder {
 	cd := CylinderData{
-		A: &geometry.Point{
+		A: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		B: &geometry.Point{
+		B: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 1.0 + yOffset,
 			Z: 0.0 + zOffset,

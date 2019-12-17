@@ -9,26 +9,26 @@ import (
 // A Camera holds information about the scene's camera
 // and facilitates the casting of Rays into the scene
 type Camera struct {
-	EyeLocation    *geometry.Point  `json:"eye_location"`
-	TargetLocation *geometry.Point  `json:"target_location"`
-	UpVector       *geometry.Vector `json:"up_vector"`
-	VerticalFOV    float64          `json:"vertical_fov"`
-	AspectRatio    float64          `json:"aspect_ratio"`
-	Aperture       float64          `json:"aperture"`
-	FocusDistance  float64          `json:"focus_distance"`
+	EyeLocation    geometry.Point  `json:"eye_location"`
+	TargetLocation geometry.Point  `json:"target_location"`
+	UpVector       geometry.Vector `json:"up_vector"`
+	VerticalFOV    float64         `json:"vertical_fov"`
+	AspectRatio    float64         `json:"aspect_ratio"`
+	Aperture       float64         `json:"aperture"`
+	FocusDistance  float64         `json:"focus_distance"`
 
 	lensRadius float64
 	theta      float64
 	halfWidth  float64
 	halfHeight float64
 
-	w *geometry.Vector
-	u *geometry.Vector
-	v *geometry.Vector
+	w geometry.Vector
+	u geometry.Vector
+	v geometry.Vector
 
-	lowerLeftCorner *geometry.Point
-	horizonal       *geometry.Vector
-	verical         *geometry.Vector
+	lowerLeftCorner geometry.Point
+	horizonal       geometry.Vector
+	verical         geometry.Vector
 }
 
 // Setup is called after initializing the Camera and filling the exported fields
@@ -57,15 +57,15 @@ func (c *Camera) Setup(p *Parameters) error {
 }
 
 // GetRay returns a Ray from the eye location to a point on the view place u% across and v% up
-func (c *Camera) GetRay(u float64, v float64, rng *rand.Rand) *geometry.Ray {
-	randomOnLens := geometry.RandomOnUnitDisc(rng).MultScalarInPlace(c.lensRadius)
+func (c *Camera) GetRay(u float64, v float64, rng *rand.Rand) geometry.Ray {
+	randomOnLens := geometry.RandomOnUnitDisc(rng).MultScalar(c.lensRadius)
 	offset := c.u.MultScalar(randomOnLens.X).AddInPlace(c.v.MultScalar(randomOnLens.Y))
-	return &geometry.Ray{
+	return geometry.Ray{
 		Origin: c.EyeLocation.AddVector(offset),
 		Direction: c.lowerLeftCorner.AddVector(
-			c.horizonal.MultScalar(u)).AddVectorInPlace(
-			c.verical.MultScalar(v)).FromInPlace(
-			c.EyeLocation).SubInPlace(
-			offset).UnitInPlace(),
+			c.horizonal.MultScalar(u)).AddVector(
+			c.verical.MultScalar(v)).From(
+			c.EyeLocation).Sub(
+			offset).Unit(),
 	}
 }

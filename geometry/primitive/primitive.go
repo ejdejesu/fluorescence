@@ -7,7 +7,7 @@ import (
 )
 
 type Primitive interface {
-	Intersection(*geometry.Ray, float64, float64) (*material.RayHit, bool)
+	Intersection(geometry.Ray, float64, float64) (*material.RayHit, bool)
 	BoundingBox(float64, float64) (*aabb.AABB, bool)
 	SetMaterial(material.Material)
 	IsInfinite() bool

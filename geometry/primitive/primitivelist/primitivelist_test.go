@@ -37,15 +37,15 @@ func BasicPrimitiveListNSpheres(n int, xOffset, yOffset, zOffset float64) *Primi
 
 func ithTriangleOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T) {
 	pl := BasicPrimitiveListNTriangles(n, 0.0, 0.0, 0.0)
-	var r *geometry.Ray
+	var r geometry.Ray
 	if shouldHit {
-		r = &geometry.Ray{
-			Origin: &geometry.Point{
+		r = geometry.Ray{
+			Origin: geometry.Point{
 				X: 0.1 + float64(i-1),
 				Y: 0.1,
 				Z: 1.0,
 			},
-			Direction: &geometry.Vector{
+			Direction: geometry.Vector{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -53,13 +53,13 @@ func ithTriangleOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T)
 		}
 
 	} else {
-		r = &geometry.Ray{
-			Origin: &geometry.Point{
+		r = geometry.Ray{
+			Origin: geometry.Point{
 				X: 0.9,
 				Y: 0.9,
 				Z: 1.0,
 			},
-			Direction: &geometry.Vector{
+			Direction: geometry.Vector{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -76,15 +76,15 @@ func ithTriangleOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T)
 
 func ithTriangleOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *testing.B) {
 	pl := BasicPrimitiveListNTriangles(n, 0.0, 0.0, 0.0)
-	var r *geometry.Ray
+	var r geometry.Ray
 	if shouldHit {
-		r = &geometry.Ray{
-			Origin: &geometry.Point{
+		r = geometry.Ray{
+			Origin: geometry.Point{
 				X: 0.1 + float64(i-1),
 				Y: 0.1,
 				Z: 1.0,
 			},
-			Direction: &geometry.Vector{
+			Direction: geometry.Vector{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -92,13 +92,13 @@ func ithTriangleOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *testi
 		}
 
 	} else {
-		r = &geometry.Ray{
-			Origin: &geometry.Point{
+		r = geometry.Ray{
+			Origin: geometry.Point{
 				X: 0.9,
 				Y: 0.9,
 				Z: 1.0,
 			},
-			Direction: &geometry.Vector{
+			Direction: geometry.Vector{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -115,15 +115,15 @@ func ithTriangleOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *testi
 
 func ithSphereOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T) {
 	pl := BasicPrimitiveListNSpheres(n, 0.0, 0.0, 0.0)
-	var r *geometry.Ray
+	var r geometry.Ray
 	if shouldHit {
-		r = &geometry.Ray{
-			Origin: &geometry.Point{
+		r = geometry.Ray{
+			Origin: geometry.Point{
 				X: 0.0 + float64(i-1),
 				Y: 0.0,
 				Z: 1.0,
 			},
-			Direction: &geometry.Vector{
+			Direction: geometry.Vector{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -131,13 +131,13 @@ func ithSphereOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T) {
 		}
 
 	} else {
-		r = &geometry.Ray{
-			Origin: &geometry.Point{
+		r = geometry.Ray{
+			Origin: geometry.Point{
 				X: 0.0,
 				Y: 1.0,
 				Z: 1.0,
 			},
-			Direction: &geometry.Vector{
+			Direction: geometry.Vector{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -154,15 +154,15 @@ func ithSphereOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T) {
 
 func ithSphereOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *testing.B) {
 	pl := BasicPrimitiveListNSpheres(n, 0.0, 0.0, 0.0)
-	var r *geometry.Ray
+	var r geometry.Ray
 	if shouldHit {
-		r = &geometry.Ray{
-			Origin: &geometry.Point{
+		r = geometry.Ray{
+			Origin: geometry.Point{
 				X: 0.0 + float64(i-1),
 				Y: 0.0,
 				Z: 1.0,
 			},
-			Direction: &geometry.Vector{
+			Direction: geometry.Vector{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -170,13 +170,13 @@ func ithSphereOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *testing
 		}
 
 	} else {
-		r = &geometry.Ray{
-			Origin: &geometry.Point{
+		r = geometry.Ray{
+			Origin: geometry.Point{
 				X: 0.0,
 				Y: 1.0,
 				Z: 1.0,
 			},
-			Direction: &geometry.Vector{
+			Direction: geometry.Vector{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -193,15 +193,15 @@ func ithSphereOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *testing
 
 func ithRectangleOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T) {
 	pl := BasicPrimitiveListNRectangles(n, 0.0, 0.0, 0.0)
-	var r *geometry.Ray
+	var r geometry.Ray
 	if shouldHit {
-		r = &geometry.Ray{
-			Origin: &geometry.Point{
+		r = geometry.Ray{
+			Origin: geometry.Point{
 				X: 0.5 + float64(i-1),
 				Y: 0.5,
 				Z: 1.0,
 			},
-			Direction: &geometry.Vector{
+			Direction: geometry.Vector{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -209,13 +209,13 @@ func ithRectangleOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T
 		}
 
 	} else {
-		r = &geometry.Ray{
-			Origin: &geometry.Point{
+		r = geometry.Ray{
+			Origin: geometry.Point{
 				X: 0.5,
 				Y: 1.5,
 				Z: 1.0,
 			},
-			Direction: &geometry.Vector{
+			Direction: geometry.Vector{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -232,15 +232,15 @@ func ithRectangleOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T
 
 func ithRectangleOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *testing.B) {
 	pl := BasicPrimitiveListNRectangles(n, 0.0, 0.0, 0.0)
-	var r *geometry.Ray
+	var r geometry.Ray
 	if shouldHit {
-		r = &geometry.Ray{
-			Origin: &geometry.Point{
+		r = geometry.Ray{
+			Origin: geometry.Point{
 				X: 0.5 + float64(i-1),
 				Y: 0.5,
 				Z: 1.0,
 			},
-			Direction: &geometry.Vector{
+			Direction: geometry.Vector{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -248,13 +248,13 @@ func ithRectangleOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *test
 		}
 
 	} else {
-		r = &geometry.Ray{
-			Origin: &geometry.Point{
+		r = geometry.Ray{
+			Origin: geometry.Point{
 				X: 0.5,
 				Y: 1.5,
 				Z: 1.0,
 			},
-			Direction: &geometry.Vector{
+			Direction: geometry.Vector{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,

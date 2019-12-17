@@ -15,11 +15,11 @@ type xzRectangle struct {
 	z1       float64
 	y        float64
 	isCulled bool
-	normal   *geometry.Vector
+	normal   geometry.Vector
 	mat      material.Material
 }
 
-func newXZRectangle(a, b *geometry.Point, isCulled, hasNegativeNormal bool) *xzRectangle {
+func newXZRectangle(a, b geometry.Point, isCulled, hasNegativeNormal bool) *xzRectangle {
 	x0 := math.Min(a.X, b.X)
 	x1 := math.Max(a.X, b.X)
 	z0 := math.Min(a.Z, b.Z)
@@ -27,11 +27,11 @@ func newXZRectangle(a, b *geometry.Point, isCulled, hasNegativeNormal bool) *xzR
 
 	y := a.Y
 
-	var normal *geometry.Vector
+	var normal geometry.Vector
 	if hasNegativeNormal {
-		normal = &geometry.Vector{0.0, -1.0, 0.0}
+		normal = geometry.Vector{0.0, -1.0, 0.0}
 	} else {
-		normal = &geometry.Vector{0.0, 1.0, 0.0}
+		normal = geometry.Vector{0.0, 1.0, 0.0}
 	}
 	return &xzRectangle{
 		x0:       x0,
@@ -44,7 +44,7 @@ func newXZRectangle(a, b *geometry.Point, isCulled, hasNegativeNormal bool) *xzR
 	}
 }
 
-func (r *xzRectangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+func (r *xzRectangle) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	// Ray is coming from behind rectangle
 	denominator := ray.Direction.Dot(r.normal)
 	if r.isCulled && denominator > -1e-7 {
@@ -77,12 +77,12 @@ func (r *xzRectangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*mate
 
 func (r *xzRectangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return &aabb.AABB{
-		A: &geometry.Point{
+		A: geometry.Point{
 			X: r.x0 - 1e-7,
 			Y: r.y - 1e-7,
 			Z: r.z0 - 1e-7,
 		},
-		B: &geometry.Point{
+		B: geometry.Point{
 			X: r.x1 + 1e-7,
 			Y: r.y + 1e-7,
 			Z: r.z1 + 1e-7,

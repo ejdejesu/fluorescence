@@ -9,13 +9,13 @@ var rectHit bool
 
 func TestRectangleIntersectionHit(t *testing.T) {
 	rect := BasicRectangle(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 0.5,
 			Y: 0.5,
 			Z: 1.0,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -29,13 +29,13 @@ func TestRectangleIntersectionHit(t *testing.T) {
 
 func BenchmarkRectangleIntersectionHit(b *testing.B) {
 	rect := BasicRectangle(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 0.5,
 			Y: 0.5,
 			Z: 1.0,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -51,13 +51,13 @@ func BenchmarkRectangleIntersectionHit(b *testing.B) {
 
 func TestRectangleIntersectionMiss(t *testing.T) {
 	rect := BasicRectangle(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 1.5,
 			Y: 0.5,
 			Z: 1.0,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -71,13 +71,13 @@ func TestRectangleIntersectionMiss(t *testing.T) {
 
 func BenchmarkRectangleIntersectionMiss(b *testing.B) {
 	rect := BasicRectangle(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 1.5,
 			Y: 0.5,
 			Z: 1.0,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,

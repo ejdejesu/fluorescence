@@ -9,13 +9,13 @@ var hcHit bool
 
 func TestHollowCylinderIntersectionHit(t *testing.T) {
 	hc := BasicHollowCylinder(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 0.0,
 			Y: 0.5,
 			Z: 1.0,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -29,13 +29,13 @@ func TestHollowCylinderIntersectionHit(t *testing.T) {
 
 func BenchmarkHollowCylinderIntersectionHit(b *testing.B) {
 	hc := BasicHollowCylinder(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 0.0,
 			Y: 0.5,
 			Z: 1.0,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -51,13 +51,13 @@ func BenchmarkHollowCylinderIntersectionHit(b *testing.B) {
 
 func TestHollowCylinderIntersectionMiss(t *testing.T) {
 	hc := BasicHollowCylinder(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 1.5,
 			Y: 0.5,
 			Z: 1.0,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -71,13 +71,13 @@ func TestHollowCylinderIntersectionMiss(t *testing.T) {
 
 func BenchmarkHollowCylinderIntersectionMiss(b *testing.B) {
 	hc := BasicHollowCylinder(0.0, 0.0, 0.0)
-	r := &geometry.Ray{
-		Origin: &geometry.Point{
+	r := geometry.Ray{
+		Origin: geometry.Point{
 			X: 1.5,
 			Y: 0.5,
 			Z: 1.0,
 		},
-		Direction: &geometry.Vector{
+		Direction: geometry.Vector{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,

@@ -10,19 +10,19 @@ import (
 )
 
 type triangle struct {
-	a        *geometry.Point
-	b        *geometry.Point
-	c        *geometry.Point
-	normal   *geometry.Vector
+	a        geometry.Point
+	b        geometry.Point
+	c        geometry.Point
+	normal   geometry.Vector
 	isCulled bool
 	mat      material.Material
 }
 
 type TriangleData struct {
-	A        *geometry.Point `json:"a"`
-	B        *geometry.Point `json:"b"`
-	C        *geometry.Point `json:"c"`
-	IsCulled bool            `json:"is_culled"`
+	A        geometry.Point `json:"a"`
+	B        geometry.Point `json:"b"`
+	C        geometry.Point `json:"c"`
+	IsCulled bool           `json:"is_culled"`
 }
 
 func NewTriangle(td *TriangleData) (*triangle, error) {
@@ -33,12 +33,12 @@ func NewTriangle(td *TriangleData) (*triangle, error) {
 		a:        td.A,
 		b:        td.B,
 		c:        td.C,
-		normal:   td.A.To(td.B).CrossInPlace(td.A.To(td.C)).UnitInPlace(),
+		normal:   td.A.To(td.B).Cross(td.A.To(td.C)).Unit(),
 		isCulled: td.IsCulled,
 	}, nil
 }
 
-func (t *triangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+func (t *triangle) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	ab := t.a.To(t.b)
 	ac := t.a.To(t.c)
 	pVector := ray.Direction.Cross(ac)
@@ -75,12 +75,12 @@ func (t *triangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*materia
 
 func (t *triangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return &aabb.AABB{
-		A: &geometry.Point{
+		A: geometry.Point{
 			X: math.Min(math.Min(t.a.X, t.a.X), t.c.X) - 1e-7,
 			Y: math.Min(math.Min(t.a.Y, t.a.Y), t.c.Y) - 1e-7,
 			Z: math.Min(math.Min(t.a.Z, t.a.Z), t.c.Z) - 1e-7,
 		},
-		B: &geometry.Point{
+		B: geometry.Point{
 			X: math.Max(math.Max(t.a.X, t.b.X), t.c.X) + 1e-7,
 			Y: math.Max(math.Max(t.a.Y, t.b.Y), t.c.Y) + 1e-7,
 			Z: math.Max(math.Max(t.a.Z, t.b.Z), t.c.Z) + 1e-7,
@@ -107,17 +107,17 @@ func (t *triangle) Copy() primitive.Primitive {
 
 func BasicTriangle(xOffset, yOffset, zOffset float64) *triangle {
 	return &triangle{
-		a: &geometry.Point{
+		a: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		b: &geometry.Point{
+		b: geometry.Point{
 			X: 1.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		c: &geometry.Point{
+		c: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 1.0 + yOffset,
 			Z: 0.0 + zOffset,

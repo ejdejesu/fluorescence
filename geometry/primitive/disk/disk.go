@@ -10,8 +10,8 @@ import (
 )
 
 type disk struct {
-	center        *geometry.Point
-	normal        *geometry.Vector
+	center        geometry.Point
+	normal        geometry.Vector
 	radius        float64
 	isCulled      bool
 	radiusSquared float64
@@ -19,16 +19,16 @@ type disk struct {
 }
 
 type DiskData struct {
-	Center   *geometry.Point  `json:"center"`
-	Normal   *geometry.Vector `json:"normal"`
-	Radius   float64          `json:"radius"`
-	IsCulled bool             `json:"is_culled"`
+	Center   geometry.Point  `json:"center"`
+	Normal   geometry.Vector `json:"normal"`
+	Radius   float64         `json:"radius"`
+	IsCulled bool            `json:"is_culled"`
 }
 
 func NewDisk(dd *DiskData) (*disk, error) {
-	if dd.Center == nil || dd.Normal == nil {
-		return nil, fmt.Errorf("Disk center or normal is nil")
-	}
+	// if dd.Center == nil || dd.Normal == nil {
+	// 	return nil, fmt.Errorf("Disk center or normal is nil")
+	// }
 	if dd.Radius <= 0.0 {
 		return nil, fmt.Errorf("Disk radius is 0 or negative")
 	}
@@ -41,7 +41,7 @@ func NewDisk(dd *DiskData) (*disk, error) {
 	}, nil
 }
 
-func (d *disk) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+func (d *disk) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	denominator := ray.Direction.Dot(d.normal)
 	if d.isCulled && denominator > -1e-7 {
 		return nil, false
@@ -79,12 +79,12 @@ func (d *disk) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	eY := d.radius * math.Sqrt(1.0-d.normal.Y*d.normal.Y)
 	eZ := d.radius * math.Sqrt(1.0-d.normal.Z*d.normal.Z)
 	return &aabb.AABB{
-		A: &geometry.Point{
+		A: geometry.Point{
 			X: d.center.X - eX - 1e-7,
 			Y: d.center.Y - eY - 1e-7,
 			Z: d.center.Z - eZ - 1e-7,
 		},
-		B: &geometry.Point{
+		B: geometry.Point{
 			X: d.center.X + eX + 1e-7,
 			Y: d.center.Y + eY + 1e-7,
 			Z: d.center.Z + eZ + 1e-7,
@@ -111,12 +111,12 @@ func (d *disk) Copy() primitive.Primitive {
 
 func BasicDisk(xOffset, yOffset, zOffset float64) *disk {
 	dd := DiskData{
-		Center: &geometry.Point{
+		Center: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		Normal: &geometry.Vector{
+		Normal: geometry.Vector{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: -1.0 + zOffset,

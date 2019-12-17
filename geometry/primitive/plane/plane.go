@@ -9,22 +9,22 @@ import (
 )
 
 type plane struct {
-	point    *geometry.Point
-	normal   *geometry.Vector
+	point    geometry.Point
+	normal   geometry.Vector
 	isCulled bool
 	mat      material.Material
 }
 
 type PlaneData struct {
-	Point    *geometry.Point  `json:"point"`
-	Normal   *geometry.Vector `json:"normal"`
-	IsCulled bool             `json:"is_culled"`
+	Point    geometry.Point  `json:"point"`
+	Normal   geometry.Vector `json:"normal"`
+	IsCulled bool            `json:"is_culled"`
 }
 
 func NewPlane(pd *PlaneData) (*plane, error) {
-	if pd.Point == nil || pd.Normal == nil {
-		return nil, fmt.Errorf("Plane point or normal is nil")
-	}
+	// if pd.Point == nil || pd.Normal == nil {
+	// 	return nil, fmt.Errorf("Plane point or normal is nil")
+	// }
 	if pd.Normal.Magnitude() == 0.0 {
 		return nil, fmt.Errorf("Plane normal is zero vector")
 	}
@@ -35,7 +35,7 @@ func NewPlane(pd *PlaneData) (*plane, error) {
 	}, nil
 }
 
-func (p *plane) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+func (p *plane) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	denominator := ray.Direction.Dot(p.normal)
 	if p.isCulled && denominator > -1e-7 {
 		return nil, false
@@ -80,12 +80,12 @@ func (p *plane) Copy() primitive.Primitive {
 
 func BasicPlane(xOffset, yOffset, zOffset float64) *plane {
 	pd := PlaneData{
-		Point: &geometry.Point{
+		Point: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		Normal: &geometry.Vector{
+		Normal: geometry.Vector{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: -1.0 + zOffset,

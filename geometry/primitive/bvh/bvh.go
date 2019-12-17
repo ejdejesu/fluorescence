@@ -86,7 +86,7 @@ func NewBVH(pl *primitivelist.PrimitiveList) (*bvh, error) {
 	return newBVH, nil
 }
 
-func (b *bvh) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+func (b *bvh) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	hitBox := b.box.Intersection(ray, tMin, tMax)
 	if hitBox {
 		leftRayHit, doesHitLeft := b.Left.Intersection(ray, tMin, tMax)

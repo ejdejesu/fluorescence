@@ -7,33 +7,33 @@ import (
 )
 
 type Dielectric struct {
-	R               *geometry.Vector `json:"r"`
-	E               *geometry.Vector `json:"e"`
-	RefractiveIndex float64          `json:"refractive_index"`
+	R               geometry.Vector `json:"r"`
+	E               geometry.Vector `json:"e"`
+	RefractiveIndex float64         `json:"refractive_index"`
 }
 
-func (d *Dielectric) Reflectance() *geometry.Vector {
+func (d Dielectric) Reflectance() geometry.Vector {
 	return d.R
 }
 
-func (d *Dielectric) Emittance() *geometry.Vector {
+func (d Dielectric) Emittance() geometry.Vector {
 	return d.E
 }
 
-func (d *Dielectric) IsSpecular() bool {
+func (d Dielectric) IsSpecular() bool {
 	return true
 }
 
-func (d *Dielectric) Scatter(rayHit *RayHit, rng *rand.Rand) (*geometry.Ray, bool) {
+func (d Dielectric) Scatter(rayHit RayHit, rng *rand.Rand) (geometry.Ray, bool) {
 	hitPoint := rayHit.Ray.PointAt(rayHit.T)
 	normal := rayHit.NormalAtHit
 	reflectionVector := rayHit.Ray.Direction.Unit().ReflectAround(normal)
 
-	var refractiveNormal *geometry.Vector
+	var refractiveNormal geometry.Vector
 	var ratioOfRefractiveIndices, cosine float64
 
 	if rayHit.Ray.Direction.Dot(normal) > 0 {
-		refractiveNormal = geometry.ZERO.Sub(normal)
+		refractiveNormal = geometry.VECTOR_ZERO.Sub(normal)
 		ratioOfRefractiveIndices = d.RefractiveIndex
 		preCos := rayHit.Ray.Direction.Dot(normal)
 		cosine = math.Sqrt(1.0 - (d.RefractiveIndex*d.RefractiveIndex)*(1.0-(preCos*preCos)))
@@ -49,10 +49,10 @@ func (d *Dielectric) Scatter(rayHit *RayHit, rng *rand.Rand) (*geometry.Ray, boo
 
 	if !ok || rng.Float64() < reflectionProbability {
 		// fmt.Println("reflect!")
-		return &geometry.Ray{hitPoint, reflectionVector}, true
+		return geometry.Ray{hitPoint, reflectionVector}, true
 	}
 	// fmt.Println("refract!")
-	return &geometry.Ray{hitPoint, refractedVector}, true
+	return geometry.Ray{hitPoint, refractedVector}, true
 
 }
 

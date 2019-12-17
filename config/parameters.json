@@ -1,13 +1,13 @@
 {
-    "image_width": 3000,
-    "image_height": 3000,
+    "image_width": 250,
+    "image_height": 250,
     "file_type": "png",
     "file_directory": "./output/",
     "file_name": "0.7.2",
     "gamma_correction": 2,
     "generate_new_file": true,
-    "sample_count": 2000,
-    "max_bounces": 50,
+    "sample_count": 25,
+    "max_bounces": 25,
     "use_bvh": false,
     "background_color": {
         "red": 0.0,

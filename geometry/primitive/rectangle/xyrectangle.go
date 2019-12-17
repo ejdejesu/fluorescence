@@ -15,11 +15,11 @@ type xyRectangle struct {
 	y1       float64
 	z        float64
 	isCulled bool
-	normal   *geometry.Vector
+	normal   geometry.Vector
 	mat      material.Material
 }
 
-func newXYRectangle(a, b *geometry.Point, isCulled, hasNegativeNormal bool) *xyRectangle {
+func newXYRectangle(a, b geometry.Point, isCulled, hasNegativeNormal bool) *xyRectangle {
 	x0 := math.Min(a.X, b.X)
 	x1 := math.Max(a.X, b.X)
 	y0 := math.Min(a.Y, b.Y)
@@ -27,11 +27,11 @@ func newXYRectangle(a, b *geometry.Point, isCulled, hasNegativeNormal bool) *xyR
 
 	z := a.Z
 
-	var normal *geometry.Vector
+	var normal geometry.Vector
 	if hasNegativeNormal {
-		normal = &geometry.Vector{0.0, 0.0, -1.0}
+		normal = geometry.Vector{0.0, 0.0, -1.0}
 	} else {
-		normal = &geometry.Vector{0.0, 0.0, 1.0}
+		normal = geometry.Vector{0.0, 0.0, 1.0}
 	}
 	return &xyRectangle{
 		x0:       x0,
@@ -44,7 +44,7 @@ func newXYRectangle(a, b *geometry.Point, isCulled, hasNegativeNormal bool) *xyR
 	}
 }
 
-func (r *xyRectangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+func (r *xyRectangle) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	// Ray is coming from behind rectangle
 	denominator := ray.Direction.Dot(r.normal)
 	if r.isCulled && denominator > -1e-7 {
@@ -77,12 +77,12 @@ func (r *xyRectangle) Intersection(ray *geometry.Ray, tMin, tMax float64) (*mate
 
 func (r *xyRectangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return &aabb.AABB{
-		A: &geometry.Point{
+		A: geometry.Point{
 			X: r.x0 - 1e-7,
 			Y: r.y0 - 1e-7,
 			Z: r.z - 1e-7,
 		},
-		B: &geometry.Point{
+		B: geometry.Point{
 			X: r.x1 + 1e-7,
 			Y: r.y1 + 1e-7,
 			Z: r.z + 1e-7,

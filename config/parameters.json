@@ -3,7 +3,7 @@
     "image_height": 3000,
     "file_type": "png",
     "file_directory": "./output/",
-    "file_name": "0.5",
+    "file_name": "0.7.2",
     "gamma_correction": 2,
     "generate_new_file": true,
     "sample_count": 2000,

@@ -8,6 +8,7 @@ import (
 	"fluorescence/geometry/primitive/disk"
 	"fluorescence/geometry/primitive/plane"
 	"fluorescence/geometry/primitive/primitivelist"
+	"fluorescence/geometry/primitive/pyramid"
 	"fluorescence/geometry/primitive/rectangle"
 	"fluorescence/geometry/primitive/sphere"
 	"fluorescence/geometry/primitive/triangle"
@@ -278,6 +279,18 @@ func loadObjects(fileName string) (map[string]primitive.Primitive, error) {
 				return nil, err
 			}
 			objectsMap[o.Name] = newPlane
+		case "Pyramid":
+			var pd pyramid.PyramidData
+			dataBytes, err := json.Marshal(o.Data)
+			if err != nil {
+				return nil, err
+			}
+			json.Unmarshal(dataBytes, &pd)
+			newPyramid, err := pyramid.NewPyramid(&pd)
+			if err != nil {
+				return nil, err
+			}
+			objectsMap[o.Name] = newPyramid
 		case "Rectangle":
 			var rd rectangle.RectangleData
 			dataBytes, err := json.Marshal(o.Data)

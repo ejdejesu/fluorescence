@@ -1,8 +1,18 @@
 package geometry
 
+import "math"
+
 type Point Vector
 
 var POINT_ZERO = Point{}
+
+func MinOf(p, q Point) Point {
+	return Point{math.Min(p.X, q.X), math.Min(p.Y, q.Y), math.Min(p.Z, q.Z)}
+}
+
+func MaxOf(p, q Point) Point {
+	return Point{math.Max(p.X, q.X), math.Max(p.Y, q.Y), math.Max(p.Z, q.Z)}
+}
 
 func (p Point) To(q Point) Vector {
 	return q.asVector().Sub(p.asVector())

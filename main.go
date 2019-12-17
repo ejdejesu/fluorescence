@@ -59,9 +59,9 @@ func main() {
 					ray := parameters.Scene.Camera.GetRay(u, v, rng)
 
 					tempColor := colorOf(parameters, ray, rng, 0)
-					colorAccumulator.Add(tempColor)
+					colorAccumulator = colorAccumulator.Add(tempColor)
 				}
-				colorAccumulator.DivScalar(float64(parameters.SampleCount)).Clamp(0, 1).Pow(1.0 / float64(parameters.GammaCorrection))
+				colorAccumulator = colorAccumulator.DivScalar(float64(parameters.SampleCount)).Clamp(0, 1).Pow(1.0 / float64(parameters.GammaCorrection))
 				color := colorAccumulator.ToColor()
 				// pixelsChan <- geometry.Pixel{x, parameters.ImageHeight - y - 1, *color}
 
@@ -133,10 +133,10 @@ func colorOf(parameters *Parameters, r geometry.Ray, rng *rand.Rand, depth int) 
 		return backgroundColor
 	}
 
-	material := rayHit.Material
+	mat := rayHit.Material
 
-	if material.Reflectance() == geometry.VECTOR_ZERO {
-		return material.Emittance()
+	if mat.Reflectance() == geometry.VECTOR_ZERO {
+		return mat.Emittance()
 	}
 
 	scatteredRay, wasScattered := rayHit.Material.Scatter(*rayHit, rng)
@@ -144,7 +144,7 @@ func colorOf(parameters *Parameters, r geometry.Ray, rng *rand.Rand, depth int) 
 		return backgroundColor
 	}
 	incomingColor := colorOf(parameters, scatteredRay, rng, depth+1)
-	return material.Emittance().Add(material.Reflectance().MultVector(incomingColor))
+	return mat.Emittance().Add(mat.Reflectance().MultVector(incomingColor))
 }
 
 func getImageFile(parameters *Parameters) (*os.File, error) {

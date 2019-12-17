@@ -14,7 +14,7 @@ type rectangle struct {
 
 type RectangleData struct {
 	A                 geometry.Point `json:"a"`
-	B                 geometry.Point `json"b"`
+	B                 geometry.Point `json:"b"`
 	IsCulled          bool           `json:"is_culled"`
 	HasNegativeNormal bool           `json:"has_negative_normal"`
 }

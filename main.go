@@ -126,7 +126,7 @@ func colorOf(parameters *Parameters, r geometry.Ray, rng *rand.Rand, depth int) 
 	}
 
 	if depth > parameters.MaxBounces {
-		return backgroundColor
+		return geometry.VECTOR_ZERO
 	}
 	rayHit, hitSomething := parameters.Scene.Objects.Intersection(r, parameters.TMin, parameters.TMax)
 	if !hitSomething {
@@ -141,7 +141,7 @@ func colorOf(parameters *Parameters, r geometry.Ray, rng *rand.Rand, depth int) 
 
 	scatteredRay, wasScattered := rayHit.Material.Scatter(*rayHit, rng)
 	if !wasScattered {
-		return backgroundColor
+		return geometry.VECTOR_ZERO
 	}
 	incomingColor := colorOf(parameters, scatteredRay, rng, depth+1)
 	return mat.Emittance().Add(mat.Reflectance().MultVector(incomingColor))

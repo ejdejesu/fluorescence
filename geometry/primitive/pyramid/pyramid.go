@@ -17,10 +17,10 @@ type pyramid struct {
 }
 
 type PyramidData struct {
-	A                 geometry.Point `json:"a"`
-	B                 geometry.Point `json:"b"`
-	Height            float64        `json:"height"`
-	HasNegativeNormal bool           `json:"has_negative_normal"`
+	A                  geometry.Point `json:"a"`
+	B                  geometry.Point `json:"b"`
+	Height             float64        `json:"height"`
+	HasInvertedNormals bool           `json:"has_inverted_normals"`
 }
 
 func NewPyramid(pd *PyramidData) (*pyramid, error) {

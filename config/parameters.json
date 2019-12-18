@@ -3,7 +3,7 @@
     "image_height": 3000,
     "file_type": "png",
     "file_directory": "./output/",
-    "file_name": "0.7.3",
+    "file_name": "0.7.4",
     "gamma_correction": 2,
     "generate_new_file": true,
     "sample_count": 2000,
@@ -21,8 +21,16 @@
         "camera_name": "main",
         "objects": [
             {
-                "object_name": "center_pyramid",
-                "material_name": "blue_glow"
+                "object_name": "outer_box",
+                "material_name": "glass"
+            },
+            {
+                "object_name": "inner_box",
+                "material_name": "cyan_diffuse"
+            },
+            {
+                "object_name": "light_center_rectangle",
+                "material_name": "white_light_full"
             },
             {
                 "object_name": "top_rectangle",

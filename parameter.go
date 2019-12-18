@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fluorescence/geometry/primitive"
+	"fluorescence/geometry/primitive/box"
 	"fluorescence/geometry/primitive/bvh"
 	"fluorescence/geometry/primitive/cylinder"
 	"fluorescence/geometry/primitive/disk"
@@ -195,6 +196,18 @@ func loadObjects(fileName string) (map[string]primitive.Primitive, error) {
 	objectsMap := map[string]primitive.Primitive{}
 	for _, o := range objectsData {
 		switch o.TypeName {
+		case "Box":
+			var bd box.BoxData
+			dataBytes, err := json.Marshal(o.Data)
+			if err != nil {
+				return nil, err
+			}
+			json.Unmarshal(dataBytes, &bd)
+			newBox, err := box.NewBox(&bd)
+			if err != nil {
+				return nil, err
+			}
+			objectsMap[o.Name] = newBox
 		case "Cylinder":
 			var cd cylinder.CylinderData
 			dataBytes, err := json.Marshal(o.Data)

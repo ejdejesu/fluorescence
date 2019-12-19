@@ -20,53 +20,65 @@ import (
 	"reflect"
 )
 
+// Parameters holds top-level information about the program's execution and the image's properties
 type Parameters struct {
-	ImageWidth      int            `json:"image_width"`
-	ImageHeight     int            `json:"image_height"`
-	FileType        string         `json:"file_type"`
-	FileDirectory   string         `json:"file_directory"`
-	FileName        string         `json:"file_name"`
-	GammaCorrection int            `json:"gamma_correction"`
-	SampleCount     int            `json:"sample_count"`
-	MaxBounces      int            `json:"max_bounces"`
-	UseBVH          bool           `json:"use_bvh"`
-	BackgroundColor *shading.Color `json:"background_color"`
-	TMin            float64        `json:"t_min"`
-	TMax            float64        `json:"t_max"`
-	Scene           *Scene         `json:"scene"`
+	ImageWidth      int           `json:"image_width"`
+	ImageHeight     int           `json:"image_height"`
+	FileType        string        `json:"file_type"`
+	FileDirectory   string        `json:"file_directory"`
+	Version         string        `json:"version"`
+	GammaCorrection int           `json:"gamma_correction"`
+	SampleCount     int           `json:"sample_count"`
+	TileWidth       int           `json:"tile_width"`
+	TileHeight      int           `json:"tile_height"`
+	MaxBounces      int           `json:"max_bounces"`
+	UseBVH          bool          `json:"use_bvh"`
+	BackgroundColor shading.Color `json:"background_color"`
+	TMin            float64       `json:"t_min"`
+	TMax            float64       `json:"t_max"`
+	SceneFileName   string        `json:"scene_file_name"`
+	Scene           *Scene        `json:"-"`
 }
 
+// Scene holds information about the pictured scene, such as the objects and camera
 type Scene struct {
+	Name            string              `json:"scene_name"`
 	CameraName      string              `json:"camera_name"`
 	Camera          *Camera             `json:"-"`
 	ObjectMaterials []*ObjectMaterial   `json:"objects"`
 	Objects         primitive.Primitive `json:"-"`
 }
 
+// ObjectMaterial is a temporary holding structure to link together geometry objects and materials
 type ObjectMaterial struct {
 	ObjectName   string `json:"object_name"`
 	MaterialName string `json:"material_name"`
 }
 
+// CameraData holds a reference to the Camera struct and name
 type CameraData struct {
 	Name   string  `json:"name"`
 	Camera *Camera `json:"data"`
 }
 
+// ObjectData holds information about a geometry object
 type ObjectData struct {
 	Name     string      `json:"name"`
 	TypeName string      `json:"type"`
 	Data     interface{} `json:"data"`
 }
 
+// MaterialData holds information about a material
 type MaterialData struct {
 	Name     string      `json:"name"`
 	TypeName string      `json:"type"`
 	Data     interface{} `json:"data"`
 }
 
+// LoadConfigs reads and parses the config files for the program
 func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materialsFileName string) (*Parameters, error) {
 
+	// load various json config files into their respective structs
 	totalCameras, err := loadCameras(camerasFileName)
 	if err != nil {
 		return nil, err
@@ -84,6 +96,15 @@ func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materials
 		return nil, err
 	}
 
+	// append the correct directory to the scene filename
+	parameters.SceneFileName = "./config/scenes/" + parameters.SceneFileName
+	// ...and load the scene
+	parameters.Scene, err = loadScene(parameters.SceneFileName)
+	if err != nil {
+		return nil, err
+	}
+
+	// select the correct camera and initialize it
 	selectedCamera, exists := totalCameras[parameters.Scene.CameraName]
 	if !exists {
 		return nil, fmt.Errorf("Selected Camera (%s) not in %s", parameters.Scene.CameraName, camerasFileName)
@@ -94,9 +115,16 @@ func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materials
 		return nil, err
 	}
 
+	// loop over the loosely connected ObjectMaterials and parse the proper materials into the primitives they represent
+
+	// most geometry objects are "bounded" meaning an AABB (Axis-Aligned Bounding Box) can be placed around them.
 	boundedSceneObjects := &primitivelist.PrimitiveList{}
+	// some geometry objects, however, are infinite in nature, which mean they canned be bounded.
+	// a distinction must be made between these to prevent assembling a BVH or other acceleration structure
+	// without a bounding box around certain primitives
 	unboundedSceneObjects := &primitivelist.PrimitiveList{}
 	for _, om := range parameters.Scene.ObjectMaterials {
+		// grab the labelled objects and materials
 		selectedObject, exists := totalObjects[om.ObjectName]
 		if !exists {
 			return nil, fmt.Errorf("Selected Object (%s) not in %s", om.ObjectName, objectsFileName)
@@ -105,14 +133,22 @@ func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materials
 		if !exists {
 			return nil, fmt.Errorf("Selected Material (%s) not in %s", om.MaterialName, materialsFileName)
 		}
+
+		// this is a check to ensure that materials that have a transmission component (i.e. Dielectrics)
+		// are not attached to "open" geometry, such as single-sided triangles and rectangles, so the
+		// transmission commponent can be reversed
+		// this is an arbitrary restriction that is likely to be removed in the future with the user choosing to self-restrict
+		// themselves in a similar manner
 		if reflect.TypeOf(selectedMaterial) == reflect.TypeOf(&material.Dielectric{}) {
 			if !selectedObject.IsClosed() {
 				return nil, fmt.Errorf("Cannot attach refractive or volumetric materials (%s) to non-closed geometry (%s)",
 					om.MaterialName, om.ObjectName)
 			}
 		}
+		// copy the object so we don't override it's material if it is reused in the scene
 		newPrimitive := selectedObject.Copy()
 		newPrimitive.SetMaterial(selectedMaterial)
+		// added to the cooresponding list based on type
 		if newPrimitive.IsInfinite() {
 			unboundedSceneObjects.List = append(unboundedSceneObjects.List, newPrimitive)
 		} else {
@@ -144,20 +180,26 @@ func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materials
 
 	// END MANUAL INSERT
 
+	// if we are using a BVH ...
 	if parameters.UseBVH {
+		// ... construct it from the bounded objects ..
 		sceneBVH, err := bvh.NewBVH(boundedSceneObjects)
 		if err != nil {
 			return nil, err
 		}
+		// ... and set it as the root node if no infinite geometry exists
 		if len(unboundedSceneObjects.List) == 0 {
 			parameters.Scene.Objects = sceneBVH
 		} else {
+			// but if some infinite geometry exists in the scene, we then
+			// establish a new root node as a list of the BVH and the infinite geometry
 			rootNode := &primitivelist.PrimitiveList{
 				List: append(unboundedSceneObjects.List, sceneBVH),
 			}
 			parameters.Scene.Objects = rootNode
 		}
 	} else {
+		// if we are not using a BVH, combine the lists into a core list and set it as the root node
 		parameters.Scene.Objects = &primitivelist.PrimitiveList{
 			List: append(boundedSceneObjects.List, unboundedSceneObjects.List...),
 		}
@@ -402,4 +444,17 @@ func loadParameters(fileName string) (*Parameters, error) {
 		return nil, err
 	}
 	return &parameters, nil
+}
+
+func loadScene(fileName string) (*Scene, error) {
+	sceneBytes, err := ioutil.ReadFile(fileName)
+	if err != nil {
+		return nil, err
+	}
+	var scene Scene
+	err = json.Unmarshal(sceneBytes, &scene)
+	if err != nil {
+		return nil, err
+	}
+	return &scene, nil
 }

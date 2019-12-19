@@ -31,7 +31,8 @@ type Camera struct {
 	verical         geometry.Vector
 }
 
-// Setup is called after initializing the Camera and filling the exported fields
+// Setup is called after allocating the Camera struct and filling the exported fields
+// It fills the unexported fields, such as derived vectors and measures
 func (c *Camera) Setup(p *Parameters) error {
 	c.UpVector = c.UpVector.Unit()
 	c.AspectRatio = float64(p.ImageWidth) / float64(p.ImageHeight)

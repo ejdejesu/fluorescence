@@ -1,61 +1,22 @@
 {
-    "image_width": 3000,
-    "image_height": 3000,
+    "image_width": 500,
+    "image_height": 500,
     "file_type": "png",
     "file_directory": "./output/",
-    "file_name": "0.7.4",
+    "version": "0.7.4",
     "gamma_correction": 2,
     "generate_new_file": true,
-    "sample_count": 2000,
+    "sample_count": 500,
+    "tile_width": 16,
+    "tile_height": 16,
     "max_bounces": 10,
     "use_bvh": false,
     "background_color": {
-        "red": 0.0,
-        "green": 0.0,
-        "blue": 0.0,
-        "alpha": 1.0
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
     },
     "t_min": 1e-7,
     "t_max": 1e+300,
-    "scene": {
-        "camera_name": "main",
-        "objects": [
-            {
-                "object_name": "outer_box",
-                "material_name": "glass"
-            },
-            {
-                "object_name": "inner_box",
-                "material_name": "cyan_diffuse"
-            },
-            {
-                "object_name": "light_center_rectangle",
-                "material_name": "white_light_full"
-            },
-            {
-                "object_name": "top_rectangle",
-                "material_name": "white_diffuse"
-            },
-            {
-                "object_name": "bottom_rectangle",
-                "material_name": "white_diffuse"
-            },
-            {
-                "object_name": "left_rectangle",
-                "material_name": "red_diffuse"
-            },
-            {
-                "object_name": "right_rectangle",
-                "material_name": "green_diffuse"
-            },
-            {
-                "object_name": "far_rectangle",
-                "material_name": "white_diffuse"
-            },
-            {
-                "object_name": "near_rectangle",
-                "material_name": "white_diffuse"
-            }
-        ]
-    }
+    "scene_file_name": "cornell_box_open.json"
 }

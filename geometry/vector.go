@@ -155,7 +155,11 @@ func (v Vector) RefractAround(w Vector, rri float64) (Vector, bool) {
 }
 
 func (v Vector) ToColor() shading.Color {
-	return shading.Color{v.X, v.Y, v.Z, 1.0}
+	return shading.Color{v.X, v.Y, v.Z}
+}
+
+func VectorFromColor(c shading.Color) Vector {
+	return Vector{c.Red, c.Green, c.Blue}
 }
 
 func (v Vector) Copy() Vector {

@@ -516,5 +516,54 @@
                 "z": -4.0
             }
         }
+    },
+    {
+        "name": "far_right_sphere",
+        "type": "Sphere",
+        "data": {
+            "center": {
+                "x": 7.5,
+                "y": 2.5,
+                "z": -7.5
+            },
+            "radius": 2.5
+        }
+    },
+    {
+        "name": "far_left_sphere",
+        "type": "Sphere",
+        "data": {
+            "center": {
+                "x": 3.2,
+                "y": 4.5,
+                "z": -8.0
+            },
+            "radius": 1.5
+        }
+    },
+    {
+        "name": "near_left_sphere",
+        "type": "Sphere",
+        "data": {
+            "center": {
+                "x": 2.5,
+                "y": 2.5,
+                "z": -2.5
+            },
+            "radius": 2.5
+        }
+    },
+    {
+        "name": "near_left_sphere_inner",
+        "type": "Sphere",
+        "data": {
+            "center": {
+                "x": 2.5,
+                "y": 2.5,
+                "z": -2.5
+            },
+            "radius": 2.0,
+            "has_inverted_normals": true
+        }
     }
 ]

@@ -1,0 +1,46 @@
+{
+    "scene_name": "Cornell Box",
+    "camera_name": "main",
+    "objects": [
+        {
+            "object_name": "far_right_sphere",
+            "material_name": "perfect_mirror"
+        },
+        {
+            "object_name": "far_left_sphere",
+            "material_name": "blue_diffuse"
+        },
+        {
+            "object_name": "near_left_sphere",
+            "material_name": "glass"
+        },
+        {
+            "object_name": "light_center_rectangle",
+            "material_name": "white_light_full"
+        },
+        {
+            "object_name": "top_rectangle",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "bottom_rectangle",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "left_rectangle",
+            "material_name": "red_diffuse"
+        },
+        {
+            "object_name": "right_rectangle",
+            "material_name": "green_diffuse"
+        },
+        {
+            "object_name": "far_rectangle",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "near_rectangle",
+            "material_name": "white_diffuse"
+        }
+    ]
+}

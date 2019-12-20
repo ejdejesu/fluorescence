@@ -2,19 +2,20 @@ package material
 
 import (
 	"fluorescence/geometry"
+	"fluorescence/shading"
 	"math/rand"
 )
 
 type Lambertian struct {
-	R geometry.Vector `json:"r"`
-	E geometry.Vector `json:"e"`
+	R shading.Color `json:"r"`
+	E shading.Color `json:"e"`
 }
 
-func (l Lambertian) Reflectance() geometry.Vector {
+func (l Lambertian) Reflectance() shading.Color {
 	return l.R
 }
 
-func (l Lambertian) Emittance() geometry.Vector {
+func (l Lambertian) Emittance() shading.Color {
 	return l.E
 }
 

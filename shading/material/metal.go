@@ -2,24 +2,25 @@ package material
 
 import (
 	"fluorescence/geometry"
+	"fluorescence/shading"
 	"math/rand"
 )
 
 // Metal is an implementation of a Material
 // It represents a perfect or near-perfect specularly reflective material
 type Metal struct {
-	R         geometry.Vector `json:"r"`
-	E         geometry.Vector `json:"e"`
-	Fuzziness float64         `json:"fuzziness"`
+	R         shading.Color `json:"r"`
+	E         shading.Color `json:"e"`
+	Fuzziness float64       `json:"fuzziness"`
 }
 
 // Reflectance returns the reflectance of this material
-func (m Metal) Reflectance() geometry.Vector {
+func (m Metal) Reflectance() shading.Color {
 	return m.R
 }
 
 // Emittance returns the emittance of this material
-func (m Metal) Emittance() geometry.Vector {
+func (m Metal) Emittance() shading.Color {
 	return m.E
 }
 

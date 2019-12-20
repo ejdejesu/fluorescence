@@ -2,21 +2,22 @@ package material
 
 import (
 	"fluorescence/geometry"
+	"fluorescence/shading"
 	"math"
 	"math/rand"
 )
 
 type Dielectric struct {
-	R               geometry.Vector `json:"r"`
-	E               geometry.Vector `json:"e"`
-	RefractiveIndex float64         `json:"refractive_index"`
+	R               shading.Color `json:"r"`
+	E               shading.Color `json:"e"`
+	RefractiveIndex float64       `json:"refractive_index"`
 }
 
-func (d Dielectric) Reflectance() geometry.Vector {
+func (d Dielectric) Reflectance() shading.Color {
 	return d.R
 }
 
-func (d Dielectric) Emittance() geometry.Vector {
+func (d Dielectric) Emittance() shading.Color {
 	return d.E
 }
 

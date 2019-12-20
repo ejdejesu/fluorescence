@@ -27,7 +27,7 @@ type Parameters struct {
 	FileType        string        `json:"file_type"`
 	FileDirectory   string        `json:"file_directory"`
 	Version         string        `json:"version"`
-	GammaCorrection int           `json:"gamma_correction"`
+	GammaCorrection float64       `json:"gamma_correction"`
 	SampleCount     int           `json:"sample_count"`
 	TileWidth       int           `json:"tile_width"`
 	TileHeight      int           `json:"tile_height"`

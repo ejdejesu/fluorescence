@@ -55,29 +55,6 @@ func (v Vector) Unit() Vector {
 	return v.DivScalar(v.Magnitude())
 }
 
-func (v Vector) Clamp(min, max float64) Vector {
-	return Vector{
-		clamp(v.X, min, max),
-		clamp(v.Y, min, max),
-		clamp(v.Z, min, max)}
-}
-
-func (v Vector) ClampInPlace(min, max float64) Vector {
-	v.X = clamp(v.X, min, max)
-	v.Y = clamp(v.Y, min, max)
-	v.Z = clamp(v.Z, min, max)
-	return v
-}
-
-func clamp(val, min, max float64) float64 {
-	if val < min {
-		return min
-	} else if val > max {
-		return max
-	}
-	return val
-}
-
 func (v Vector) Dot(w Vector) float64 {
 	return v.X*w.X + v.Y*w.Y + v.Z*w.Z
 }

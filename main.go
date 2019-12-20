@@ -42,7 +42,7 @@ func main() {
 	runtime.LockOSThread()
 
 	startTime := time.Now()
-	go Trace(parameters, img, doneChan, maxThreads)
+	go TraceImage(parameters, img, doneChan, maxThreads)
 
 	doneCount := 0
 	printInterval := pixelCount / 1000

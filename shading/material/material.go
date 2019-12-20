@@ -2,12 +2,13 @@ package material
 
 import (
 	"fluorescence/geometry"
+	"fluorescence/shading"
 	"math/rand"
 )
 
 type Material interface {
-	Reflectance() geometry.Vector
-	Emittance() geometry.Vector
+	Reflectance() shading.Color
+	Emittance() shading.Color
 	IsSpecular() bool
 	Scatter(RayHit, *rand.Rand) (geometry.Ray, bool)
 }

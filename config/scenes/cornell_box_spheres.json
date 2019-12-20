@@ -8,10 +8,14 @@
         },
         {
             "object_name": "far_left_sphere",
-            "material_name": "blue_diffuse"
+            "material_name": "cyan_diffuse"
         },
         {
             "object_name": "near_left_sphere",
+            "material_name": "glass"
+        },
+        {
+            "object_name": "near_left_sphere_inner",
             "material_name": "glass"
         },
         {

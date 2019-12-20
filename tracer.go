@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fluorescence/geometry"
+	"fluorescence/shading"
 	"image"
 	"math"
 	"math/rand"
@@ -17,7 +18,7 @@ type Tile struct {
 	Span   geometry.Vector
 }
 
-func Trace(params *Parameters, img *image.RGBA64, doneChan chan<- int, maxThreads int64) {
+func TraceImage(params *Parameters, img *image.RGBA64, doneChan chan<- int, maxThreads int64) {
 
 	tiles := getTiles(params, img)
 
@@ -35,49 +36,51 @@ func traceTile(p *Parameters, rng *rand.Rand, img *image.RGBA64, dc chan<- int, 
 	defer sem.Release(1)
 	for y := t.Origin.Y; y < t.Origin.Y+t.Span.Y; y++ {
 		for x := t.Origin.X; x < t.Origin.X+t.Span.X; x++ {
-			colorAccumulator := geometry.VECTOR_ZERO
-			for s := 0; s < p.SampleCount; s++ {
-				u := (float64(x) + rng.Float64()) / float64(p.ImageWidth)
-				v := (float64(y) + rng.Float64()) / float64(p.ImageHeight)
+			pixelColor := tracePixel(p, int(x), int(y), rng)
 
-				ray := p.Scene.Camera.GetRay(u, v, rng)
-
-				tempColor := colorOf(p, ray, rng, 0)
-				colorAccumulator = colorAccumulator.Add(tempColor)
-			}
-			colorAccumulator = colorAccumulator.DivScalar(float64(p.SampleCount)).Clamp(0, 1).Pow(1.0 / float64(p.GammaCorrection))
-			color := colorAccumulator.ToColor()
-
-			img.SetRGBA64(int(x), p.ImageHeight-int(y)-1, color.ToRGBA64())
+			img.SetRGBA64(int(x), p.ImageHeight-int(y)-1, pixelColor.ToRGBA64())
 			dc <- 1
 		}
 	}
 }
 
-func colorOf(parameters *Parameters, r geometry.Ray, rng *rand.Rand, depth int) geometry.Vector {
+func tracePixel(p *Parameters, x, y int, rng *rand.Rand) shading.Color {
+	pixelColor := shading.Color{}
+	for s := 0; s < p.SampleCount; s++ {
+		u := (float64(x) + rng.Float64()) / float64(p.ImageWidth)
+		v := (float64(y) + rng.Float64()) / float64(p.ImageHeight)
 
-	backgroundColor := geometry.VectorFromColor(parameters.BackgroundColor)
+		ray := p.Scene.Camera.GetRay(u, v, rng)
+
+		tempColor := traceRay(p, ray, rng, 0)
+		pixelColor = pixelColor.Add(tempColor)
+	}
+	return pixelColor.DivScalar(float64(p.SampleCount)).Clamp(0, 1).Pow(1.0 / float64(p.GammaCorrection))
+
+}
+
+func traceRay(parameters *Parameters, r geometry.Ray, rng *rand.Rand, depth int) shading.Color {
 
 	if depth > parameters.MaxBounces {
-		return geometry.VECTOR_ZERO
+		return shading.COLOR_BLACK
 	}
 	rayHit, hitSomething := parameters.Scene.Objects.Intersection(r, parameters.TMin, parameters.TMax)
 	if !hitSomething {
-		return backgroundColor
+		return parameters.BackgroundColor
 	}
 
 	mat := rayHit.Material
 
-	if mat.Reflectance() == geometry.VECTOR_ZERO {
+	if mat.Reflectance() == shading.COLOR_BLACK {
 		return mat.Emittance()
 	}
 
 	scatteredRay, wasScattered := rayHit.Material.Scatter(*rayHit, rng)
 	if !wasScattered {
-		return geometry.VECTOR_ZERO
+		return shading.COLOR_BLACK
 	}
-	incomingColor := colorOf(parameters, scatteredRay, rng, depth+1)
-	return mat.Emittance().Add(mat.Reflectance().MultVector(incomingColor))
+	incomingColor := traceRay(parameters, scatteredRay, rng, depth+1)
+	return mat.Emittance().Add(mat.Reflectance().MultColor(incomingColor))
 }
 
 func getTiles(p *Parameters, i *image.RGBA64) []Tile {

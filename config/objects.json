@@ -240,6 +240,24 @@
         }
     },
     {
+        "name": "light_center_rectangle_quarter",
+        "type": "Rectangle",
+        "data": {
+            "a": {
+                "x": 3.75,
+                "y": 9.9999,
+                "z": -3.75
+            },
+            "b": {
+                "x": 6.25,
+                "y": 9.9999,
+                "z": -6.25
+            },
+            "is_culled": true,
+            "has_negative_normal": true
+        }
+    },
+    {
         "name": "light_far_left_rectangle",
         "type": "Rectangle",
         "data": {

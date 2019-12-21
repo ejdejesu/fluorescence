@@ -132,7 +132,7 @@ func LoadConfigs(
 	// select the correct camera and initialize it
 	selectedCamera, exists := totalCameras[parameters.Scene.CameraName]
 	if !exists {
-		return nil, fmt.Errorf("Selected Camera (%s) not in %s", parameters.Scene.CameraName, camerasFileName)
+		return nil, fmt.Errorf("selected Camera (%s) not in %s", parameters.Scene.CameraName, camerasFileName)
 	}
 	parameters.Scene.Camera = selectedCamera
 	err = parameters.Scene.Camera.Setup(parameters)
@@ -152,11 +152,11 @@ func LoadConfigs(
 		// grab the labelled objects and materials
 		selectedObject, exists := totalObjects[om.ObjectName]
 		if !exists {
-			return nil, fmt.Errorf("Selected Object (%s) not in %s", om.ObjectName, objectsFileName)
+			return nil, fmt.Errorf("selected Object (%s) not in %s", om.ObjectName, objectsFileName)
 		}
 		selectedMaterial, exists := totalMaterials[om.MaterialName]
 		if !exists {
-			return nil, fmt.Errorf("Selected Material (%s) not in %s", om.MaterialName, materialsFileName)
+			return nil, fmt.Errorf("selected Material (%s) not in %s", om.MaterialName, materialsFileName)
 		}
 
 		// this is a check to ensure that materials that have a transmission component (i.e. Dielectrics)
@@ -166,7 +166,7 @@ func LoadConfigs(
 		// themselves in a similar manner
 		if reflect.TypeOf(selectedMaterial) == reflect.TypeOf(&material.Dielectric{}) {
 			if !selectedObject.IsClosed() {
-				return nil, fmt.Errorf("Cannot attach refractive or volumetric materials (%s) to non-closed geometry (%s)",
+				return nil, fmt.Errorf("cannot attach refractive or volumetric materials (%s) to non-closed geometry (%s)",
 					om.MaterialName, om.ObjectName)
 			}
 		}
@@ -414,7 +414,7 @@ func loadObjects(fileName string) (map[string]primitive.Primitive, error) {
 			}
 			objectsMap[o.Name] = newTriangle
 		default:
-			return nil, fmt.Errorf("Type (%s) not a valid primitive type", o.TypeName)
+			return nil, fmt.Errorf("type (%s) not a valid primitive type", o.TypeName)
 		}
 	}
 	return objectsMap, nil
@@ -463,7 +463,7 @@ func loadTextures(fileName string) (map[string]texture.Texture, error) {
 			}
 			texturesMap[t.Name] = &i
 		default:
-			return nil, fmt.Errorf("Type (%s) not a valid texture type", t.TypeName)
+			return nil, fmt.Errorf("type (%s) not a valid texture type", t.TypeName)
 		}
 	}
 	return texturesMap, nil
@@ -496,24 +496,24 @@ func loadMaterials(fileName, texturesFileName string, texturesMap map[string]tex
 			if m.ReflectanceTextureName == "" {
 				l.ReflectanceTexture, ok = texturesMap["default"]
 				if !ok {
-					return nil, fmt.Errorf("Selected Texture (%s) not in %s", "default", texturesFileName)
+					return nil, fmt.Errorf("selected Texture (%s) not in %s", "default", texturesFileName)
 				}
 			} else {
 				l.ReflectanceTexture, ok = texturesMap[m.ReflectanceTextureName]
 				if !ok {
-					return nil, fmt.Errorf("Selected Texture (%s) not in %s", m.ReflectanceTextureName, texturesFileName)
+					return nil, fmt.Errorf("selected Texture (%s) not in %s", m.ReflectanceTextureName, texturesFileName)
 				}
 			}
 
 			if m.EmittanceTextureName == "" {
 				l.EmittanceTexture, ok = texturesMap["default"]
 				if !ok {
-					return nil, fmt.Errorf("Selected Texture (%s) not in %s", "default", texturesFileName)
+					return nil, fmt.Errorf("selected Texture (%s) not in %s", "default", texturesFileName)
 				}
 			} else {
 				l.EmittanceTexture, ok = texturesMap[m.EmittanceTextureName]
 				if !ok {
-					return nil, fmt.Errorf("Selected Texture (%s) not in %s", m.EmittanceTextureName, texturesFileName)
+					return nil, fmt.Errorf("selected Texture (%s) not in %s", m.EmittanceTextureName, texturesFileName)
 				}
 			}
 			materialsMap[m.Name] = &l
@@ -529,24 +529,24 @@ func loadMaterials(fileName, texturesFileName string, texturesMap map[string]tex
 			if m.ReflectanceTextureName == "" {
 				mtl.ReflectanceTexture, ok = texturesMap["default"]
 				if !ok {
-					return nil, fmt.Errorf("Selected Texture (%s) not in %s", "default", texturesFileName)
+					return nil, fmt.Errorf("selected Texture (%s) not in %s", "default", texturesFileName)
 				}
 			} else {
 				mtl.ReflectanceTexture, ok = texturesMap[m.ReflectanceTextureName]
 				if !ok {
-					return nil, fmt.Errorf("Selected Texture (%s) not in %s", m.ReflectanceTextureName, texturesFileName)
+					return nil, fmt.Errorf("selected Texture (%s) not in %s", m.ReflectanceTextureName, texturesFileName)
 				}
 			}
 
 			if m.EmittanceTextureName == "" {
 				mtl.EmittanceTexture, ok = texturesMap["default"]
 				if !ok {
-					return nil, fmt.Errorf("Selected Texture (%s) not in %s", "default", texturesFileName)
+					return nil, fmt.Errorf("selected Texture (%s) not in %s", "default", texturesFileName)
 				}
 			} else {
 				mtl.EmittanceTexture, ok = texturesMap[m.EmittanceTextureName]
 				if !ok {
-					return nil, fmt.Errorf("Selected Texture (%s) not in %s", m.EmittanceTextureName, texturesFileName)
+					return nil, fmt.Errorf("selected Texture (%s) not in %s", m.EmittanceTextureName, texturesFileName)
 				}
 			}
 			materialsMap[m.Name] = &mtl
@@ -561,28 +561,28 @@ func loadMaterials(fileName, texturesFileName string, texturesMap map[string]tex
 			if m.ReflectanceTextureName == "" {
 				d.ReflectanceTexture, ok = texturesMap["default"]
 				if !ok {
-					return nil, fmt.Errorf("Selected Texture (%s) not in %s", "default", texturesFileName)
+					return nil, fmt.Errorf("selected Texture (%s) not in %s", "default", texturesFileName)
 				}
 			} else {
 				d.ReflectanceTexture, ok = texturesMap[m.ReflectanceTextureName]
 				if !ok {
-					return nil, fmt.Errorf("Selected Texture (%s) not in %s", m.ReflectanceTextureName, texturesFileName)
+					return nil, fmt.Errorf("selected Texture (%s) not in %s", m.ReflectanceTextureName, texturesFileName)
 				}
 			}
 			if m.EmittanceTextureName == "" {
 				d.EmittanceTexture, ok = texturesMap["default"]
 				if !ok {
-					return nil, fmt.Errorf("Selected Texture (%s) not in %s", "default", texturesFileName)
+					return nil, fmt.Errorf("selected Texture (%s) not in %s", "default", texturesFileName)
 				}
 			} else {
 				d.EmittanceTexture, ok = texturesMap[m.EmittanceTextureName]
 				if !ok {
-					return nil, fmt.Errorf("Selected Texture (%s) not in %s", m.EmittanceTextureName, texturesFileName)
+					return nil, fmt.Errorf("selected Texture (%s) not in %s", m.EmittanceTextureName, texturesFileName)
 				}
 			}
 			materialsMap[m.Name] = &d
 		default:
-			return nil, fmt.Errorf("Type (%s) not a valid material type", m.TypeName)
+			return nil, fmt.Errorf("type (%s) not a valid material type", m.TypeName)
 		}
 	}
 	return materialsMap, nil

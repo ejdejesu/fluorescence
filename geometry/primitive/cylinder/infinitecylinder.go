@@ -24,16 +24,16 @@ type InfiniteCylinderData struct {
 
 func NewInfiniteCylinder(icd *InfiniteCylinderData) (*infiniteCylinder, error) {
 	// if icd.Ray == nil {
-	// 	return nil, fmt.Errorf("InfiniteCylinder ray is nil")
+	// 	return nil, fmt.Errorf("infiniteCylinder ray is nil")
 	// }
 	// if icd.Ray.Origin == nil || icd.Ray.Direction == nil {
-	// 	return nil, fmt.Errorf("InfiniteCylinder ray origin or ray direction is nil")
+	// 	return nil, fmt.Errorf("infiniteCylinder ray origin or ray direction is nil")
 	// }
 	if icd.Ray.Direction.Magnitude() == 0 {
-		return nil, fmt.Errorf("InfiniteCylinder ray direction is zero vector")
+		return nil, fmt.Errorf("infiniteCylinder ray direction is zero vector")
 	}
 	if icd.Radius <= 0.0 {
-		return nil, fmt.Errorf("InfiniteCylinder radius is 0 or negative")
+		return nil, fmt.Errorf("infiniteCylinder radius is 0 or negative")
 	}
 	icd.Ray.Direction.Unit()
 	return &infiniteCylinder{

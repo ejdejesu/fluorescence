@@ -27,10 +27,10 @@ type DiskData struct {
 
 func NewDisk(dd *DiskData) (*disk, error) {
 	// if dd.Center == nil || dd.Normal == nil {
-	// 	return nil, fmt.Errorf("Disk center or normal is nil")
+	// 	return nil, fmt.Errorf("disk center or normal is nil")
 	// }
 	if dd.Radius <= 0.0 {
-		return nil, fmt.Errorf("Disk radius is 0 or negative")
+		return nil, fmt.Errorf("disk radius is 0 or negative")
 	}
 	return &disk{
 		center:        dd.Center,

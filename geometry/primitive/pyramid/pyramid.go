@@ -25,10 +25,10 @@ type PyramidData struct {
 
 func NewPyramid(pd *PyramidData) (*pyramid, error) {
 	if pd.Height <= 0 {
-		return nil, fmt.Errorf("Pyramid height is 0 or negative")
+		return nil, fmt.Errorf("pyramid height is 0 or negative")
 	}
 	if pd.A.Y != pd.B.Y {
-		return nil, fmt.Errorf("Pyramid is not directed upwards")
+		return nil, fmt.Errorf("pyramid is not directed upwards")
 	}
 
 	c1 := geometry.MinOf(pd.A, pd.B)

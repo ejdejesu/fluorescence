@@ -23,10 +23,10 @@ type PlaneData struct {
 
 func NewPlane(pd *PlaneData) (*plane, error) {
 	// if pd.Point == nil || pd.Normal == nil {
-	// 	return nil, fmt.Errorf("Plane point or normal is nil")
+	// 	return nil, fmt.Errorf("plane point or normal is nil")
 	// }
 	if pd.Normal.Magnitude() == 0.0 {
-		return nil, fmt.Errorf("Plane normal is zero vector")
+		return nil, fmt.Errorf("plane normal is zero vector")
 	}
 	return &plane{
 		point:    pd.Point,

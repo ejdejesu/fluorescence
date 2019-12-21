@@ -21,12 +21,12 @@ type RectangleData struct {
 
 func NewRectangle(rd *RectangleData) (*rectangle, error) {
 	// if rd.A == nil || rd.B == nil {
-	// 	return nil, fmt.Errorf("Rectangle a or b is nil")
+	// 	return nil, fmt.Errorf("rectangle a or b is nil")
 	// }
 	if (rd.A.X == rd.B.X && rd.A.Y == rd.B.Y) ||
 		(rd.A.X == rd.B.X && rd.A.Z == rd.B.Z) ||
 		(rd.A.Y == rd.B.Y && rd.A.Z == rd.B.Z) {
-		return nil, fmt.Errorf("Rectangle resolves to line or point")
+		return nil, fmt.Errorf("rectangle resolves to line or point")
 	}
 
 	if rd.A.X == rd.B.X {
@@ -39,7 +39,7 @@ func NewRectangle(rd *RectangleData) (*rectangle, error) {
 		// lies on XY Plane
 		return &rectangle{newXYRectangle(rd.A, rd.B, rd.IsCulled, rd.HasNegativeNormal)}, nil
 	}
-	return nil, fmt.Errorf("Points do not lie on on axis-aligned plane")
+	return nil, fmt.Errorf("points do not lie on on axis-aligned plane")
 }
 
 func (r *rectangle) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {

@@ -30,19 +30,19 @@ type HollowDiskData struct {
 
 func NewHollowDisk(hdd *HollowDiskData) (*hollowDisk, error) {
 	// if hdd.Center == nil || hdd.Normal == nil {
-	// 	return nil, fmt.Errorf("HollowDisk center or normal is nil")
+	// 	return nil, fmt.Errorf("hollowDisk center or normal is nil")
 	// }
 	if hdd.InnerRadius > hdd.OuterRadius {
-		return nil, fmt.Errorf("HollowDisk inner radius is lesser than radius")
+		return nil, fmt.Errorf("hollowDisk inner radius is lesser than radius")
 	}
 	if hdd.InnerRadius == hdd.OuterRadius {
-		return nil, fmt.Errorf("HollowDisk outer radius equals inner radius")
+		return nil, fmt.Errorf("hollowDisk outer radius equals inner radius")
 	}
 	if hdd.InnerRadius < 0.0 {
-		return nil, fmt.Errorf("HollowDisk inner radius is negative")
+		return nil, fmt.Errorf("hollowDisk inner radius is negative")
 	}
 	if hdd.OuterRadius <= 0 {
-		return nil, fmt.Errorf("HollowDisk outer radius is 0 or negative")
+		return nil, fmt.Errorf("hollowDisk outer radius is 0 or negative")
 	}
 	return &hollowDisk{
 		center:             hdd.Center,

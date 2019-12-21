@@ -27,7 +27,7 @@ type TriangleData struct {
 
 func NewTriangle(td *TriangleData) (*triangle, error) {
 	if td.A == td.B || td.A == td.C || td.B == td.C {
-		return nil, fmt.Errorf("Triangle resolves to line or point")
+		return nil, fmt.Errorf("triangle resolves to line or point")
 	}
 	return &triangle{
 		a:        td.A,

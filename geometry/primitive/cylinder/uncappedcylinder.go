@@ -28,13 +28,13 @@ type UncappedCylinderData struct {
 
 func NewUncappedCylinder(ucd *UncappedCylinderData) (*uncappedCylinder, error) {
 	// if ucd.A == nil || ucd.B == nil {
-	// 	return nil, fmt.Errorf("UncappedCylinder ray is nil")
+	// 	return nil, fmt.Errorf("uncappedCylinder ray is nil")
 	// }
 	if ucd.A.To(ucd.B).Magnitude() == 0 {
-		return nil, fmt.Errorf("UncappedCylinder length is zero vector")
+		return nil, fmt.Errorf("uncappedCylinder length is zero vector")
 	}
 	if ucd.Radius <= 0.0 {
-		return nil, fmt.Errorf("UncappedCylinder radius is 0 or negative")
+		return nil, fmt.Errorf("uncappedCylinder radius is 0 or negative")
 	}
 	r := geometry.Ray{
 		Origin:    ucd.A,

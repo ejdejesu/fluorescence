@@ -25,10 +25,10 @@ type SphereData struct {
 
 func NewSphere(sd *SphereData) (*sphere, error) {
 	// if sd.Center == nil {
-	// 	return nil, fmt.Errorf("Sphere center is nil")
+	// 	return nil, fmt.Errorf("sphere center is nil")
 	// }
 	if sd.Radius <= 0 {
-		return nil, fmt.Errorf("Sphere radius is 0 or negative")
+		return nil, fmt.Errorf("sphere radius is 0 or negative")
 	}
 	newSphere := &sphere{
 		center:             sd.Center,

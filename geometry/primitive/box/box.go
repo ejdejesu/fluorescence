@@ -26,7 +26,7 @@ func NewBox(bd *BoxData) (*box, error) {
 	c8 := geometry.MaxOf(bd.A, bd.B)
 
 	if c1.X == c8.X || c1.Y == c8.Y || c1.Z == c8.Z {
-		return nil, fmt.Errorf("Box resolves to point, line, or plane")
+		return nil, fmt.Errorf("box resolves to point, line, or plane")
 	}
 
 	rNegX, err := rectangle.NewRectangle(&rectangle.RectangleData{

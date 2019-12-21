@@ -12,6 +12,133 @@
         }
     },
     {
+        "name": "large_center_sphere_outer",
+        "type": "Sphere",
+        "data": {
+            "center": {
+                "x": 5.0,
+                "y": 5.0,
+                "z": -5.0
+            },
+            "radius": 4.0
+        }
+    },
+    {
+        "name": "large_center_sphere_inner",
+        "type": "Sphere",
+        "data": {
+            "center": {
+                "x": 5.0,
+                "y": 5.0,
+                "z": -5.0
+            },
+            "radius": 3.9
+        }
+    },
+    {
+        "name": "center_platform_cylinder",
+        "type": "Cylinder",
+        "data": {
+            "a": {
+                "x": 5.0,
+                "y": 0.0,
+                "z": -5.0
+            },
+            "b": {
+                "x": 5.0,
+                "y": 1.0,
+                "z": -5.0
+            },
+            "radius": 2.0
+        }
+    },
+    {
+        "name": "center_platform_cylinder_outer",
+        "type": "HollowCylinder",
+        "data": {
+            "a": {
+                "x": 5.0,
+                "y": 0.0,
+                "z": -5.0
+            },
+            "b": {
+                "x": 5.0,
+                "y": 1.0,
+                "z": -5.0
+            },
+            "inner_radius": 1.5,
+            "outer_radius": 2.0
+        }
+    },
+    {
+        "name": "center_platform_cylinder_inner",
+        "type": "Cylinder",
+        "data": {
+            "a": {
+                "x": 5.0,
+                "y": 0.0,
+                "z": -5.0
+            },
+            "b": {
+                "x": 5.0,
+                "y": 1.0,
+                "z": -5.0
+            },
+            "radius": 1.499
+        }
+    },
+    {
+        "name": "center_platform_cylinder_lower",
+        "type": "Cylinder",
+        "data": {
+            "a": {
+                "x": 5.0,
+                "y": 0.0,
+                "z": -5.0
+            },
+            "b": {
+                "x": 5.0,
+                "y": 0.3,
+                "z": -5.0
+            },
+            "radius": 2.0
+        }
+    },
+    {
+        "name": "center_platform_cylinder_middle",
+        "type": "Cylinder",
+        "data": {
+            "a": {
+                "x": 5.0,
+                "y": 0.3,
+                "z": -5.0
+            },
+            "b": {
+                "x": 5.0,
+                "y": 0.7,
+                "z": -5.0
+            },
+            "radius": 2.0
+        }
+    },
+    {
+        "name": "center_platform_cylinder_upper",
+        "type": "Cylinder",
+        "data": {
+            "a": {
+                "x": 5.0,
+                "y": 0.7,
+                "z": -5.0
+            },
+            "b": {
+                "x": 5.0,
+                "y": 1.0,
+                "z": -5.0
+            },
+            "radius": 2.0
+        }
+    },
+    {
         "name": "large_near_center_sphere",
         "type": "Sphere",
         "data": {
@@ -93,6 +220,43 @@
                 "z": -7.5
             },
             "radius": 2.0
+        }
+    },
+    {
+        "name": "hdr_sphere",
+        "type": "Sphere",
+        "data": {
+            "center": {
+                "x": 5.0,
+                "y": 5.0,
+                "z": -5.0
+            },
+            "radius": 1000000.0
+        },
+        "has_inverted_normals": true
+    },
+    {
+        "name": "earth_sphere",
+        "type": "Sphere",
+        "data": {
+            "center": {
+                "x": 5.0,
+                "y": 5.0,
+                "z": -5.0
+            },
+            "radius": 2.0
+        }
+    },
+    {
+        "name": "sun_sphere",
+        "type": "Sphere",
+        "data": {
+            "center": {
+                "x": 33.2590,
+                "y": 5.0,
+                "z": 33.2590
+            },
+            "radius": 2.180
         }
     },
     {

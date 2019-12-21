@@ -29,6 +29,7 @@ type Parameters struct {
 	FileDirectory   string        `json:"file_directory"`
 	Version         string        `json:"version"`
 	GammaCorrection float64       `json:"gamma_correction"`
+	TextureGamma    float64       `json:"texture_gamma"`
 	SampleCount     int           `json:"sample_count"`
 	TileWidth       int           `json:"tile_width"`
 	TileHeight      int           `json:"tile_height"`
@@ -94,22 +95,27 @@ func LoadConfigs(
 	texturesFileName string) (*Parameters, error) {
 
 	// load various json config files into their respective structs
+	fmt.Printf("\tLoading Cameras...\n")
 	totalCameras, err := loadCameras(camerasFileName)
 	if err != nil {
 		return nil, err
 	}
+	fmt.Printf("\tLoading Objects...\n")
 	totalObjects, err := loadObjects(objectsFileName)
 	if err != nil {
 		return nil, err
 	}
+	fmt.Printf("\tLoading Textures...\n")
 	totalTextures, err := loadTextures(texturesFileName)
 	if err != nil {
 		return nil, err
 	}
+	fmt.Printf("\tLoading Materials...\n")
 	totalMaterials, err := loadMaterials(materialsFileName, texturesFileName, totalTextures)
 	if err != nil {
 		return nil, err
 	}
+	fmt.Printf("\tLoading Parameters...\n")
 	parameters, err := loadParameters(parametersFileName)
 	if err != nil {
 		return nil, err
@@ -445,6 +451,12 @@ func loadTextures(fileName string) (map[string]texture.Texture, error) {
 				return nil, err
 			}
 			json.Unmarshal(dataBytes, &i)
+			if i.Magnitude == 0.0 {
+				i.Magnitude = 1.0
+			}
+			if i.Gamma == 0.0 {
+				i.Gamma = 1.0
+			}
 			err = i.Load()
 			if err != nil {
 				return nil, err

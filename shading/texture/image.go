@@ -11,8 +11,10 @@ import (
 )
 
 type Image struct {
-	FileName string      `json:"image_file_name"`
-	Image    image.Image `json:"-"`
+	FileName  string      `json:"image_file_name"`
+	Gamma     float64     `json:"gamma"`
+	Magnitude float64     `json:"magnitude"`
+	Image     image.Image `json:"-"`
 }
 
 func (it *Image) Load() error {
@@ -40,5 +42,5 @@ func (it *Image) Value(u, v float64) shading.Color {
 	x := int(u * float64(it.Image.Bounds().Dx()-1))
 	y := int((1.0 - v) * float64(it.Image.Bounds().Dy()-1))
 	color := it.Image.At(x, y)
-	return shading.MakeColor(color)
+	return shading.MakeColor(color).Pow(it.Gamma).MultScalar(it.Magnitude)
 }

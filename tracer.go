@@ -13,9 +13,10 @@ import (
 	"golang.org/x/sync/semaphore"
 )
 
+// Tile holds information about a section of pixels on the image
 type Tile struct {
-	Origin geometry.Point
-	Span   geometry.Vector
+	Origin geometry.Point  // Top left corner of Tile
+	Span   geometry.Vector // Width and Height of Tile
 }
 
 // TraceImage is the powerhouse function, driving the raycasting algorith by casting rays into the scene
@@ -58,7 +59,7 @@ func tracePixel(p *Parameters, x, y int, rng *rand.Rand) shading.Color {
 		tempColor := traceRay(p, ray, rng, 0)
 		pixelColor = pixelColor.Add(tempColor)
 	}
-	return pixelColor.DivScalar(float64(p.SampleCount)).Clamp(0, 1).Pow(1.0 / float64(p.GammaCorrection))
+	return pixelColor.DivScalar(float64(p.SampleCount)).Clamp(0, 1).Pow(1.0 / p.GammaCorrection)
 
 }
 

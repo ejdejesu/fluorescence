@@ -9,7 +9,7 @@
         "name": "white_glow",
         "type": "Lambertian",
         "reflectance_texture_name": "color_white_real",
-        "emittance_texture_name": "color_white",
+        "emittance_texture_name": "color_white_spec",
         "data": {}
     },
     {
@@ -109,7 +109,7 @@
         "data": {}
     },
     {
-        "name": "white_light_full",
+        "name": "white_light",
         "type": "Lambertian",
         "emittance_texture_name": "color_white",
         "data": {}
@@ -139,7 +139,7 @@
         "data": {}
     },
     {
-        "name": "red_light_full",
+        "name": "red_light",
         "type": "Lambertian",
         "emittance_texture_name": "color_red",
         "data": {}
@@ -169,7 +169,7 @@
         "data": {}
     },
     {
-        "name": "green_light_full",
+        "name": "green_light",
         "type": "Lambertian",
         "emittance_texture_name": "color_green",
         "data": {}
@@ -199,7 +199,7 @@
         "data": {}
     },
     {
-        "name": "blue_light_full",
+        "name": "blue_light",
         "type": "Lambertian",
         "emittance_texture_name": "color_blue",
         "data": {}
@@ -229,7 +229,7 @@
         "data": {}
     },
     {
-        "name": "yellow_light_full",
+        "name": "yellow_light",
         "type": "Lambertian",
         "emittance_texture_name": "color_yellow",
         "data": {}
@@ -259,7 +259,7 @@
         "data": {}
     },
     {
-        "name": "magenta_light_full",
+        "name": "magenta_light",
         "type": "Lambertian",
         "emittance_texture_name": "color_magenta",
         "data": {}
@@ -289,7 +289,7 @@
         "data": {}
     },
     {
-        "name": "cyan_light_full",
+        "name": "cyan_light",
         "type": "Lambertian",
         "emittance_texture_name": "color_cyan",
         "data": {}
@@ -399,8 +399,97 @@
     {
         "name": "image_earth_day_emissive",
         "type": "Lambertian",
-        "reflectance_texture_name": "image_earth_day",
         "emittance_texture_name": "image_earth_day",
+        "data": {}
+    },
+    {
+        "name": "image_earth_night",
+        "type": "Lambertian",
+        "reflectance_texture_name": "image_earth_night",
+        "data": {}
+    },
+    {
+        "name": "image_earth_night_emissive",
+        "type": "Lambertian",
+        "emittance_texture_name": "image_earth_night",
+        "data": {}
+    },
+    {
+        "name": "image_stars_milky_way",
+        "type": "Lambertian",
+        "reflectance_texture_name": "image_stars_milky_way",
+        "data": {}
+    },
+    {
+        "name": "image_stars_milky_way_emissive",
+        "type": "Lambertian",
+        "emittance_texture_name": "image_stars_milky_way",
+        "data": {}
+    },
+    {
+        "name": "image_8k_stars_milky_way",
+        "type": "Lambertian",
+        "reflectance_texture_name": "image_8k_stars_milky_way",
+        "data": {}
+    },
+    {
+        "name": "image_8k_stars_milky_way_emissive",
+        "type": "Lambertian",
+        "emittance_texture_name": "image_8k_stars_milky_way",
+        "data": {}
+    },
+    {
+        "name": "image_sun",
+        "type": "Lambertian",
+        "reflectance_texture_name": "image_sun",
+        "data": {}
+    },
+    {
+        "name": "image_sun_emissive",
+        "type": "Lambertian",
+        "emittance_texture_name": "image_sun",
+        "data": {}
+    },
+    {
+        "name": "image_poliigon_wood_floor_044",
+        "type": "Lambertian",
+        "reflectance_texture_name": "image_poliigon_wood_floor_044",
+        "data": {}
+    },
+    {
+        "name": "image_poliigon_tiles_onyx_opalo_black_001",
+        "type": "Lambertian",
+        "reflectance_texture_name": "image_poliigon_tiles_onyx_opalo_black_001",
+        "data": {}
+    },
+    {
+        "name": "image_poliigon_marble_13",
+        "type": "Lambertian",
+        "reflectance_texture_name": "image_poliigon_marble_13",
+        "data": {}
+    },
+    {
+        "name": "image_poliigon_marble_062",
+        "type": "Lambertian",
+        "reflectance_texture_name": "image_poliigon_marble_062",
+        "data": {}
+    },
+    {
+        "name": "image_poliigon_ground_forest_003",
+        "type": "Lambertian",
+        "reflectance_texture_name": "image_poliigon_ground_forest_003",
+        "data": {}
+    },
+    {
+        "name": "image_poliigon_bricks_flemish_red_001",
+        "type": "Lambertian",
+        "reflectance_texture_name": "image_poliigon_bricks_flemish_red_001",
+        "data": {}
+    },
+    {
+        "name": "image_poliigon_bricks_01",
+        "type": "Lambertian",
+        "reflectance_texture_name": "image_poliigon_bricks_01",
         "data": {}
     }
 ]

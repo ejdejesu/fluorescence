@@ -19,6 +19,10 @@ func (c Color) Add(d Color) Color {
 	return Color{c.Red + d.Red, c.Green + d.Green, c.Blue + d.Blue}
 }
 
+func (c Color) MultScalar(s float64) Color {
+	return Color{c.Red * s, c.Green * s, c.Blue * s}
+}
+
 func (c Color) MultColor(d Color) Color {
 	return Color{c.Red * d.Red, c.Green * d.Green, c.Blue * d.Blue}
 }

@@ -7,8 +7,8 @@
             "material_name": "white_diffuse"
         },
         {
-            "object_name": "center_sphere",
-            "material_name": "image_earth_day_emissive"
+            "object_name": "large_center_sphere",
+            "material_name": "image_gradient1_emissive"
         },
         {
             "object_name": "top_rectangle",

@@ -1,0 +1,18 @@
+{
+    "scene_name": "Solar System",
+    "camera_name": "main",
+    "objects": [
+        {
+            "object_name": "hdr_sphere",
+            "material_name": "image_8k_stars_milky_way_emissive"
+        },
+        {
+            "object_name": "earth_sphere",
+            "material_name": "image_earth_day"
+        },
+        {
+            "object_name": "sun_sphere",
+            "material_name": "white_light_fifty"
+        }
+    ]
+}

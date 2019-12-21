@@ -10,6 +10,7 @@ import (
 	"strings"
 )
 
+// Image holds information about a texture based on an image
 type Image struct {
 	FileName  string      `json:"image_file_name"`
 	Gamma     float64     `json:"gamma"`
@@ -17,6 +18,7 @@ type Image struct {
 	Image     image.Image `json:"-"`
 }
 
+// Load decodes the image from the given filename and performs other setup actions
 func (it *Image) Load() error {
 	imageFile, err := os.Open(it.FileName)
 	if err != nil {
@@ -38,6 +40,8 @@ func (it *Image) Load() error {
 	return nil
 }
 
+// Value returns the color of the image at the given texture coordinates
+// parameters u and v have a valid range [0.0, 1.0)
 func (it *Image) Value(u, v float64) shading.Color {
 	x := int(u * float64(it.Image.Bounds().Dx()-1))
 	y := int((1.0 - v) * float64(it.Image.Bounds().Dy()-1))

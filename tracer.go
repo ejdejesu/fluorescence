@@ -35,6 +35,7 @@ func TraceImage(params *Parameters, img *image.RGBA64, doneChan chan<- int, maxT
 
 }
 
+// traceTile iterates over the pixels in a tile and writes the received colors to the image
 func traceTile(p *Parameters, rng *rand.Rand, img *image.RGBA64, dc chan<- int, sem *semaphore.Weighted, t Tile, sampleCount int) {
 	defer sem.Release(1)
 	for y := t.Origin.Y; y < t.Origin.Y+t.Span.Y; y++ {
@@ -48,9 +49,12 @@ func traceTile(p *Parameters, rng *rand.Rand, img *image.RGBA64, dc chan<- int, 
 	// dc <- 1
 }
 
+// tracePixel gets the color for a pixel
 func tracePixel(p *Parameters, x, y int, rng *rand.Rand) shading.Color {
 	pixelColor := shading.Color{}
 	for s := 0; s < p.SampleCount; s++ {
+		// pick a random spot on the pixel to shoot a ray into
+		// this is purely random, NOT stratified
 		u := (float64(x) + rng.Float64()) / float64(p.ImageWidth)
 		v := (float64(y) + rng.Float64()) / float64(p.ImageHeight)
 
@@ -63,30 +67,44 @@ func tracePixel(p *Parameters, x, y int, rng *rand.Rand) shading.Color {
 
 }
 
+// traceRay casts in individual ray into the scene
 func traceRay(parameters *Parameters, r geometry.Ray, rng *rand.Rand, depth int) shading.Color {
 
+	// if we've gone too deep...
 	if depth > parameters.MaxBounces {
+		// ...just return BLACK
 		return shading.COLOR_BLACK
 	}
+	// check if we've hit something
 	rayHit, hitSomething := parameters.Scene.Objects.Intersection(r, parameters.TMin, parameters.TMax)
+	// if we did not hit something...
 	if !hitSomething {
+		// ...return the background color
+		// TODO: add support for HDR skymaps
 		return parameters.BackgroundColor
 	}
 
 	mat := rayHit.Material
 
+	// if the surface is BLACK, it's not going to let any incoming light contribute to the outgoing color
+	// so we can safely say no light is reflected and simply return the emittance of the material
 	if mat.Reflectance(rayHit.U, rayHit.V) == shading.COLOR_BLACK {
 		return mat.Emittance(rayHit.U, rayHit.V)
 	}
 
+	// get the reflection incoming ray
 	scatteredRay, wasScattered := rayHit.Material.Scatter(*rayHit, rng)
+	// if no ray could have reflected to us, we just return BLACK
 	if !wasScattered {
 		return shading.COLOR_BLACK
 	}
+	// get the color that came to this point and gave us the outgoing ray
 	incomingColor := traceRay(parameters, scatteredRay, rng, depth+1)
+	// return the (very-roughly approximated) value of the rendering equation
 	return mat.Emittance(rayHit.U, rayHit.V).Add(mat.Reflectance(rayHit.U, rayHit.V).MultColor(incomingColor))
 }
 
+// getTiles creates and return a grid of tiles on the image
 func getTiles(p *Parameters, i *image.RGBA64) []Tile {
 	tiles := []Tile{}
 	for y := 0; y < p.ImageHeight; y += p.TileHeight {

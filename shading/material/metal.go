@@ -15,12 +15,12 @@ type Metal struct {
 	Fuzziness          float64         `json:"fuzziness"`
 }
 
-// Reflectance returns the reflectance of this material
+// Reflectance returns the reflective color at texture coordinates (u, v)
 func (m Metal) Reflectance(u, v float64) shading.Color {
 	return m.ReflectanceTexture.Value(u, v)
 }
 
-// Emittance returns the emittance of this material
+// Emittance returns the emissive color at texture coordinates (u, v)
 func (m Metal) Emittance(u, v float64) shading.Color {
 	return m.EmittanceTexture.Value(u, v)
 }

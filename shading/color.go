@@ -13,33 +13,41 @@ type Color struct {
 	Blue  float64 `json:"blue"`
 }
 
-var COLOR_BLACK = Color{0.0, 0.0, 0.0}
+// ColorBlack is a simple reference to an all-black Color
+var ColorBlack = Color{0.0, 0.0, 0.0}
 
+// Add adds values from two Colors together
 func (c Color) Add(d Color) Color {
 	return Color{c.Red + d.Red, c.Green + d.Green, c.Blue + d.Blue}
 }
 
+// MultScalar multiplies a Color by a scalar
 func (c Color) MultScalar(s float64) Color {
 	return Color{c.Red * s, c.Green * s, c.Blue * s}
 }
 
+// MultColor multiplies a Color by a Color component-wise
 func (c Color) MultColor(d Color) Color {
 	return Color{c.Red * d.Red, c.Green * d.Green, c.Blue * d.Blue}
 }
 
+// DivScalar divides a Color by a scalar
 func (c Color) DivScalar(s float64) Color {
 	inv := 1.0 / s
 	return Color{c.Red * inv, c.Green * inv, c.Blue * inv}
 }
 
+// DivColor divides a Color by a Color component-wise
 func (c Color) DivColor(d Color) Color {
 	return Color{c.Red / d.Red, c.Green / d.Green, c.Blue / d.Blue}
 }
 
+// Pow raises a Color to an exponential power, component-wise
 func (c Color) Pow(e float64) Color {
 	return Color{math.Pow(c.Red, e), math.Pow(c.Green, e), math.Pow(c.Blue, e)}
 }
 
+// Clamp clamps each component to a specified minimum and maximum
 func (c Color) Clamp(min, max float64) Color {
 	return Color{
 		clamp(c.Red, min, max),
@@ -47,6 +55,7 @@ func (c Color) Clamp(min, max float64) Color {
 		clamp(c.Blue, min, max)}
 }
 
+// clamp clamps a value to a minimum and a maximum
 func clamp(val, min, max float64) float64 {
 	if val < min {
 		return min
@@ -74,6 +83,7 @@ func (c Color) ToRGBA64() color.RGBA64 {
 		uint16(1.0 * float64(math.MaxUint16))}
 }
 
+// MakeColor creates a new shading.Color from a color.Color
 func MakeColor(c color.Color) Color {
 	// fmt.Println(c)
 	r, g, b, _ := c.RGBA()

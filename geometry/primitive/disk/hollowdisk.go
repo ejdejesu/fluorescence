@@ -86,7 +86,7 @@ func (hd *hollowDisk) Intersection(ray geometry.Ray, tMin, tMax float64) (*mater
 	return &material.RayHit{
 		Ray:         ray,
 		NormalAtHit: hd.normal,
-		T:           t,
+		Time:           t,
 		Material:    hd.mat,
 	}, true
 }

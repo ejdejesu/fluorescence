@@ -18,3 +18,6 @@
 # Image outputs
 output/
 
+# Image textures
+resources/
+

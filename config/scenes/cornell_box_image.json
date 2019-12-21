@@ -1,0 +1,34 @@
+{
+    "scene_name": "Cornell Box Image",
+    "camera_name": "main",
+    "objects": [
+        {
+            "object_name": "far_rectangle",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "center_sphere",
+            "material_name": "image_earth_day_emissive"
+        },
+        {
+            "object_name": "top_rectangle",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "bottom_rectangle",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "left_rectangle",
+            "material_name": "red_diffuse"
+        },
+        {
+            "object_name": "right_rectangle",
+            "material_name": "green_diffuse"
+        },
+        {
+            "object_name": "near_rectangle",
+            "material_name": "white_diffuse"
+        }
+    ]
+}

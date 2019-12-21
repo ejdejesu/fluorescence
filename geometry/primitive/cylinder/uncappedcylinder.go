@@ -73,7 +73,7 @@ func (uc *uncappedCylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (
 			return &material.RayHit{
 				Ray:         ray,
 				NormalAtHit: uc.normalAt(ray.PointAt(t1)),
-				T:           t1,
+				Time:        t1,
 				Material:    uc.mat,
 			}, true
 		}
@@ -84,7 +84,7 @@ func (uc *uncappedCylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (
 			return &material.RayHit{
 				Ray:         ray,
 				NormalAtHit: uc.normalAt(ray.PointAt(t2)),
-				T:           t2,
+				Time:        t2,
 				Material:    uc.mat,
 			}, true
 		}

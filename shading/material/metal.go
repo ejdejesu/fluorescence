@@ -3,25 +3,26 @@ package material
 import (
 	"fluorescence/geometry"
 	"fluorescence/shading"
+	"fluorescence/shading/texture"
 	"math/rand"
 )
 
 // Metal is an implementation of a Material
 // It represents a perfect or near-perfect specularly reflective material
 type Metal struct {
-	R         shading.Color `json:"r"`
-	E         shading.Color `json:"e"`
-	Fuzziness float64       `json:"fuzziness"`
+	ReflectanceTexture texture.Texture `json:"-"`
+	EmittanceTexture   texture.Texture `json:"-"`
+	Fuzziness          float64         `json:"fuzziness"`
 }
 
 // Reflectance returns the reflectance of this material
-func (m Metal) Reflectance() shading.Color {
-	return m.R
+func (m Metal) Reflectance(u, v float64) shading.Color {
+	return m.ReflectanceTexture.Value(u, v)
 }
 
 // Emittance returns the emittance of this material
-func (m Metal) Emittance() shading.Color {
-	return m.E
+func (m Metal) Emittance(u, v float64) shading.Color {
+	return m.EmittanceTexture.Value(u, v)
 }
 
 // IsSpecular returns whether this material is specular in nature (vs. diffuse)
@@ -32,7 +33,7 @@ func (m Metal) IsSpecular() bool {
 
 // Scatter returns an incoming ray given a RayHit representing the outgoing ray
 func (m Metal) Scatter(rayHit RayHit, rng *rand.Rand) (geometry.Ray, bool) {
-	hitPoint := rayHit.Ray.PointAt(rayHit.T)
+	hitPoint := rayHit.Ray.PointAt(rayHit.Time)
 	normal := rayHit.NormalAtHit
 
 	reflectionVector := rayHit.Ray.Direction.Unit().ReflectAround(normal)

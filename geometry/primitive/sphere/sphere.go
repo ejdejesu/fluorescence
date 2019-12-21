@@ -59,20 +59,42 @@ func (s *sphere) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.R
 		t1 := (-b - root) / a
 		// return if within range
 		if t1 >= tMin && t1 <= tMax {
+			hitPoint := ray.PointAt(t1)
+			unitHitPoint := s.center.To(hitPoint).DivScalar(s.radius)
+
+			phi := math.Atan2(unitHitPoint.Z, unitHitPoint.X)
+			theta := math.Asin(unitHitPoint.Y)
+
+			u := 1 - (phi+math.Pi)/(2*math.Pi)
+			v := (theta + math.Pi/2) / math.Pi
+
 			return &material.RayHit{
 				Ray:         ray,
-				NormalAtHit: s.normalAt(ray.PointAt(t1)),
-				T:           t1,
+				NormalAtHit: s.normalAt(hitPoint),
+				Time:        t1,
+				U:           u,
+				V:           v,
 				Material:    s.mat,
 			}, true
 		}
 		// evaluate and return second solution if in range
 		t2 := (-b + root) / a
 		if t2 >= tMin && t2 <= tMax {
+			hitPoint := ray.PointAt(t1)
+			unitHitPoint := s.center.To(hitPoint).DivScalar(s.radius)
+
+			phi := math.Atan2(unitHitPoint.Z, unitHitPoint.X)
+			theta := math.Asin(unitHitPoint.Y)
+
+			u := 1.0 - (phi+math.Pi)/(2*math.Pi)
+			v := (theta + math.Pi/2) / math.Pi
+
 			return &material.RayHit{
 				Ray:         ray,
 				NormalAtHit: s.normalAt(ray.PointAt(t2)),
-				T:           t2,
+				Time:        t2,
+				U:           u,
+				V:           v,
 				Material:    s.mat,
 			}, true
 		}

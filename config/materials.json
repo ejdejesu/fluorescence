@@ -2,730 +2,405 @@
     {
         "name": "white_diffuse",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.9,
-                "green": 0.9,
-                "blue": 0.9
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            }
-        }
+        "reflectance_texture_name": "color_white_real",
+        "data": {}
     },
     {
         "name": "white_glow",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.9,
-                "green": 0.9,
-                "blue": 0.9
-            },
-            "e": {
-                "red": 0.5,
-                "green": 0.5,
-                "blue": 0.5
-            }
-        }
+        "reflectance_texture_name": "color_white_real",
+        "emittance_texture_name": "color_white",
+        "data": {}
     },
     {
         "name": "grey_diffuse",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.3,
-                "green": 0.3,
-                "blue": 0.3
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            }
-        }
+        "reflectance_texture_name": "color_grey",
+        "data": {}
     },
     {
         "name": "black_diffuse",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            }
-        }
+        "reflectance_texture_name": "color_black_real",
+        "data": {}
     },
     {
         "name": "red_diffuse",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.9,
-                "green": 0.1,
-                "blue": 0.1
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            }
-        }
+        "reflectance_texture_name": "color_red_real",
+        "data": {}
     },
     {
         "name": "red_glow",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.9,
-                "green": 0.1,
-                "blue": 0.1
-            },
-            "e": {
-                "red": 0.5,
-                "green": 0.01,
-                "blue": 0.01
-            }
-        }
+        "reflectance_texture_name": "color_red_real",
+        "emittance_texture_name": "color_red_spec",
+        "data": {}
     },
     {
         "name": "green_diffuse",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.1,
-                "green": 0.9,
-                "blue": 0.1
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            }
-        }
+        "reflectance_texture_name": "color_green_real",
+        "data": {}
     },
     {
         "name": "green_glow",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.1,
-                "green": 0.9,
-                "blue": 0.1
-            },
-            "e": {
-                "red": 0.01,
-                "green": 0.5,
-                "blue": 0.01
-            }
-        }
+        "reflectance_texture_name": "color_green_real",
+        "emittance_texture_name": "color_green_spec",
+        "data": {}
     },
     {
         "name": "blue_diffuse",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.1,
-                "green": 0.1,
-                "blue": 0.9
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            }
-        }
+        "reflectance_texture_name": "color_blue_real",
+        "data": {}
     },
     {
         "name": "blue_glow",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.1,
-                "green": 0.1,
-                "blue": 0.9
-            },
-            "e": {
-                "red": 0.01,
-                "green": 0.01,
-                "blue": 0.5
-            }
-        }
+        "reflectance_texture_name": "color_blue_real",
+        "emittance_texture_name": "color_blue_spec",
+        "data": {}
     },
     {
         "name": "yellow_diffuse",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.9,
-                "green": 0.9,
-                "blue": 0.1
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            }
-        }
+        "reflectance_texture_name": "color_yellow_real",
+        "data": {}
     },
     {
         "name": "yellow_glow",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.9,
-                "green": 0.9,
-                "blue": 0.1
-            },
-            "e": {
-                "red": 0.5,
-                "green": 0.5,
-                "blue": 0.01
-            }
-        }
+        "reflectance_texture_name": "color_yellow_real",
+        "emittance_texture_name": "color_yellow_spec",
+        "data": {}
     },
     {
         "name": "magenta_diffuse",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.9,
-                "green": 0.1,
-                "blue": 0.9
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            }
-        }
+        "reflectance_texture_name": "color_magenta_real",
+        "data": {}
     },
     {
         "name": "magenta_glow",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.9,
-                "green": 0.1,
-                "blue": 0.9
-            },
-            "e": {
-                "red": 0.5,
-                "green": 0.01,
-                "blue": 0.5
-            }
-        }
+        "reflectance_texture_name": "color_magenta_real",
+        "emittance_texture_name": "color_magenta_spec",
+        "data": {}
     },
     {
         "name": "cyan_diffuse",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.1,
-                "green": 0.9,
-                "blue": 0.9
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            }
-        }
+        "reflectance_texture_name": "color_cyan_real",
+        "data": {}
     },
     {
         "name": "cyan_glow",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.1,
-                "green": 0.9,
-                "blue": 0.9
-            },
-            "e": {
-                "red": 0.01,
-                "green": 0.5,
-                "blue": 0.5
-            }
-        }
+        "reflectance_texture_name": "color_cyan_real",
+        "emittance_texture_name": "color_cyan_spec",
+        "data": {}
     },
     {
         "name": "white_light_half",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 0.5,
-                "green": 0.5,
-                "blue": 0.5
-            }
-        }
+        "emittance_texture_name": "color_white_half",
+        "data": {}
     },
     {
         "name": "white_light_full",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 1.0,
-                "green": 1.0,
-                "blue": 1.0
-            }
-        }
+        "emittance_texture_name": "color_white",
+        "data": {}
     },
     {
         "name": "white_light_double",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 2.0,
-                "green": 2.0,
-                "blue": 2.0
-            }
-        }
+        "emittance_texture_name": "color_white_double",
+        "data": {}
     },
     {
         "name": "white_light_five",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 5.0,
-                "green": 5.0,
-                "blue": 5.0
-            }
-        }
+        "emittance_texture_name": "color_white_five",
+        "data": {}
     },
     {
         "name": "white_light_fifty",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 50.0,
-                "green": 50.0,
-                "blue": 50.0
-            }
-        }
+        "emittance_texture_name": "color_white_fifty",
+        "data": {}
     },
     {
         "name": "red_light_half",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 0.5,
-                "green": 0.0,
-                "blue": 0.0
-            }
-        }
+        "emittance_texture_name": "color_red_half",
+        "data": {}
     },
     {
         "name": "red_light_full",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 1.0,
-                "green": 0.0,
-                "blue": 0.0
-            }
-        }
+        "emittance_texture_name": "color_red",
+        "data": {}
     },
     {
         "name": "red_light_double",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 2.0,
-                "green": 0.0,
-                "blue": 0.0
-            }
-        }
+        "emittance_texture_name": "color_red_double",
+        "data": {}
     },
     {
         "name": "red_light_five",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 5.0,
-                "green": 0.0,
-                "blue": 0.0
-            }
-        }
+        "emittance_texture_name": "color_red_five",
+        "data": {}
     },
     {
         "name": "red_light_fifty",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 50.0,
-                "green": 0.0,
-                "blue": 0.0
-            }
-        }
+        "emittance_texture_name": "color_red_fifty",
+        "data": {}
     },
     {
         "name": "green_light_half",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.5,
-                "blue": 0.0
-            }
-        }
+        "emittance_texture_name": "color_green_half",
+        "data": {}
     },
     {
         "name": "green_light_full",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 0.0,
-                "green": 1.0,
-                "blue": 0.0
-            }
-        }
+        "emittance_texture_name": "color_green",
+        "data": {}
     },
     {
         "name": "green_light_double",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 0.0,
-                "green": 2.0,
-                "blue": 0.0
-            }
-        }
+        "emittance_texture_name": "color_green_double",
+        "data": {}
     },
     {
         "name": "green_light_five",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 0.0,
-                "green": 5.0,
-                "blue": 0.0
-            }
-        }
+        "emittance_texture_name": "color_green_five",
+        "data": {}
     },
     {
         "name": "green_light_fifty",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 0.0,
-                "green": 50.0,
-                "blue": 0.0
-            }
-        }
+        "emittance_texture_name": "color_green_fifty",
+        "data": {}
     },
     {
         "name": "blue_light_half",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.5
-            }
-        }
+        "emittance_texture_name": "color_blue_half",
+        "data": {}
     },
     {
         "name": "blue_light_full",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 1.0
-            }
-        }
+        "emittance_texture_name": "color_blue",
+        "data": {}
     },
     {
         "name": "blue_light_double",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 2.0
-            }
-        }
+        "emittance_texture_name": "color_blue_double",
+        "data": {}
     },
     {
         "name": "blue_light_five",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 5.0
-            }
-        }
+        "emittance_texture_name": "color_blue_five",
+        "data": {}
     },
     {
         "name": "blue_light_fifty",
         "type": "Lambertian",
-        "data": {
-            "r": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 50.0
-            }
-        }
+        "emittance_texture_name": "color_blue_fifty",
+        "data": {}
+    },
+    {
+        "name": "yellow_light_half",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_yellow_half",
+        "data": {}
+    },
+    {
+        "name": "yellow_light_full",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_yellow",
+        "data": {}
+    },
+    {
+        "name": "yellow_light_double",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_yellow_double",
+        "data": {}
+    },
+    {
+        "name": "yellow_light_five",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_yellow_five",
+        "data": {}
+    },
+    {
+        "name": "yellow_light_fifty",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_yellow_fifty",
+        "data": {}
+    },
+    {
+        "name": "magenta_light_half",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_magenta_half",
+        "data": {}
+    },
+    {
+        "name": "magenta_light_full",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_magenta",
+        "data": {}
+    },
+    {
+        "name": "magenta_light_double",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_magenta_double",
+        "data": {}
+    },
+    {
+        "name": "magenta_light_five",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_magenta_five",
+        "data": {}
+    },
+    {
+        "name": "magenta_light_fifty",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_magenta_fifty",
+        "data": {}
+    },
+    {
+        "name": "cyan_light_half",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_cyan_half",
+        "data": {}
+    },
+    {
+        "name": "cyan_light_full",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_cyan",
+        "data": {}
+    },
+    {
+        "name": "cyan_light_double",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_cyan_double",
+        "data": {}
+    },
+    {
+        "name": "cyan_light_five",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_cyan_five",
+        "data": {}
+    },
+    {
+        "name": "cyan_light_fifty",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_cyan_fifty",
+        "data": {}
     },
     {
         "name": "perfect_mirror",
         "type": "Metal",
+        "reflectance_texture_name": "color_white",
         "data": {
-            "r": {
-                "red": 1.0,
-                "green": 1.0,
-                "blue": 1.0
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
             "fuzziness": 0.0
         }
     },
     {
         "name": "real_mirror",
         "type": "Metal",
+        "reflectance_texture_name": "color_white",
         "data": {
-            "r": {
-                "red": 1.0,
-                "green": 1.0,
-                "blue": 1.0
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
             "fuzziness": 0.01
         }
     },
     {
         "name": "fuzzy_mirror",
         "type": "Metal",
+        "reflectance_texture_name": "color_white",
         "data": {
-            "r": {
-                "red": 1.0,
-                "green": 1.0,
-                "blue": 1.0
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
             "fuzziness": 0.1
         }
     },
     {
         "name": "water",
         "type": "Dielectric",
+        "reflectance_texture_name": "color_white",
         "data": {
-            "r": {
-                "red": 1.0,
-                "green": 1.0,
-                "blue": 1.0
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
             "refractive_index": 1.33
         }
     },
     {
         "name": "glass",
         "type": "Dielectric",
+        "reflectance_texture_name": "color_white",
         "data": {
-            "r": {
-                "red": 1.0,
-                "green": 1.0,
-                "blue": 1.0
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "refractive_index": 1.5
-        }
-    },
-    {
-        "name": "red_glass",
-        "type": "Dielectric",
-        "data": {
-            "r": {
-                "red": 1.0,
-                "green": 0.5,
-                "blue": 0.5
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "refractive_index": 1.5
-        }
-    },
-    {
-        "name": "green_glass",
-        "type": "Dielectric",
-        "data": {
-            "r": {
-                "red": 0.5,
-                "green": 1.0,
-                "blue": 0.5
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
-            "refractive_index": 1.5
-        }
-    },
-    {
-        "name": "blue_glass",
-        "type": "Dielectric",
-        "data": {
-            "r": {
-                "red": 0.5,
-                "green": 0.5,
-                "blue": 1.0
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
             "refractive_index": 1.5
         }
     },
     {
         "name": "diamond",
         "type": "Dielectric",
+        "reflectance_texture_name": "color_white",
         "data": {
-            "r": {
-                "red": 1.0,
-                "green": 1.0,
-                "blue": 1.0
-            },
-            "e": {
-                "red": 0.0,
-                "green": 0.0,
-                "blue": 0.0
-            },
             "refractive_index": 2.42
         }
+    },
+    {
+        "name": "image_trees",
+        "type": "Lambertian",
+        "reflectance_texture_name": "image_test_trees",
+        "data": {}
+    },
+    {
+        "name": "image_white",
+        "type": "Lambertian",
+        "reflectance_texture_name": "image_white_square",
+        "data": {}
+    },
+    {
+        "name": "image_trees_emissive",
+        "type": "Lambertian",
+        "emittance_texture_name": "image_test_trees",
+        "data": {}
+    },
+    {
+        "name": "image_gradient1",
+        "type": "Lambertian",
+        "reflectance_texture_name": "image_gradient1",
+        "data": {}
+    },
+    {
+        "name": "image_gradient1_emissive",
+        "type": "Lambertian",
+        "emittance_texture_name": "image_gradient1",
+        "data": {}
+    },
+    {
+        "name": "image_earth_day",
+        "type": "Lambertian",
+        "reflectance_texture_name": "image_earth_day",
+        "data": {}
+    },
+    {
+        "name": "image_earth_day_emissive",
+        "type": "Lambertian",
+        "reflectance_texture_name": "image_earth_day",
+        "emittance_texture_name": "image_earth_day",
+        "data": {}
     }
 ]

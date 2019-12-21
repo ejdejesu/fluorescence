@@ -1,0 +1,42 @@
+{
+    "scene_name": "Cornell Box CMY",
+    "camera_name": "main",
+    "objects": [
+        {
+            "object_name": "light_far_left_rectangle",
+            "material_name": "cyan_light_full"
+        },
+        {
+            "object_name": "light_far_center_rectangle",
+            "material_name": "magenta_light_full"
+        },
+        {
+            "object_name": "light_far_right_rectangle",
+            "material_name": "yellow_light_full"
+        },
+        {
+            "object_name": "top_rectangle",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "bottom_rectangle",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "left_rectangle",
+            "material_name": "red_diffuse"
+        },
+        {
+            "object_name": "right_rectangle",
+            "material_name": "green_diffuse"
+        },
+        {
+            "object_name": "far_rectangle",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "near_rectangle",
+            "material_name": "white_diffuse"
+        }
+    ]
+}

@@ -52,7 +52,7 @@ func (p *plane) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.Ra
 	return &material.RayHit{
 		Ray:         ray,
 		NormalAtHit: p.normal,
-		T:           t,
+		Time:           t,
 		Material:    p.mat,
 	}, true
 }

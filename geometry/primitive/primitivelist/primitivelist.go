@@ -72,10 +72,10 @@ func (pl *PrimitiveList) Intersection(ray geometry.Ray, tMin, tMax float64) (*ma
 	hitSomething := false
 	for _, p := range pl.List {
 		rh, wasHit := p.Intersection(ray, tMin, tMax)
-		if wasHit && rh.T < minT {
+		if wasHit && rh.Time < minT {
 			hitSomething = true
 			rayHit = rh
-			minT = rh.T
+			minT = rh.Time
 		}
 	}
 	if hitSomething {

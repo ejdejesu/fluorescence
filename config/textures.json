@@ -1,0 +1,602 @@
+[
+    {
+        "name": "default",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.0,
+                "green": 0.0,
+                "blue": 0.0
+            }
+        }
+    },
+    {
+        "name": "color_black",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.0,
+                "green": 0.0,
+                "blue": 0.0
+            }
+        }
+    },
+    {
+        "name": "color_black_real",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.1,
+                "green": 0.1,
+                "blue": 0.1
+            }
+        }
+    },
+    {
+        "name": "color_grey",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.3,
+                "green": 0.3,
+                "blue": 0.3
+            }
+        }
+    },
+    {
+        "name": "color_white_half",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.5,
+                "green": 0.5,
+                "blue": 0.5
+            }
+        }
+    },
+    {
+        "name": "color_white",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 1.0,
+                "green": 1.0,
+                "blue": 1.0
+            }
+        }
+    },
+    {
+        "name": "color_white_double",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 2.0,
+                "green": 2.0,
+                "blue": 2.0
+            }
+        }
+    },
+    {
+        "name": "color_white_five",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 5.0,
+                "green": 5.0,
+                "blue": 5.0
+            }
+        }
+    },
+    {
+        "name": "color_white_fifty",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 50.0,
+                "green": 50.0,
+                "blue": 50.0
+            }
+        }
+    },
+    {
+        "name": "color_white_real",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.9,
+                "green": 0.9,
+                "blue": 0.9
+            }
+        }
+    },
+    {
+        "name": "color_red_half",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.5,
+                "green": 0.0,
+                "blue": 0.0
+            }
+        }
+    },
+    {
+        "name": "color_red",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 1.0,
+                "green": 0.0,
+                "blue": 0.0
+            }
+        }
+    },
+    {
+        "name": "color_red_double",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 2.0,
+                "green": 0.0,
+                "blue": 0.0
+            }
+        }
+    },
+    {
+        "name": "color_red_five",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 5.0,
+                "green": 0.0,
+                "blue": 0.0
+            }
+        }
+    },
+    {
+        "name": "color_red_fifty",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 50.0,
+                "green": 0.0,
+                "blue": 0.0
+            }
+        }
+    },
+    {
+        "name": "color_red_real",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.9,
+                "green": 0.1,
+                "blue": 0.1
+            }
+        }
+    },
+    {
+        "name": "color_red_spec",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.5,
+                "green": 0.01,
+                "blue": 0.01
+            }
+        }
+    },
+    {
+        "name": "color_green_half",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.0,
+                "green": 0.5,
+                "blue": 0.0
+            }
+        }
+    },
+    {
+        "name": "color_green",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.0,
+                "green": 1.0,
+                "blue": 0.0
+            }
+        }
+    },
+    {
+        "name": "color_green_double",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.0,
+                "green": 2.0,
+                "blue": 0.0
+            }
+        }
+    },
+    {
+        "name": "color_green_five",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.0,
+                "green": 5.0,
+                "blue": 0.0
+            }
+        }
+    },
+    {
+        "name": "color_green_fifty",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.0,
+                "green": 50.0,
+                "blue": 0.0
+            }
+        }
+    },
+    {
+        "name": "color_green_real",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.1,
+                "green": 0.9,
+                "blue": 0.1
+            }
+        }
+    },
+    {
+        "name": "color_green_spec",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.01,
+                "green": 0.5,
+                "blue": 0.01
+            }
+        }
+    },
+    {
+        "name": "color_blue_half",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.0,
+                "green": 0.0,
+                "blue": 0.5
+            }
+        }
+    },
+    {
+        "name": "color_blue",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.0,
+                "green": 0.0,
+                "blue": 1.0
+            }
+        }
+    },
+    {
+        "name": "color_blue_double",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.0,
+                "green": 0.0,
+                "blue": 2.0
+            }
+        }
+    },
+    {
+        "name": "color_blue_five",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.0,
+                "green": 0.0,
+                "blue": 5.0
+            }
+        }
+    },
+    {
+        "name": "color_blue_fifty",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.0,
+                "green": 0.0,
+                "blue": 50.0
+            }
+        }
+    },
+    {
+        "name": "color_blue_real",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.1,
+                "green": 0.1,
+                "blue": 0.9
+            }
+        }
+    },
+    {
+        "name": "color_blue_spec",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.01,
+                "green": 0.01,
+                "blue": 0.5
+            }
+        }
+    },
+    {
+        "name": "color_yellow_half",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.5,
+                "green": 0.5,
+                "blue": 0.0
+            }
+        }
+    },
+    {
+        "name": "color_yellow",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 1.0,
+                "green": 1.0,
+                "blue": 0.0
+            }
+        }
+    },
+    {
+        "name": "color_yellow_double",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 2.0,
+                "green": 2.0,
+                "blue": 0.0
+            }
+        }
+    },
+    {
+        "name": "color_yellow_five",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 5.0,
+                "green": 5.0,
+                "blue": 0.0
+            }
+        }
+    },
+    {
+        "name": "color_yellow_fifty",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 50.0,
+                "green": 50.0,
+                "blue": 0.0
+            }
+        }
+    },
+    {
+        "name": "color_yellow_real",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.9,
+                "green": 0.9,
+                "blue": 0.1
+            }
+        }
+    },
+    {
+        "name": "color_yellow_spec",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.5,
+                "green": 0.5,
+                "blue": 0.01
+            }
+        }
+    },
+    {
+        "name": "color_magenta_half",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.5,
+                "green": 0.0,
+                "blue": 0.5
+            }
+        }
+    },
+    {
+        "name": "color_magenta",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 1.0,
+                "green": 0.0,
+                "blue": 1.0
+            }
+        }
+    },
+    {
+        "name": "color_magenta_double",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 2.0,
+                "green": 0.0,
+                "blue": 2.0
+            }
+        }
+    },
+    {
+        "name": "color_magenta_five",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 5.0,
+                "green": 0.0,
+                "blue": 5.0
+            }
+        }
+    },
+    {
+        "name": "color_magenta_fifty",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 50.0,
+                "green": 0.0,
+                "blue": 50.0
+            }
+        }
+    },
+    {
+        "name": "color_magenta_real",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.9,
+                "green": 0.1,
+                "blue": 0.9
+            }
+        }
+    },
+    {
+        "name": "color_magenta_spec",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.5,
+                "green": 0.01,
+                "blue": 0.5
+            }
+        }
+    },
+    {
+        "name": "color_cyan_half",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.0,
+                "green": 0.5,
+                "blue": 0.5
+            }
+        }
+    },
+    {
+        "name": "color_cyan",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.0,
+                "green": 1.0,
+                "blue": 1.0
+            }
+        }
+    },
+    {
+        "name": "color_cyan_double",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.0,
+                "green": 2.0,
+                "blue": 2.0
+            }
+        }
+    },
+    {
+        "name": "color_cyan_five",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.0,
+                "green": 5.0,
+                "blue": 5.0
+            }
+        }
+    },
+    {
+        "name": "color_cyan_fifty",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.0,
+                "green": 50.0,
+                "blue": 50.0
+            }
+        }
+    },
+    {
+        "name": "color_cyan_real",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.1,
+                "green": 0.9,
+                "blue": 0.9
+            }
+        }
+    },
+    {
+        "name": "color_cyan_spec",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.01,
+                "green": 0.5,
+                "blue": 0.5
+            }
+        }
+    },
+    {
+        "name": "image_test_trees",
+        "type": "Image",
+        "data": {
+            "image_file_name": "./resources/images/test_trees.jpg"
+        }
+    },
+    {
+        "name": "image_white_square",
+        "type": "Image",
+        "data": {
+            "image_file_name": "./resources/images/white_square.jpeg"
+        }
+    },
+    {
+        "name": "image_gradient1",
+        "type": "Image",
+        "data": {
+            "image_file_name": "./resources/images/gradient1.jpg"
+        }
+    },
+    {
+        "name": "image_earth_day",
+        "type": "Image",
+        "data": {
+            "image_file_name": "./resources/images/solarsystem/planets/earth/2k_earth_daymap.jpg"
+        }
+    }
+]

@@ -21,8 +21,9 @@ func main() {
 	camerasFileName := "./config/cameras.json"
 	objectsFileName := "./config/objects.json"
 	materialsFileName := "./config/materials.json"
+	texturesFileName := "./config/textures.json"
 	fmt.Printf("Loading Config files...\n")
-	parameters, err := LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materialsFileName)
+	parameters, err := LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materialsFileName, texturesFileName)
 	if err != nil {
 		fmt.Printf("Error loading parameters data: %s\n", err.Error())
 		return

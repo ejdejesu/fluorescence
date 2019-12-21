@@ -3,22 +3,23 @@ package material
 import (
 	"fluorescence/geometry"
 	"fluorescence/shading"
+	"fluorescence/shading/texture"
 	"math"
 	"math/rand"
 )
 
 type Dielectric struct {
-	R               shading.Color `json:"r"`
-	E               shading.Color `json:"e"`
-	RefractiveIndex float64       `json:"refractive_index"`
+	ReflectanceTexture texture.Texture `json:"-"`
+	EmittanceTexture   texture.Texture `json:"-"`
+	RefractiveIndex    float64         `json:"refractive_index"`
 }
 
-func (d Dielectric) Reflectance() shading.Color {
-	return d.R
+func (d Dielectric) Reflectance(u, v float64) shading.Color {
+	return d.ReflectanceTexture.Value(u, v)
 }
 
-func (d Dielectric) Emittance() shading.Color {
-	return d.E
+func (d Dielectric) Emittance(u, v float64) shading.Color {
+	return d.EmittanceTexture.Value(u, v)
 }
 
 func (d Dielectric) IsSpecular() bool {
@@ -26,7 +27,7 @@ func (d Dielectric) IsSpecular() bool {
 }
 
 func (d Dielectric) Scatter(rayHit RayHit, rng *rand.Rand) (geometry.Ray, bool) {
-	hitPoint := rayHit.Ray.PointAt(rayHit.T)
+	hitPoint := rayHit.Ray.PointAt(rayHit.Time)
 	normal := rayHit.NormalAtHit
 	reflectionVector := rayHit.Ray.Direction.Unit().ReflectAround(normal)
 

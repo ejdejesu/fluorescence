@@ -3,20 +3,21 @@ package material
 import (
 	"fluorescence/geometry"
 	"fluorescence/shading"
+	"fluorescence/shading/texture"
 	"math/rand"
 )
 
 type Lambertian struct {
-	R shading.Color `json:"r"`
-	E shading.Color `json:"e"`
+	ReflectanceTexture texture.Texture `json:"-"`
+	EmittanceTexture   texture.Texture `json:"-"`
 }
 
-func (l Lambertian) Reflectance() shading.Color {
-	return l.R
+func (l Lambertian) Reflectance(u, v float64) shading.Color {
+	return l.ReflectanceTexture.Value(u, v)
 }
 
-func (l Lambertian) Emittance() shading.Color {
-	return l.E
+func (l Lambertian) Emittance(u, v float64) shading.Color {
+	return l.EmittanceTexture.Value(u, v)
 }
 
 func (l Lambertian) IsSpecular() bool {
@@ -24,7 +25,7 @@ func (l Lambertian) IsSpecular() bool {
 }
 
 func (l Lambertian) Scatter(rayHit RayHit, rng *rand.Rand) (geometry.Ray, bool) {
-	hitPoint := rayHit.Ray.PointAt(rayHit.T)
+	hitPoint := rayHit.Ray.PointAt(rayHit.Time)
 	target := hitPoint.AddVector(rayHit.NormalAtHit).AddVector(geometry.RandomInUnitSphere(rng))
 	return geometry.Ray{hitPoint, hitPoint.To(target)}, true
 }

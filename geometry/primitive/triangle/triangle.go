@@ -68,7 +68,7 @@ func (t *triangle) Intersection(ray geometry.Ray, tMin, tMax float64) (*material
 	time := inverseDeterminant * (ac.Dot(qVector))
 	if time >= tMin && time <= tMax {
 		// ray intersection
-		return &material.RayHit{ray, t.normal, time, t.mat}, true
+		return &material.RayHit{ray, t.normal, time, 0, 0, t.mat}, true
 	}
 	return nil, false
 }

@@ -98,7 +98,7 @@ func (b *bvh) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayH
 		}
 		rightRayHit, doesHitRight := b.Right.Intersection(ray, tMin, tMax)
 		if doesHitLeft && doesHitRight {
-			if leftRayHit.T < rightRayHit.T {
+			if leftRayHit.Time < rightRayHit.Time {
 				return leftRayHit, true
 			}
 			return rightRayHit, true

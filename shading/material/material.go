@@ -7,8 +7,8 @@ import (
 )
 
 type Material interface {
-	Reflectance() shading.Color
-	Emittance() shading.Color
+	Reflectance(u, v float64) shading.Color
+	Emittance(u, v float64) shading.Color
 	IsSpecular() bool
 	Scatter(RayHit, *rand.Rand) (geometry.Ray, bool)
 }
@@ -16,6 +16,8 @@ type Material interface {
 type RayHit struct {
 	Ray         geometry.Ray
 	NormalAtHit geometry.Vector
-	T           float64
+	Time        float64
+	U           float64
+	V           float64
 	Material    Material
 }

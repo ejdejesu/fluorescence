@@ -15,6 +15,7 @@ import (
 	"fluorescence/geometry/primitive/triangle"
 	"fluorescence/shading"
 	"fluorescence/shading/material"
+	"fluorescence/shading/texture"
 	"fmt"
 	"io/ioutil"
 	"reflect"
@@ -70,13 +71,27 @@ type ObjectData struct {
 
 // MaterialData holds information about a material
 type MaterialData struct {
+	Name                   string      `json:"name"`
+	TypeName               string      `json:"type"`
+	ReflectanceTextureName string      `json:"reflectance_texture_name"`
+	EmittanceTextureName   string      `json:"emittance_texture_name"`
+	Data                   interface{} `json:"data"`
+}
+
+// TextureData holds information about a texture
+type TextureData struct {
 	Name     string      `json:"name"`
 	TypeName string      `json:"type"`
 	Data     interface{} `json:"data"`
 }
 
 // LoadConfigs reads and parses the config files for the program
-func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materialsFileName string) (*Parameters, error) {
+func LoadConfigs(
+	parametersFileName,
+	camerasFileName,
+	objectsFileName,
+	materialsFileName,
+	texturesFileName string) (*Parameters, error) {
 
 	// load various json config files into their respective structs
 	totalCameras, err := loadCameras(camerasFileName)
@@ -87,7 +102,11 @@ func LoadConfigs(parametersFileName, camerasFileName, objectsFileName, materials
 	if err != nil {
 		return nil, err
 	}
-	totalMaterials, err := loadMaterials(materialsFileName)
+	totalTextures, err := loadTextures(texturesFileName)
+	if err != nil {
+		return nil, err
+	}
+	totalMaterials, err := loadMaterials(materialsFileName, texturesFileName, totalTextures)
 	if err != nil {
 		return nil, err
 	}
@@ -220,6 +239,9 @@ func loadCameras(fileName string) (map[string]*Camera, error) {
 	}
 	camerasMap := map[string]*Camera{}
 	for _, cd := range camerasData {
+		if _, ok := camerasMap[cd.Name]; ok {
+			return nil, fmt.Errorf("camera (%s) redefined", cd.Name)
+		}
 		camerasMap[cd.Name] = cd.Camera
 	}
 	return camerasMap, nil
@@ -237,6 +259,9 @@ func loadObjects(fileName string) (map[string]primitive.Primitive, error) {
 	}
 	objectsMap := map[string]primitive.Primitive{}
 	for _, o := range objectsData {
+		if _, ok := objectsMap[o.Name]; ok {
+			return nil, fmt.Errorf("object (%s) redefined", o.Name)
+		}
 		switch o.TypeName {
 		case "Box":
 			var bd box.BoxData
@@ -389,7 +414,50 @@ func loadObjects(fileName string) (map[string]primitive.Primitive, error) {
 	return objectsMap, nil
 }
 
-func loadMaterials(fileName string) (map[string]material.Material, error) {
+func loadTextures(fileName string) (map[string]texture.Texture, error) {
+	texturesBytes, err := ioutil.ReadFile(fileName)
+	if err != nil {
+		return nil, err
+	}
+	var texturesData []TextureData
+	err = json.Unmarshal(texturesBytes, &texturesData)
+	if err != nil {
+		return nil, err
+	}
+	texturesMap := map[string]texture.Texture{}
+	for _, t := range texturesData {
+		if _, ok := texturesMap[t.Name]; ok {
+			return nil, fmt.Errorf("texture (%s) redefined", t.Name)
+		}
+		switch t.TypeName {
+		case "Color":
+			var c texture.Color
+			dataBytes, err := json.Marshal(t.Data)
+			if err != nil {
+				return nil, err
+			}
+			json.Unmarshal(dataBytes, &c)
+			texturesMap[t.Name] = &c
+		case "Image":
+			var i texture.Image
+			dataBytes, err := json.Marshal(t.Data)
+			if err != nil {
+				return nil, err
+			}
+			json.Unmarshal(dataBytes, &i)
+			err = i.Load()
+			if err != nil {
+				return nil, err
+			}
+			texturesMap[t.Name] = &i
+		default:
+			return nil, fmt.Errorf("Type (%s) not a valid texture type", t.TypeName)
+		}
+	}
+	return texturesMap, nil
+}
+
+func loadMaterials(fileName, texturesFileName string, texturesMap map[string]texture.Texture) (map[string]material.Material, error) {
 	materialsBytes, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		return nil, err
@@ -401,6 +469,9 @@ func loadMaterials(fileName string) (map[string]material.Material, error) {
 	}
 	materialsMap := map[string]material.Material{}
 	for _, m := range materialsData {
+		if _, ok := materialsMap[m.Name]; ok {
+			return nil, fmt.Errorf("material (%s) redefined", m.Name)
+		}
 		switch m.TypeName {
 		case "Lambertian":
 			var l material.Lambertian
@@ -409,6 +480,30 @@ func loadMaterials(fileName string) (map[string]material.Material, error) {
 				return nil, err
 			}
 			json.Unmarshal(dataBytes, &l)
+			var ok bool
+			if m.ReflectanceTextureName == "" {
+				l.ReflectanceTexture, ok = texturesMap["default"]
+				if !ok {
+					return nil, fmt.Errorf("Selected Texture (%s) not in %s", "default", texturesFileName)
+				}
+			} else {
+				l.ReflectanceTexture, ok = texturesMap[m.ReflectanceTextureName]
+				if !ok {
+					return nil, fmt.Errorf("Selected Texture (%s) not in %s", m.ReflectanceTextureName, texturesFileName)
+				}
+			}
+
+			if m.EmittanceTextureName == "" {
+				l.EmittanceTexture, ok = texturesMap["default"]
+				if !ok {
+					return nil, fmt.Errorf("Selected Texture (%s) not in %s", "default", texturesFileName)
+				}
+			} else {
+				l.EmittanceTexture, ok = texturesMap[m.EmittanceTextureName]
+				if !ok {
+					return nil, fmt.Errorf("Selected Texture (%s) not in %s", m.EmittanceTextureName, texturesFileName)
+				}
+			}
 			materialsMap[m.Name] = &l
 		case "Metal":
 			var mtl material.Metal
@@ -417,6 +512,31 @@ func loadMaterials(fileName string) (map[string]material.Material, error) {
 				return nil, err
 			}
 			json.Unmarshal(dataBytes, &mtl)
+			var ok bool
+
+			if m.ReflectanceTextureName == "" {
+				mtl.ReflectanceTexture, ok = texturesMap["default"]
+				if !ok {
+					return nil, fmt.Errorf("Selected Texture (%s) not in %s", "default", texturesFileName)
+				}
+			} else {
+				mtl.ReflectanceTexture, ok = texturesMap[m.ReflectanceTextureName]
+				if !ok {
+					return nil, fmt.Errorf("Selected Texture (%s) not in %s", m.ReflectanceTextureName, texturesFileName)
+				}
+			}
+
+			if m.EmittanceTextureName == "" {
+				mtl.EmittanceTexture, ok = texturesMap["default"]
+				if !ok {
+					return nil, fmt.Errorf("Selected Texture (%s) not in %s", "default", texturesFileName)
+				}
+			} else {
+				mtl.EmittanceTexture, ok = texturesMap[m.EmittanceTextureName]
+				if !ok {
+					return nil, fmt.Errorf("Selected Texture (%s) not in %s", m.EmittanceTextureName, texturesFileName)
+				}
+			}
 			materialsMap[m.Name] = &mtl
 		case "Dielectric":
 			var d material.Dielectric
@@ -425,6 +545,29 @@ func loadMaterials(fileName string) (map[string]material.Material, error) {
 				return nil, err
 			}
 			json.Unmarshal(dataBytes, &d)
+			var ok bool
+			if m.ReflectanceTextureName == "" {
+				d.ReflectanceTexture, ok = texturesMap["default"]
+				if !ok {
+					return nil, fmt.Errorf("Selected Texture (%s) not in %s", "default", texturesFileName)
+				}
+			} else {
+				d.ReflectanceTexture, ok = texturesMap[m.ReflectanceTextureName]
+				if !ok {
+					return nil, fmt.Errorf("Selected Texture (%s) not in %s", m.ReflectanceTextureName, texturesFileName)
+				}
+			}
+			if m.EmittanceTextureName == "" {
+				d.EmittanceTexture, ok = texturesMap["default"]
+				if !ok {
+					return nil, fmt.Errorf("Selected Texture (%s) not in %s", "default", texturesFileName)
+				}
+			} else {
+				d.EmittanceTexture, ok = texturesMap[m.EmittanceTextureName]
+				if !ok {
+					return nil, fmt.Errorf("Selected Texture (%s) not in %s", m.EmittanceTextureName, texturesFileName)
+				}
+			}
 			materialsMap[m.Name] = &d
 		default:
 			return nil, fmt.Errorf("Type (%s) not a valid material type", m.TypeName)

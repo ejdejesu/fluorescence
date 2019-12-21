@@ -64,7 +64,7 @@ func (ic *infiniteCylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (
 			return &material.RayHit{
 				Ray:         ray,
 				NormalAtHit: ic.normalAt(ray.PointAt(t1)),
-				T:           t1,
+				Time:           t1,
 				Material:    ic.mat,
 			}, true
 		}
@@ -74,7 +74,7 @@ func (ic *infiniteCylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (
 			return &material.RayHit{
 				Ray:         ray,
 				NormalAtHit: ic.normalAt(ray.PointAt(t2)),
-				T:           t2,
+				Time:           t2,
 				Material:    ic.mat,
 			}, true
 		}

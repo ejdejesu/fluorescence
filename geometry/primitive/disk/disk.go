@@ -69,7 +69,7 @@ func (d *disk) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.Ray
 	return &material.RayHit{
 		Ray:         ray,
 		NormalAtHit: d.normal,
-		T:           t,
+		Time:           t,
 		Material:    d.mat,
 	}, true
 }

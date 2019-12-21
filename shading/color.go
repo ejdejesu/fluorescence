@@ -69,3 +69,18 @@ func (c Color) ToRGBA64() color.RGBA64 {
 		uint16(c.Blue * float64(math.MaxUint16)),
 		uint16(1.0 * float64(math.MaxUint16))}
 }
+
+func MakeColor(c color.Color) Color {
+	// fmt.Println(c)
+	r, g, b, _ := c.RGBA()
+	// fmt.Println(r, g, b)
+	inv := float64(1.0 / math.MaxUint16)
+	// fmt.Println("red   ", float64(r)*inv)
+	// fmt.Println("green ", float64(g)*inv)
+	// fmt.Println("blue  ", float64(b)*inv)
+	return Color{
+		Red:   float64(r) * inv,
+		Green: float64(g) * inv,
+		Blue:  float64(b) * inv,
+	}
+}

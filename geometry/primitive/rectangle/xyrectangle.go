@@ -72,7 +72,17 @@ func (r *xyRectangle) Intersection(ray geometry.Ray, tMin, tMax float64) (*mater
 		return nil, false
 	}
 
-	return &material.RayHit{ray, r.normal, t, r.mat}, true
+	u := (x - r.x0) / (r.x1 - r.x0)
+	v := (y - r.y0) / (r.y1 - r.y0)
+
+	return &material.RayHit{
+		Ray:         ray,
+		NormalAtHit: r.normal,
+		Time:        t,
+		U:           u,
+		V:           v,
+		Material:    r.mat,
+	}, true
 }
 
 func (r *xyRectangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {

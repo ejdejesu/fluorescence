@@ -18,6 +18,7 @@ type Tile struct {
 	Span   geometry.Vector
 }
 
+// TraceImage is the powerhouse function, driving the raycasting algorith by casting rays into the scene
 func TraceImage(params *Parameters, img *image.RGBA64, doneChan chan<- int, maxThreads int64) {
 
 	tiles := getTiles(params, img)
@@ -30,6 +31,7 @@ func TraceImage(params *Parameters, img *image.RGBA64, doneChan chan<- int, maxT
 		sem.Acquire(context.Background(), 1)
 		go traceTile(params, r, img, doneChan, sem, tile, params.SampleCount)
 	}
+
 }
 
 func traceTile(p *Parameters, rng *rand.Rand, img *image.RGBA64, dc chan<- int, sem *semaphore.Weighted, t Tile, sampleCount int) {
@@ -42,6 +44,7 @@ func traceTile(p *Parameters, rng *rand.Rand, img *image.RGBA64, dc chan<- int, 
 			dc <- 1
 		}
 	}
+	// dc <- 1
 }
 
 func tracePixel(p *Parameters, x, y int, rng *rand.Rand) shading.Color {
@@ -71,8 +74,8 @@ func traceRay(parameters *Parameters, r geometry.Ray, rng *rand.Rand, depth int)
 
 	mat := rayHit.Material
 
-	if mat.Reflectance() == shading.COLOR_BLACK {
-		return mat.Emittance()
+	if mat.Reflectance(rayHit.U, rayHit.V) == shading.COLOR_BLACK {
+		return mat.Emittance(rayHit.U, rayHit.V)
 	}
 
 	scatteredRay, wasScattered := rayHit.Material.Scatter(*rayHit, rng)
@@ -80,7 +83,7 @@ func traceRay(parameters *Parameters, r geometry.Ray, rng *rand.Rand, depth int)
 		return shading.COLOR_BLACK
 	}
 	incomingColor := traceRay(parameters, scatteredRay, rng, depth+1)
-	return mat.Emittance().Add(mat.Reflectance().MultColor(incomingColor))
+	return mat.Emittance(rayHit.U, rayHit.V).Add(mat.Reflectance(rayHit.U, rayHit.V).MultColor(incomingColor))
 }
 
 func getTiles(p *Parameters, i *image.RGBA64) []Tile {

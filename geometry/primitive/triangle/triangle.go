@@ -114,7 +114,7 @@ func (t *triangle) Copy() primitive.Primitive {
 }
 
 // Unit creates a unit triangle.
-// The points on this triangle are:
+// The points of this triangle are:
 // A: (0, 0, 0),
 // B: (1, 0, 0),
 // C: (0, 1, 0).

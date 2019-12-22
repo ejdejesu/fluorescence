@@ -6,6 +6,7 @@ import (
 	"fluorescence/geometry/primitive/aabb"
 	"fluorescence/geometry/primitive/disk"
 	"fluorescence/geometry/primitive/primitivelist"
+	"fluorescence/geometry/primitive/uncappedcylinder"
 	"fluorescence/shading/material"
 )
 
@@ -21,7 +22,7 @@ type Data struct {
 }
 
 func New(cd *Data) (*cylinder, error) {
-	uncappedCylinder, err := New(&Data{
+	uncappedCylinder, err := uncappedcylinder.New(&uncappedcylinder.Data{
 		A:                  cd.A,
 		B:                  cd.B,
 		Radius:             cd.Radius,

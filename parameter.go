@@ -9,6 +9,7 @@ import (
 	"fluorescence/geometry/primitive/disk"
 	"fluorescence/geometry/primitive/hollowcylinder"
 	"fluorescence/geometry/primitive/hollowdisk"
+	"fluorescence/geometry/primitive/infinitecylinder"
 	"fluorescence/geometry/primitive/plane"
 	"fluorescence/geometry/primitive/primitivelist"
 	"fluorescence/geometry/primitive/pyramid"

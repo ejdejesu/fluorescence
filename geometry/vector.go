@@ -41,9 +41,9 @@ func RandomOnUnitDisk(rng *rand.Rand) Vector {
 	}
 }
 
-// RandomInUnit returns a new Vector pointing from the origin to a
+// RandomInUnitSphere returns a new Vector pointing from the origin to a
 // random point in a unit sphere
-func RandomInUnit(rng *rand.Rand) Vector {
+func RandomInUnitSphere(rng *rand.Rand) Vector {
 	for {
 		v := Vector{
 			X: 2.0*rng.Float64() - 1.0,

@@ -8,7 +8,7 @@ import (
 var ucHit bool
 
 func TestUncappedCylinderIntersectionHit(t *testing.T) {
-	uc := UnitUncappedCylinder(0.0, 0.0, 0.0)
+	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,
@@ -28,7 +28,7 @@ func TestUncappedCylinderIntersectionHit(t *testing.T) {
 }
 
 func BenchmarkUncappedCylinderIntersectionHit(b *testing.B) {
-	uc := UnitUncappedCylinder(0.0, 0.0, 0.0)
+	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,
@@ -50,7 +50,7 @@ func BenchmarkUncappedCylinderIntersectionHit(b *testing.B) {
 }
 
 func TestUncappedCylinderIntersectionSecondHit(t *testing.T) {
-	uc := UnitUncappedCylinder(0.0, 0.0, 0.0)
+	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,
@@ -70,7 +70,7 @@ func TestUncappedCylinderIntersectionSecondHit(t *testing.T) {
 }
 
 func BenchmarkUncappedCylinderIntersectionSecondHit(b *testing.B) {
-	uc := UnitUncappedCylinder(0.0, 0.0, 0.0)
+	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,
@@ -92,7 +92,7 @@ func BenchmarkUncappedCylinderIntersectionSecondHit(b *testing.B) {
 }
 
 func TestUncappedCylinderIntersectionSideMiss(t *testing.T) {
-	uc := UnitUncappedCylinder(0.0, 0.0, 0.0)
+	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 1.5,
@@ -112,7 +112,7 @@ func TestUncappedCylinderIntersectionSideMiss(t *testing.T) {
 }
 
 func BenchmarkUncappedCylinderIntersectionSideMiss(b *testing.B) {
-	uc := UnitUncappedCylinder(0.0, 0.0, 0.0)
+	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 1.5,
@@ -134,7 +134,7 @@ func BenchmarkUncappedCylinderIntersectionSideMiss(b *testing.B) {
 }
 
 func TestUncappedCylinderIntersectionBehindMiss(t *testing.T) {
-	uc := UnitUncappedCylinder(0.0, 0.0, 0.0)
+	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,
@@ -154,7 +154,7 @@ func TestUncappedCylinderIntersectionBehindMiss(t *testing.T) {
 }
 
 func BenchmarkUncappedCylinderIntersectionBehindMiss(b *testing.B) {
-	uc := UnitUncappedCylinder(0.0, 0.0, 0.0)
+	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,
@@ -176,7 +176,7 @@ func BenchmarkUncappedCylinderIntersectionBehindMiss(b *testing.B) {
 }
 
 func TestUncappedCylinderIntersectionTopMiss(t *testing.T) {
-	uc := UnitUncappedCylinder(0.0, 0.0, 0.0)
+	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,
@@ -196,7 +196,7 @@ func TestUncappedCylinderIntersectionTopMiss(t *testing.T) {
 }
 
 func BenchmarkUncappedCylinderIntersectionTopMiss(b *testing.B) {
-	uc := UnitUncappedCylinder(0.0, 0.0, 0.0)
+	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,
@@ -218,7 +218,7 @@ func BenchmarkUncappedCylinderIntersectionTopMiss(b *testing.B) {
 }
 
 func TestUncappedCylinderIntersectionBottomMiss(t *testing.T) {
-	uc := UnitUncappedCylinder(0.0, 0.0, 0.0)
+	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,
@@ -238,7 +238,7 @@ func TestUncappedCylinderIntersectionBottomMiss(t *testing.T) {
 }
 
 func BenchmarkUncappedCylinderIntersectionBottomMiss(b *testing.B) {
-	uc := UnitUncappedCylinder(0.0, 0.0, 0.0)
+	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,
@@ -260,7 +260,7 @@ func BenchmarkUncappedCylinderIntersectionBottomMiss(b *testing.B) {
 }
 
 func TestUncappedCylinderIntersectionParallelMiss(t *testing.T) {
-	uc := UnitUncappedCylinder(0.0, 0.0, 0.0)
+	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,
@@ -280,7 +280,7 @@ func TestUncappedCylinderIntersectionParallelMiss(t *testing.T) {
 }
 
 func BenchmarkUncappedCylinderIntersectionParallelMiss(b *testing.B) {
-	uc := UnitUncappedCylinder(0.0, 0.0, 0.0)
+	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,
@@ -302,7 +302,7 @@ func BenchmarkUncappedCylinderIntersectionParallelMiss(b *testing.B) {
 }
 
 func TestUncappedCylinderIntersectionInsideParallelMiss(t *testing.T) {
-	uc := UnitUncappedCylinder(0.0, 0.0, 0.0)
+	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,
@@ -322,7 +322,7 @@ func TestUncappedCylinderIntersectionInsideParallelMiss(t *testing.T) {
 }
 
 func BenchmarkUncappedCylinderIntersectionInsideParallelMiss(b *testing.B) {
-	uc := UnitUncappedCylinder(0.0, 0.0, 0.0)
+	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,

@@ -19,6 +19,7 @@ type uncappedCylinder struct {
 	mat                material.Material
 }
 
+// Data holds information needed to contruct a uncappedCylinder
 type Data struct {
 	A                  geometry.Point `json:"a"`
 	B                  geometry.Point `json:"b"`
@@ -26,6 +27,7 @@ type Data struct {
 	HasInvertedNormals bool           `json:"has_inverted_normals"`
 }
 
+// New contructs a new uncappedCylinder given a Data
 func New(ucd *Data) (*uncappedCylinder, error) {
 	// if ucd.A == nil || ucd.B == nil {
 	// 	return nil, fmt.Errorf("uncappedCylinder ray is nil")
@@ -139,7 +141,12 @@ func (uc *uncappedCylinder) normalAt(p geometry.Point) geometry.Vector {
 	return uc.ray.ClosestPoint(p).To(p).Unit()
 }
 
-func UnitUncappedCylinder(xOffset, yOffset, zOffset float64) *uncappedCylinder {
+// Unit creates a unit uncappedCylinder.
+// The points of this cylinder are:
+// A: (0, 0, 0),
+// B: (1, 0, 0),
+// and the Radius is 1
+func Unit(xOffset, yOffset, zOffset float64) *uncappedCylinder {
 	ucd := Data{
 		A: geometry.Point{
 			X: 0.0 + xOffset,

@@ -1,4 +1,4 @@
-package cylinder
+package infinitecylinder
 
 import (
 	"fluorescence/geometry"

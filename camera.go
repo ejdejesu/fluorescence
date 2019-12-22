@@ -59,8 +59,8 @@ func (c *Camera) Setup(p *Parameters) error {
 
 // GetRay returns a Ray from the eye location to a point on the view place u% across and v% up
 func (c *Camera) GetRay(u float64, v float64, rng *rand.Rand) geometry.Ray {
-	randomOnLens := geometry.RandomOnUnitDisc(rng).MultScalar(c.lensRadius)
-	offset := c.u.MultScalar(randomOnLens.X).AddInPlace(c.v.MultScalar(randomOnLens.Y))
+	randomOnLens := geometry.RandomOnUnitDisk(rng).MultScalar(c.lensRadius)
+	offset := c.u.MultScalar(randomOnLens.X).Add(c.v.MultScalar(randomOnLens.Y))
 	return geometry.Ray{
 		Origin: c.EyeLocation.AddVector(offset),
 		Direction: c.lowerLeftCorner.AddVector(

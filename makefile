@@ -6,6 +6,7 @@ GOBUILD=$(GOCMD) build
 GOTEST=$(GOCMD) test
 GOCLEAN=$(GOCMD) clean
 GOGET=$(GOCMD) get
+GOVET=$(GOCMD) vet
 
 BINARY_NAME=fluorescence
 OUTPUT_DIR=./output/
@@ -28,11 +29,14 @@ test:
 	$(GOTEST) -v ./...
 benchmark:
 	$(GOTEST) -v -bench . -run xxx ./...
+vet:
+	# go vet
+	$(GOVET)
 clean:
 	# go clean
 	$(GOCLEAN)
 	# remove binary
 	-rm $(GOPATH)/bin/$(BINARY_NAME)
-clean-output:
+flush:
 	# delete all generated images
 	-rm -r $(OUTPUT_DIR)

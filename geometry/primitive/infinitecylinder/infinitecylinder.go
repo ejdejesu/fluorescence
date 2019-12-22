@@ -16,13 +16,13 @@ type infiniteCylinder struct {
 	mat                material.Material
 }
 
-type InfiniteCylinderData struct {
+type Data struct {
 	Ray                geometry.Ray `json:"ray"`
 	Radius             float64      `json:"radius"`
 	HasInvertedNormals bool         `json:"has_inverted_normals"`
 }
 
-func NewInfiniteCylinder(icd *InfiniteCylinderData) (*infiniteCylinder, error) {
+func New(icd *Data) (*infiniteCylinder, error) {
 	// if icd.Ray == nil {
 	// 	return nil, fmt.Errorf("infiniteCylinder ray is nil")
 	// }
@@ -64,7 +64,7 @@ func (ic *infiniteCylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (
 			return &material.RayHit{
 				Ray:         ray,
 				NormalAtHit: ic.normalAt(ray.PointAt(t1)),
-				Time:           t1,
+				Time:        t1,
 				Material:    ic.mat,
 			}, true
 		}
@@ -74,7 +74,7 @@ func (ic *infiniteCylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (
 			return &material.RayHit{
 				Ray:         ray,
 				NormalAtHit: ic.normalAt(ray.PointAt(t2)),
-				Time:           t2,
+				Time:        t2,
 				Material:    ic.mat,
 			}, true
 		}
@@ -111,8 +111,8 @@ func (ic *infiniteCylinder) normalAt(p geometry.Point) geometry.Vector {
 	return ic.ray.ClosestPoint(p).To(p).Unit()
 }
 
-func BasicInfiniteCylinder(xOffset, yOffset, zOffset float64) *infiniteCylinder {
-	icd := InfiniteCylinderData{
+func UnitInfiniteCylinder(xOffset, yOffset, zOffset float64) *infiniteCylinder {
+	icd := Data{
 		Ray: geometry.Ray{
 			Origin: geometry.Point{
 				X: 0.0 + xOffset,
@@ -127,6 +127,6 @@ func BasicInfiniteCylinder(xOffset, yOffset, zOffset float64) *infiniteCylinder 
 		},
 		Radius: 1.0,
 	}
-	ic, _ := NewInfiniteCylinder(&icd)
+	ic, _ := New(&icd)
 	return ic
 }

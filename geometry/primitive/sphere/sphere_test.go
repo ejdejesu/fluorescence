@@ -8,7 +8,7 @@ import (
 var sphereHit bool
 
 func TestSphereIntersectionHit(t *testing.T) {
-	sphere := BasicSphere(0.0, 0.0, 0.0)
+	sphere := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,
@@ -28,7 +28,7 @@ func TestSphereIntersectionHit(t *testing.T) {
 }
 
 func BenchmarkSphereIntersectionHit(b *testing.B) {
-	sphere := BasicSphere(0.0, 0.0, 0.0)
+	sphere := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,
@@ -50,7 +50,7 @@ func BenchmarkSphereIntersectionHit(b *testing.B) {
 }
 
 func TestSphereIntersectionMiss(t *testing.T) {
-	sphere := BasicSphere(0.0, 0.0, 0.0)
+	sphere := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 1.0,
@@ -70,7 +70,7 @@ func TestSphereIntersectionMiss(t *testing.T) {
 }
 
 func BenchmarkSphereIntersectionMiss(b *testing.B) {
-	sphere := BasicSphere(0.0, 0.0, 0.0)
+	sphere := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 1.0,

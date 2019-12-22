@@ -8,7 +8,7 @@ import (
 var planeHit bool
 
 func TestPlaneIntersectionHit(t *testing.T) {
-	plane := BasicPlane(0.0, 0.0, 0.0)
+	plane := UnitPlane(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.5,
@@ -28,7 +28,7 @@ func TestPlaneIntersectionHit(t *testing.T) {
 }
 
 func BenchmarkPlaneIntersectionHit(b *testing.B) {
-	plane := BasicPlane(0.0, 0.0, 0.0)
+	plane := UnitPlane(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.5,
@@ -50,7 +50,7 @@ func BenchmarkPlaneIntersectionHit(b *testing.B) {
 }
 
 func TestPlaneIntersectionMiss(t *testing.T) {
-	plane := BasicPlane(0.0, 0.0, 0.0)
+	plane := UnitPlane(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.5,
@@ -70,7 +70,7 @@ func TestPlaneIntersectionMiss(t *testing.T) {
 }
 
 func BenchmarkPlaneIntersectionMiss(b *testing.B) {
-	plane := BasicPlane(0.0, 0.0, 0.0)
+	plane := UnitPlane(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.5,

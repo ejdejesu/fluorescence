@@ -33,7 +33,7 @@ func (l Lambertian) IsSpecular() bool {
 // Scatter returns an incoming ray given a RayHit representing the outgoing ray
 func (l Lambertian) Scatter(rayHit RayHit, rng *rand.Rand) (geometry.Ray, bool) {
 	hitPoint := rayHit.Ray.PointAt(rayHit.Time)
-	target := hitPoint.AddVector(rayHit.NormalAtHit).AddVector(geometry.RandomInUnitSphere(rng))
+	target := hitPoint.AddVector(rayHit.NormalAtHit).AddVector(geometry.RandomInUnit(rng))
 	return geometry.Ray{
 		Origin:    hitPoint,
 		Direction: hitPoint.To(target),

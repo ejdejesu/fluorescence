@@ -13,13 +13,22 @@ type Vector struct {
 	Z float64 `json:"z"`
 }
 
-var VECTOR_ZERO = Vector{}
+// VectorZero references the zero vector
+var VectorZero = Vector{}
 
-var VECTOR_UP = Vector{0.0, 1.0, 0.0}
-var VECTOR_RIGHT = Vector{1.0, 0.0, 0.0}
-var VECTOR_FORWARD = Vector{0.0, 0.0, -1.0}
+// VectorUp references the up vector (positive Y) with the standard cartesian axes as an orthogonal system
+var VectorUp = Vector{0.0, 1.0, 0.0}
 
-func RandomOnUnitDisc(rng *rand.Rand) Vector {
+// VectorRight references the right vector (positive X) with the standard cartesian axes as an orthogonal system
+var VectorRight = Vector{1.0, 0.0, 0.0}
+
+// VectorForward references the forward vector (negative Z) with the standard cartesian axes as an orthogonal system
+// it points towards negative Z to preserve the system's right-handedness
+var VectorForward = Vector{0.0, 0.0, -1.0}
+
+// RandomOnUnitDisk returns a new Vector pointing from the origin to a
+// random point on a unit disk
+func RandomOnUnitDisk(rng *rand.Rand) Vector {
 	for {
 		v := Vector{
 			X: 2.0*rng.Float64() - 1.0,
@@ -32,7 +41,9 @@ func RandomOnUnitDisc(rng *rand.Rand) Vector {
 	}
 }
 
-func RandomInUnitSphere(rng *rand.Rand) Vector {
+// RandomInUnit returns a new Vector pointing from the origin to a
+// random point in a unit sphere
+func RandomInUnit(rng *rand.Rand) Vector {
 	for {
 		v := Vector{
 			X: 2.0*rng.Float64() - 1.0,
@@ -45,81 +56,73 @@ func RandomInUnitSphere(rng *rand.Rand) Vector {
 	}
 }
 
-// Magnitude return euclidean length of vector
+// Magnitude return euclidean length of Vector
 func (v Vector) Magnitude() float64 {
 	return math.Sqrt(v.X*v.X + v.Y*v.Y + v.Z*v.Z)
 }
 
-// Unit returns a new vector with direction preserved and length equal to one
+// Unit returns a new Vector with direction preserved and length equal to one
 func (v Vector) Unit() Vector {
 	return v.DivScalar(v.Magnitude())
 }
 
+// Dot computes the dot or scalar product of two Vectors
 func (v Vector) Dot(w Vector) float64 {
 	return v.X*w.X + v.Y*w.Y + v.Z*w.Z
 }
 
+// Cross computes the cross or Vector product of two Vectors
 func (v Vector) Cross(w Vector) Vector {
 	return Vector{v.Y*w.Z - v.Z*w.Y, v.Z*w.X - v.X*w.Z, v.X*w.Y - v.Y*w.X}
 }
 
-func (v Vector) CrossInPlace(w Vector) Vector {
-
-	nX := v.Y*w.Z - v.Z*w.Y
-	nY := v.Z*w.X - v.X*w.Z
-	nZ := v.X*w.Y - v.Y*w.X
-
-	v.X = nX
-	v.Y = nY
-	v.Z = nZ
-
-	return v
-}
-
+// Add adds a Vector to another Vector component-wise
 func (v Vector) Add(w Vector) Vector {
 	return Vector{v.X + w.X, v.Y + w.Y, v.Z + w.Z}
 }
 
-func (v Vector) AddInPlace(w Vector) Vector {
-	v.X += w.X
-	v.Y += w.Y
-	v.Z += w.Z
-	return v
-}
-
+// Sub subtracts a Vector from another Vector component-wise
 func (v Vector) Sub(w Vector) Vector {
 	return Vector{v.X - w.X, v.Y - w.Y, v.Z - w.Z}
 }
 
+// MultScalar multiplies a Vector by a scalar
 func (v Vector) MultScalar(s float64) Vector {
 	return Vector{v.X * s, v.Y * s, v.Z * s}
 }
 
+// MultVector multiplies a Vector by a Vector component-wise
 func (v Vector) MultVector(w Vector) Vector {
 	return Vector{v.X * w.X, v.Y * w.Y, v.Z * w.Z}
 }
 
+// Pow raises a Vector to an exponential power, component-wise
 func (v Vector) Pow(e float64) Vector {
 	return Vector{math.Pow(v.X, e), math.Pow(v.Y, e), math.Pow(v.Z, e)}
 }
 
+// DivScalar divides a Vector by a scalar
 func (v Vector) DivScalar(s float64) Vector {
 	inv := 1.0 / s
 	return Vector{v.X * inv, v.Y * inv, v.Z * inv}
 }
 
+// DivVector divides a Vector by a Vector component-wise
 func (v Vector) DivVector(w Vector) Vector {
 	return Vector{v.X / w.X, v.Y / w.Y, v.Z / w.Z}
 }
 
+// Negate returns a Vector pointing in the opposite direction
 func (v Vector) Negate() Vector {
 	return Vector{-v.X, -v.Y, -v.Z}
 }
 
+// ReflectAround returns the reflection of a vector given a normal
 func (v Vector) ReflectAround(w Vector) Vector {
 	return v.Sub(w.MultScalar(v.Dot(w) * 2.0))
 }
 
+// RefractAround returns the refraction of a vector given the normal and ratio of reflective indices
 func (v Vector) RefractAround(w Vector, rri float64) (Vector, bool) {
 	dt := v.Unit().Dot(w)
 	discriminant := 1.0 - (rri*rri)*(1.0-(dt*dt))
@@ -128,17 +131,24 @@ func (v Vector) RefractAround(w Vector, rri float64) (Vector, bool) {
 		// fmt.Println("yu")
 		return v.Unit().Sub(w.MultScalar(dt)).MultScalar(rri).Sub(w.MultScalar(math.Sqrt(discriminant))), true
 	}
-	return VECTOR_ZERO, false
+	return VectorZero, false
 }
 
+// ToColor converts a Vector to a Color
 func (v Vector) ToColor() shading.Color {
-	return shading.Color{v.X, v.Y, v.Z}
+	return shading.Color{
+		Red:   v.X,
+		Green: v.Y,
+		Blue:  v.Z,
+	}
 }
 
+// VectorFromColor creates a Vector from a Color
 func VectorFromColor(c shading.Color) Vector {
 	return Vector{c.Red, c.Green, c.Blue}
 }
 
+// Copy returns a new Vector identical to v
 func (v Vector) Copy() Vector {
 	return Vector{v.X, v.Y, v.Z}
 }

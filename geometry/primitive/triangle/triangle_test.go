@@ -8,7 +8,7 @@ import (
 var triHit bool
 
 func TestTriangleIntersectionHit(t *testing.T) {
-	tri := BasicTriangle(0.0, 0.0, 0.0)
+	tri := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.1,
@@ -28,7 +28,7 @@ func TestTriangleIntersectionHit(t *testing.T) {
 }
 
 func BenchmarkTriangleIntersectionHit(b *testing.B) {
-	tri := BasicTriangle(0.0, 0.0, 0.0)
+	tri := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.1,
@@ -50,7 +50,7 @@ func BenchmarkTriangleIntersectionHit(b *testing.B) {
 }
 
 func TestTriangleIntersectionMiss(t *testing.T) {
-	tri := BasicTriangle(0.0, 0.0, 0.0)
+	tri := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.9,
@@ -70,7 +70,7 @@ func TestTriangleIntersectionMiss(t *testing.T) {
 }
 
 func BenchmarkTriangleIntersectionMiss(b *testing.B) {
-	tri := BasicTriangle(0.0, 0.0, 0.0)
+	tri := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.9,

@@ -19,7 +19,7 @@ type RayHit struct {
 	Ray         geometry.Ray
 	NormalAtHit geometry.Vector
 	Time        float64
-	U           float64
-	V           float64
+	U           float64 // texture coordinate U
+	V           float64 // texture coordinate V
 	Material    Material
 }

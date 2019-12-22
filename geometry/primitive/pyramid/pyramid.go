@@ -16,14 +16,14 @@ type pyramid struct {
 	box  *aabb.AABB
 }
 
-type PyramidData struct {
+type Data struct {
 	A                  geometry.Point `json:"a"`
 	B                  geometry.Point `json:"b"`
 	Height             float64        `json:"height"`
 	HasInvertedNormals bool           `json:"has_inverted_normals"`
 }
 
-func NewPyramid(pd *PyramidData) (*pyramid, error) {
+func New(pd *Data) (*pyramid, error) {
 	if pd.Height <= 0 {
 		return nil, fmt.Errorf("pyramid height is 0 or negative")
 	}
@@ -31,12 +31,12 @@ func NewPyramid(pd *PyramidData) (*pyramid, error) {
 		return nil, fmt.Errorf("pyramid is not directed upwards")
 	}
 
-	c1 := geometry.MinOf(pd.A, pd.B)
-	c3 := geometry.MaxOf(pd.A, pd.B)
+	c1 := geometry.MinComponents(pd.A, pd.B)
+	c3 := geometry.MaxComponents(pd.A, pd.B)
 	c2 := geometry.Point{c1.X, c1.Y, c3.Z}
 	c4 := geometry.Point{c3.X, c1.Y, c1.Z}
 
-	base, err := rectangle.NewRectangle(&rectangle.RectangleData{
+	base, err := rectangle.New(&rectangle.Data{
 		A:                 pd.A,
 		B:                 pd.B,
 		IsCulled:          false,
@@ -48,9 +48,9 @@ func NewPyramid(pd *PyramidData) (*pyramid, error) {
 
 	diagonalBaseVectorHalf := c1.To(c3).DivScalar(2.0)
 	baseCenterPoint := c1.AddVector(diagonalBaseVectorHalf)
-	topPoint := baseCenterPoint.AddVector(geometry.VECTOR_UP.MultScalar(pd.Height))
+	topPoint := baseCenterPoint.AddVector(geometry.VectorUp.MultScalar(pd.Height))
 
-	tri1, err := triangle.NewTriangle(&triangle.TriangleData{
+	tri1, err := triangle.New(&triangle.Data{
 		A:        c1,
 		B:        c2,
 		C:        topPoint,
@@ -60,7 +60,7 @@ func NewPyramid(pd *PyramidData) (*pyramid, error) {
 		return nil, err
 	}
 
-	tri2, err := triangle.NewTriangle(&triangle.TriangleData{
+	tri2, err := triangle.New(&triangle.Data{
 		A:        c2,
 		B:        c3,
 		C:        topPoint,
@@ -70,7 +70,7 @@ func NewPyramid(pd *PyramidData) (*pyramid, error) {
 		return nil, err
 	}
 
-	tri3, err := triangle.NewTriangle(&triangle.TriangleData{
+	tri3, err := triangle.New(&triangle.Data{
 		A:        c3,
 		B:        c4,
 		C:        topPoint,
@@ -80,7 +80,7 @@ func NewPyramid(pd *PyramidData) (*pyramid, error) {
 		return nil, err
 	}
 
-	tri4, err := triangle.NewTriangle(&triangle.TriangleData{
+	tri4, err := triangle.New(&triangle.Data{
 		A:        c4,
 		B:        c1,
 		C:        topPoint,
@@ -129,8 +129,8 @@ func (p *pyramid) Copy() primitive.Primitive {
 	return &newP
 }
 
-func BasicPyramid(xOffset, yOffset, zOffset float64) *pyramid {
-	rd := PyramidData{
+func UnitPyramid(xOffset, yOffset, zOffset float64) *pyramid {
+	rd := Data{
 		A: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
@@ -143,6 +143,6 @@ func BasicPyramid(xOffset, yOffset, zOffset float64) *pyramid {
 		},
 		Height: 1.0,
 	}
-	r, _ := NewPyramid(&rd)
+	r, _ := New(&rd)
 	return r
 }

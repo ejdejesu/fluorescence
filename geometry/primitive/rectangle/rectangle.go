@@ -12,14 +12,14 @@ type rectangle struct {
 	axisAlignedRectangle primitive.Primitive
 }
 
-type RectangleData struct {
+type Data struct {
 	A                 geometry.Point `json:"a"`
 	B                 geometry.Point `json:"b"`
 	IsCulled          bool           `json:"is_culled"`
 	HasNegativeNormal bool           `json:"has_negative_normal"`
 }
 
-func NewRectangle(rd *RectangleData) (*rectangle, error) {
+func New(rd *Data) (*rectangle, error) {
 	// if rd.A == nil || rd.B == nil {
 	// 	return nil, fmt.Errorf("rectangle a or b is nil")
 	// }
@@ -67,8 +67,8 @@ func (r *rectangle) Copy() primitive.Primitive {
 	return &newR
 }
 
-func BasicRectangle(xOffset, yOffset, zOffset float64) *rectangle {
-	rd := RectangleData{
+func UnitRectangle(xOffset, yOffset, zOffset float64) *rectangle {
+	rd := Data{
 		A: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
@@ -80,6 +80,6 @@ func BasicRectangle(xOffset, yOffset, zOffset float64) *rectangle {
 			Z: 0.0 + zOffset,
 		},
 	}
-	r, _ := NewRectangle(&rd)
+	r, _ := New(&rd)
 	return r
 }

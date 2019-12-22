@@ -17,13 +17,13 @@ type sphere struct {
 	mat                material.Material
 }
 
-type SphereData struct {
+type Data struct {
 	Center             geometry.Point `json:"center"`
 	Radius             float64        `json:"radius"`
 	HasInvertedNormals bool           `json:"has_inverted_normals"`
 }
 
-func NewSphere(sd *SphereData) (*sphere, error) {
+func New(sd *Data) (*sphere, error) {
 	// if sd.Center == nil {
 	// 	return nil, fmt.Errorf("sphere center is nil")
 	// }
@@ -142,8 +142,8 @@ func (s *sphere) normalAt(p geometry.Point) geometry.Vector {
 	return s.center.To(p).Unit()
 }
 
-func BasicSphere(xOffset, yOffset, zOffset float64) *sphere {
-	s, _ := NewSphere(&SphereData{
+func Unit(xOffset, yOffset, zOffset float64) *sphere {
+	s, _ := New(&Data{
 		Center: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,

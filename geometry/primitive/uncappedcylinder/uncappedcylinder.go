@@ -1,4 +1,4 @@
-package cylinder
+package uncappedcylinder
 
 import (
 	"fluorescence/geometry"
@@ -19,14 +19,14 @@ type uncappedCylinder struct {
 	mat                material.Material
 }
 
-type UncappedCylinderData struct {
+type Data struct {
 	A                  geometry.Point `json:"a"`
 	B                  geometry.Point `json:"b"`
 	Radius             float64        `json:"radius"`
 	HasInvertedNormals bool           `json:"has_inverted_normals"`
 }
 
-func NewUncappedCylinder(ucd *UncappedCylinderData) (*uncappedCylinder, error) {
+func New(ucd *Data) (*uncappedCylinder, error) {
 	// if ucd.A == nil || ucd.B == nil {
 	// 	return nil, fmt.Errorf("uncappedCylinder ray is nil")
 	// }
@@ -94,12 +94,12 @@ func (uc *uncappedCylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (
 }
 
 func (uc *uncappedCylinder) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
-	diskA, _ := disk.NewDisk(&disk.DiskData{
+	diskA, _ := disk.New(&disk.Data{
 		Center: uc.ray.Origin,
 		Normal: uc.ray.Direction,
 		Radius: uc.radius,
 	})
-	diskB, _ := disk.NewDisk(&disk.DiskData{
+	diskB, _ := disk.New(&disk.Data{
 		Center: uc.ray.PointAt(uc.maxT),
 		Normal: uc.ray.PointAt(uc.maxT).To(uc.ray.Origin).Unit(),
 		Radius: uc.radius,
@@ -139,8 +139,8 @@ func (uc *uncappedCylinder) normalAt(p geometry.Point) geometry.Vector {
 	return uc.ray.ClosestPoint(p).To(p).Unit()
 }
 
-func BasicUncappedCylinder(xOffset, yOffset, zOffset float64) *uncappedCylinder {
-	ucd := UncappedCylinderData{
+func UnitUncappedCylinder(xOffset, yOffset, zOffset float64) *uncappedCylinder {
+	ucd := Data{
 		A: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
@@ -153,6 +153,6 @@ func BasicUncappedCylinder(xOffset, yOffset, zOffset float64) *uncappedCylinder 
 		},
 		Radius: 1.0,
 	}
-	uc, _ := NewUncappedCylinder(&ucd)
+	uc, _ := New(&ucd)
 	return uc
 }

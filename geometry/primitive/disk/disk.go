@@ -18,14 +18,14 @@ type disk struct {
 	mat           material.Material
 }
 
-type DiskData struct {
+type Data struct {
 	Center   geometry.Point  `json:"center"`
 	Normal   geometry.Vector `json:"normal"`
 	Radius   float64         `json:"radius"`
 	IsCulled bool            `json:"is_culled"`
 }
 
-func NewDisk(dd *DiskData) (*disk, error) {
+func New(dd *Data) (*disk, error) {
 	// if dd.Center == nil || dd.Normal == nil {
 	// 	return nil, fmt.Errorf("disk center or normal is nil")
 	// }
@@ -109,8 +109,8 @@ func (d *disk) Copy() primitive.Primitive {
 	return &newD
 }
 
-func BasicDisk(xOffset, yOffset, zOffset float64) *disk {
-	dd := DiskData{
+func UnitDisk(xOffset, yOffset, zOffset float64) *disk {
+	dd := Data{
 		Center: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
@@ -123,6 +123,6 @@ func BasicDisk(xOffset, yOffset, zOffset float64) *disk {
 		},
 		Radius: 1.0,
 	}
-	d, _ := NewDisk(&dd)
+	d, _ := New(&dd)
 	return d
 }

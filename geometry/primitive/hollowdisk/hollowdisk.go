@@ -1,4 +1,4 @@
-package disk
+package hollowdisk
 
 import (
 	"fluorescence/geometry"
@@ -20,7 +20,7 @@ type hollowDisk struct {
 	mat                material.Material
 }
 
-type HollowDiskData struct {
+type Data struct {
 	Center      geometry.Point  `json:"center"`
 	Normal      geometry.Vector `json:"normal"`
 	InnerRadius float64         `json:"inner_radius"`
@@ -28,7 +28,7 @@ type HollowDiskData struct {
 	IsCulled    bool            `json:"is_culled"`
 }
 
-func NewHollowDisk(hdd *HollowDiskData) (*hollowDisk, error) {
+func New(hdd *Data) (*hollowDisk, error) {
 	// if hdd.Center == nil || hdd.Normal == nil {
 	// 	return nil, fmt.Errorf("hollowDisk center or normal is nil")
 	// }
@@ -86,7 +86,7 @@ func (hd *hollowDisk) Intersection(ray geometry.Ray, tMin, tMax float64) (*mater
 	return &material.RayHit{
 		Ray:         ray,
 		NormalAtHit: hd.normal,
-		Time:           t,
+		Time:        t,
 		Material:    hd.mat,
 	}, true
 }
@@ -126,8 +126,8 @@ func (hd *hollowDisk) Copy() primitive.Primitive {
 	return &newHD
 }
 
-func BasicHollowDisk(xOffset, yOffset, zOffset float64) *hollowDisk {
-	hdd := HollowDiskData{
+func UnitHollowDisk(xOffset, yOffset, zOffset float64) *hollowDisk {
+	hdd := Data{
 		Center: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
@@ -141,6 +141,6 @@ func BasicHollowDisk(xOffset, yOffset, zOffset float64) *hollowDisk {
 		InnerRadius: 0.5,
 		OuterRadius: 1.0,
 	}
-	hd, _ := NewHollowDisk(&hdd)
+	hd, _ := New(&hdd)
 	return hd
 }

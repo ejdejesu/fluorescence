@@ -2,38 +2,48 @@ package geometry
 
 import "math"
 
+// Point in a small extention of a Vector, representing a point in 3D space
 type Point Vector
 
-var POINT_ZERO = Point{}
+// PointZero is the zero point, or the origin
+var PointZero = Point{}
 
-func MinOf(p, q Point) Point {
+// MinComponents returns the Point construction of the minimums of two points component-wise
+func MinComponents(p, q Point) Point {
 	return Point{math.Min(p.X, q.X), math.Min(p.Y, q.Y), math.Min(p.Z, q.Z)}
 }
 
-func MaxOf(p, q Point) Point {
+// MaxComponents returns the Point construction of the maximums of two points component-wise
+func MaxComponents(p, q Point) Point {
 	return Point{math.Max(p.X, q.X), math.Max(p.Y, q.Y), math.Max(p.Z, q.Z)}
 }
 
+// To finds a Vector pointing from p to q
 func (p Point) To(q Point) Vector {
 	return q.asVector().Sub(p.asVector())
 }
 
+// From finds a Vector pointing from q to p
 func (p Point) From(q Point) Vector {
 	return p.asVector().Sub(q.asVector())
 }
 
-func (p Point) SubPoint(q Point) Vector {
-	return p.asVector().Sub(q.asVector())
-}
-
+// AddVector adds a Vector c to a Point p
 func (p Point) AddVector(v Vector) Point {
 	return Point{p.X + v.X, p.Y + v.Y, p.Z + v.Z}
 }
 
+// SubPoint subtracts a Point q from a Point p
+func (p Point) SubPoint(q Point) Vector {
+	return p.asVector().Sub(q.asVector())
+}
+
+// SubVector subtracts a Vector v from a Point p
 func (p Point) SubVector(v Vector) Point {
 	return Point{p.X - v.X, p.Y - v.Y, p.Z - v.Z}
 }
 
+// asVector converts a Point to a Vector
 func (p Point) asVector() Vector {
-	return (Vector)(p)
+	return Vector(p)
 }

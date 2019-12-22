@@ -14,14 +14,14 @@ type cylinder struct {
 	box  *aabb.AABB
 }
 
-type CylinderData struct {
+type Data struct {
 	A      geometry.Point `json:"a"`
 	B      geometry.Point `json:"b"`
 	Radius float64        `json:"radius"`
 }
 
-func NewCylinder(cd *CylinderData) (*cylinder, error) {
-	uncappedCylinder, err := NewUncappedCylinder(&UncappedCylinderData{
+func New(cd *Data) (*cylinder, error) {
+	uncappedCylinder, err := New(&Data{
 		A:                  cd.A,
 		B:                  cd.B,
 		Radius:             cd.Radius,
@@ -30,7 +30,7 @@ func NewCylinder(cd *CylinderData) (*cylinder, error) {
 	if err != nil {
 		return nil, err
 	}
-	diskA, err := disk.NewDisk(&disk.DiskData{
+	diskA, err := disk.New(&disk.Data{
 		Center:   cd.A,
 		Normal:   cd.B.To(cd.A).Unit(),
 		Radius:   cd.Radius,
@@ -39,7 +39,7 @@ func NewCylinder(cd *CylinderData) (*cylinder, error) {
 	if err != nil {
 		return nil, err
 	}
-	diskB, err := disk.NewDisk(&disk.DiskData{
+	diskB, err := disk.New(&disk.Data{
 		Center:   cd.B,
 		Normal:   cd.A.To(cd.B).Unit(),
 		Radius:   cd.Radius,
@@ -91,8 +91,8 @@ func (c *cylinder) Copy() primitive.Primitive {
 	return &newC
 }
 
-func BasicCylinder(xOffset, yOffset, zOffset float64) *cylinder {
-	cd := CylinderData{
+func UnitCylinder(xOffset, yOffset, zOffset float64) *cylinder {
+	cd := Data{
 		A: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
@@ -105,6 +105,6 @@ func BasicCylinder(xOffset, yOffset, zOffset float64) *cylinder {
 		},
 		Radius: 1.0,
 	}
-	c, _ := NewCylinder(&cd)
+	c, _ := New(&cd)
 	return c
 }

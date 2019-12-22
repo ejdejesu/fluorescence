@@ -8,7 +8,7 @@ import (
 var rectHit bool
 
 func TestRectangleIntersectionHit(t *testing.T) {
-	rect := BasicRectangle(0.0, 0.0, 0.0)
+	rect := UnitRectangle(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.5,
@@ -28,7 +28,7 @@ func TestRectangleIntersectionHit(t *testing.T) {
 }
 
 func BenchmarkRectangleIntersectionHit(b *testing.B) {
-	rect := BasicRectangle(0.0, 0.0, 0.0)
+	rect := UnitRectangle(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.5,
@@ -50,7 +50,7 @@ func BenchmarkRectangleIntersectionHit(b *testing.B) {
 }
 
 func TestRectangleIntersectionMiss(t *testing.T) {
-	rect := BasicRectangle(0.0, 0.0, 0.0)
+	rect := UnitRectangle(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 1.5,
@@ -70,7 +70,7 @@ func TestRectangleIntersectionMiss(t *testing.T) {
 }
 
 func BenchmarkRectangleIntersectionMiss(b *testing.B) {
-	rect := BasicRectangle(0.0, 0.0, 0.0)
+	rect := UnitRectangle(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 1.5,

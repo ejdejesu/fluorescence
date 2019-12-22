@@ -15,13 +15,13 @@ type plane struct {
 	mat      material.Material
 }
 
-type PlaneData struct {
+type Data struct {
 	Point    geometry.Point  `json:"point"`
 	Normal   geometry.Vector `json:"normal"`
 	IsCulled bool            `json:"is_culled"`
 }
 
-func NewPlane(pd *PlaneData) (*plane, error) {
+func New(pd *Data) (*plane, error) {
 	// if pd.Point == nil || pd.Normal == nil {
 	// 	return nil, fmt.Errorf("plane point or normal is nil")
 	// }
@@ -78,8 +78,8 @@ func (p *plane) Copy() primitive.Primitive {
 	return &newP
 }
 
-func BasicPlane(xOffset, yOffset, zOffset float64) *plane {
-	pd := PlaneData{
+func UnitPlane(xOffset, yOffset, zOffset float64) *plane {
+	pd := Data{
 		Point: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
@@ -91,6 +91,6 @@ func BasicPlane(xOffset, yOffset, zOffset float64) *plane {
 			Z: -1.0 + zOffset,
 		},
 	}
-	p, _ := NewPlane(&pd)
+	p, _ := New(&pd)
 	return p
 }

@@ -1,11 +1,12 @@
-package cylinder
+package hollowcylinder
 
 import (
 	"fluorescence/geometry"
 	"fluorescence/geometry/primitive"
 	"fluorescence/geometry/primitive/aabb"
-	"fluorescence/geometry/primitive/disk"
+	"fluorescence/geometry/primitive/hollowdisk"
 	"fluorescence/geometry/primitive/primitivelist"
+	"fluorescence/geometry/primitive/uncappedcylinder"
 	"fluorescence/shading/material"
 )
 
@@ -14,15 +15,15 @@ type hollowCylinder struct {
 	box  *aabb.AABB
 }
 
-type HollowCylinderData struct {
+type Data struct {
 	A           geometry.Point `json:"a"`
 	B           geometry.Point `json:"b"`
 	InnerRadius float64        `json:"inner_radius"`
 	OuterRadius float64        `json:"outer_radius"`
 }
 
-func NewHollowCylinder(hcd *HollowCylinderData) (*hollowCylinder, error) {
-	outerUncappedCylinder, err := NewUncappedCylinder(&UncappedCylinderData{
+func New(hcd *Data) (*hollowCylinder, error) {
+	outerUncappedCylinder, err := uncappedcylinder.New(&uncappedcylinder.Data{
 		A:                  hcd.A,
 		B:                  hcd.B,
 		Radius:             hcd.OuterRadius,
@@ -31,7 +32,7 @@ func NewHollowCylinder(hcd *HollowCylinderData) (*hollowCylinder, error) {
 	if err != nil {
 		return nil, err
 	}
-	innerUncappedCylinder, err := NewUncappedCylinder(&UncappedCylinderData{
+	innerUncappedCylinder, err := uncappedcylinder.New(&uncappedcylinder.Data{
 		A:                  hcd.A,
 		B:                  hcd.B,
 		Radius:             hcd.InnerRadius,
@@ -40,7 +41,7 @@ func NewHollowCylinder(hcd *HollowCylinderData) (*hollowCylinder, error) {
 	if err != nil {
 		return nil, err
 	}
-	hollowDiskA, err := disk.NewHollowDisk(&disk.HollowDiskData{
+	hollowDiskA, err := hollowdisk.New(&hollowdisk.Data{
 		Center:      hcd.A,
 		Normal:      hcd.B.To(hcd.A).Unit(),
 		InnerRadius: hcd.InnerRadius,
@@ -50,7 +51,7 @@ func NewHollowCylinder(hcd *HollowCylinderData) (*hollowCylinder, error) {
 	if err != nil {
 		return nil, err
 	}
-	hollowDiskB, err := disk.NewHollowDisk(&disk.HollowDiskData{
+	hollowDiskB, err := hollowdisk.New(&hollowdisk.Data{
 		Center:      hcd.B,
 		Normal:      hcd.A.To(hcd.B).Unit(),
 		InnerRadius: hcd.InnerRadius,
@@ -104,8 +105,8 @@ func (hc *hollowCylinder) Copy() primitive.Primitive {
 	return &newHC
 }
 
-func BasicHollowCylinder(xOffset, yOffset, zOffset float64) *hollowCylinder {
-	hcd := HollowCylinderData{
+func UnitHollowCylinder(xOffset, yOffset, zOffset float64) *hollowCylinder {
+	hcd := Data{
 		A: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
@@ -119,6 +120,6 @@ func BasicHollowCylinder(xOffset, yOffset, zOffset float64) *hollowCylinder {
 		InnerRadius: 0.5,
 		OuterRadius: 1.0,
 	}
-	hc, _ := NewHollowCylinder(&hcd)
+	hc, _ := New(&hcd)
 	return hc
 }

@@ -9,23 +9,24 @@ import (
 	"math"
 )
 
+// triangle is an internal representation of a triangle geometry contruct
 type triangle struct {
-	a        geometry.Point
-	b        geometry.Point
-	c        geometry.Point
-	normal   geometry.Vector
-	isCulled bool
+	a, b, c  geometry.Point  // points of the triangle
+	normal   geometry.Vector // normal of the triangle's surface
+	isCulled bool            // whether or not the triangle is culled, or single-sided
 	mat      material.Material
 }
 
-type TriangleData struct {
+// Data holds information needed to contruct a triangle
+type Data struct {
 	A        geometry.Point `json:"a"`
 	B        geometry.Point `json:"b"`
 	C        geometry.Point `json:"c"`
 	IsCulled bool           `json:"is_culled"`
 }
 
-func NewTriangle(td *TriangleData) (*triangle, error) {
+// New contructs a new triangle given a Data
+func New(td *Data) (*triangle, error) {
 	if td.A == td.B || td.A == td.C || td.B == td.C {
 		return nil, fmt.Errorf("triangle resolves to line or point")
 	}
@@ -68,7 +69,14 @@ func (t *triangle) Intersection(ray geometry.Ray, tMin, tMax float64) (*material
 	time := inverseDeterminant * (ac.Dot(qVector))
 	if time >= tMin && time <= tMax {
 		// ray intersection
-		return &material.RayHit{ray, t.normal, time, 0, 0, t.mat}, true
+		return &material.RayHit{
+			Ray:         ray,
+			NormalAtHit: t.normal,
+			Time:        time,
+			U:           0,
+			V:           0,
+			Material:    t.mat,
+		}, true
 	}
 	return nil, false
 }
@@ -105,7 +113,12 @@ func (t *triangle) Copy() primitive.Primitive {
 	return &newT
 }
 
-func BasicTriangle(xOffset, yOffset, zOffset float64) *triangle {
+// Unit creates a unit triangle.
+// The points on this triangle are:
+// A: (0, 0, 0),
+// B: (1, 0, 0),
+// C: (0, 1, 0).
+func Unit(xOffset, yOffset, zOffset float64) *triangle {
 	return &triangle{
 		a: geometry.Point{
 			X: 0.0 + xOffset,

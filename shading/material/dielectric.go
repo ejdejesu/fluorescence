@@ -42,7 +42,7 @@ func (d Dielectric) Scatter(rayHit RayHit, rng *rand.Rand) (geometry.Ray, bool) 
 	var ratioOfRefractiveIndices, cosine float64
 
 	if rayHit.Ray.Direction.Dot(normal) > 0 {
-		refractiveNormal = geometry.VECTOR_ZERO.Sub(normal)
+		refractiveNormal = geometry.VectorZero.Sub(normal)
 		ratioOfRefractiveIndices = d.RefractiveIndex
 		preCos := rayHit.Ray.Direction.Dot(normal)
 		cosine = math.Sqrt(1.0 - (d.RefractiveIndex*d.RefractiveIndex)*(1.0-(preCos*preCos)))

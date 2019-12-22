@@ -15,21 +15,21 @@ type box struct {
 	box  *aabb.AABB
 }
 
-type BoxData struct {
+type Data struct {
 	A                  geometry.Point `json:"a"`
 	B                  geometry.Point `json:"b"`
 	HasInvertedNormals bool           `json:"has_inverted_normals"`
 }
 
-func NewBox(bd *BoxData) (*box, error) {
-	c1 := geometry.MinOf(bd.A, bd.B)
-	c8 := geometry.MaxOf(bd.A, bd.B)
+func New(bd *Data) (*box, error) {
+	c1 := geometry.MinComponents(bd.A, bd.B)
+	c8 := geometry.MaxComponents(bd.A, bd.B)
 
 	if c1.X == c8.X || c1.Y == c8.Y || c1.Z == c8.Z {
 		return nil, fmt.Errorf("box resolves to point, line, or plane")
 	}
 
-	rNegX, err := rectangle.NewRectangle(&rectangle.RectangleData{
+	rNegX, err := rectangle.New(&rectangle.Data{
 		A:                 c1,
 		B:                 geometry.Point{c1.X, c8.Y, c8.Z},
 		HasNegativeNormal: !bd.HasInvertedNormals,
@@ -38,7 +38,7 @@ func NewBox(bd *BoxData) (*box, error) {
 		return nil, err
 	}
 
-	rPosX, err := rectangle.NewRectangle(&rectangle.RectangleData{
+	rPosX, err := rectangle.New(&rectangle.Data{
 		A:                 geometry.Point{c8.X, c1.Y, c1.Z},
 		B:                 c8,
 		HasNegativeNormal: bd.HasInvertedNormals,
@@ -47,7 +47,7 @@ func NewBox(bd *BoxData) (*box, error) {
 		return nil, err
 	}
 
-	rNegY, err := rectangle.NewRectangle(&rectangle.RectangleData{
+	rNegY, err := rectangle.New(&rectangle.Data{
 		A:                 c1,
 		B:                 geometry.Point{c8.X, c1.Y, c8.Z},
 		HasNegativeNormal: !bd.HasInvertedNormals,
@@ -56,7 +56,7 @@ func NewBox(bd *BoxData) (*box, error) {
 		return nil, err
 	}
 
-	rPosY, err := rectangle.NewRectangle(&rectangle.RectangleData{
+	rPosY, err := rectangle.New(&rectangle.Data{
 		A:                 geometry.Point{c1.X, c8.Y, c1.Z},
 		B:                 c8,
 		HasNegativeNormal: bd.HasInvertedNormals,
@@ -65,7 +65,7 @@ func NewBox(bd *BoxData) (*box, error) {
 		return nil, err
 	}
 
-	rNegZ, err := rectangle.NewRectangle(&rectangle.RectangleData{
+	rNegZ, err := rectangle.New(&rectangle.Data{
 		A:                 c1,
 		B:                 geometry.Point{c8.X, c8.Y, c1.Z},
 		HasNegativeNormal: !bd.HasInvertedNormals,
@@ -74,7 +74,7 @@ func NewBox(bd *BoxData) (*box, error) {
 		return nil, err
 	}
 
-	rPosZ, err := rectangle.NewRectangle(&rectangle.RectangleData{
+	rPosZ, err := rectangle.New(&rectangle.Data{
 		A:                 geometry.Point{c1.X, c1.Y, c8.Z},
 		B:                 c8,
 		HasNegativeNormal: bd.HasInvertedNormals,
@@ -123,8 +123,8 @@ func (b *box) Copy() primitive.Primitive {
 	return &newB
 }
 
-func BasicBox(xOffset, yOffset, zOffset float64) *box {
-	bd := BoxData{
+func Unit(xOffset, yOffset, zOffset float64) *box {
+	bd := Data{
 		A: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
@@ -136,6 +136,6 @@ func BasicBox(xOffset, yOffset, zOffset float64) *box {
 			Z: 1.0 + zOffset,
 		},
 	}
-	b, _ := NewBox(&bd)
+	b, _ := New(&bd)
 	return b
 }

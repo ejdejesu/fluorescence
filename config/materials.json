@@ -391,6 +391,42 @@
         "data": {}
     },
     {
+        "name": "image_gradient2",
+        "type": "Lambertian",
+        "reflectance_texture_name": "image_gradient2",
+        "data": {}
+    },
+    {
+        "name": "image_gradient2_emissive",
+        "type": "Lambertian",
+        "emittance_texture_name": "image_gradient2",
+        "data": {}
+    },
+    {
+        "name": "image_rainbow_gradient1",
+        "type": "Lambertian",
+        "reflectance_texture_name": "image_rainbow_gradient1",
+        "data": {}
+    },
+    {
+        "name": "image_rainbow_gradient1_emissive",
+        "type": "Lambertian",
+        "emittance_texture_name": "image_rainbow_gradient1",
+        "data": {}
+    },
+    {
+        "name": "image_rainbow_gradient2",
+        "type": "Lambertian",
+        "reflectance_texture_name": "image_rainbow_gradient2",
+        "data": {}
+    },
+    {
+        "name": "image_rainbow_gradient2_emissive",
+        "type": "Lambertian",
+        "emittance_texture_name": "image_rainbow_gradient2",
+        "data": {}
+    },
+    {
         "name": "image_earth_day",
         "type": "Lambertian",
         "reflectance_texture_name": "image_earth_day",

@@ -99,6 +99,11 @@ func LoadConfigs(
 	texturesFileName string) (*Parameters, error) {
 
 	// load various json config files into their respective structs
+	fmt.Printf("\tLoading Parameters...\n")
+	parameters, err := loadParameters(parametersFileName)
+	if err != nil {
+		return nil, err
+	}
 	fmt.Printf("\tLoading Cameras...\n")
 	totalCameras, err := loadCameras(camerasFileName)
 	if err != nil {
@@ -110,17 +115,12 @@ func LoadConfigs(
 		return nil, err
 	}
 	fmt.Printf("\tLoading Textures...\n")
-	totalTextures, err := loadTextures(texturesFileName)
+	totalTextures, err := loadTextures(texturesFileName, parameters.TextureGamma)
 	if err != nil {
 		return nil, err
 	}
 	fmt.Printf("\tLoading Materials...\n")
 	totalMaterials, err := loadMaterials(materialsFileName, texturesFileName, totalTextures)
-	if err != nil {
-		return nil, err
-	}
-	fmt.Printf("\tLoading Parameters...\n")
-	parameters, err := loadParameters(parametersFileName)
 	if err != nil {
 		return nil, err
 	}
@@ -424,7 +424,7 @@ func loadObjects(fileName string) (map[string]primitive.Primitive, error) {
 	return objectsMap, nil
 }
 
-func loadTextures(fileName string) (map[string]texture.Texture, error) {
+func loadTextures(fileName string, tGamma float64) (map[string]texture.Texture, error) {
 	texturesBytes, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		return nil, err
@@ -459,7 +459,7 @@ func loadTextures(fileName string) (map[string]texture.Texture, error) {
 				i.Magnitude = 1.0
 			}
 			if i.Gamma == 0.0 {
-				i.Gamma = 1.0
+				i.Gamma = tGamma
 			}
 			err = i.Load()
 			if err != nil {

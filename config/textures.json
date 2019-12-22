@@ -604,19 +604,38 @@
         }
     },
     {
+        "name": "image_gradient2",
+        "type": "Image",
+        "data": {
+            "image_file_name": "./resources/images/gradient2.jpg"
+        }
+    },
+    {
+        "name": "image_rainbow_gradient1",
+        "type": "Image",
+        "data": {
+            "image_file_name": "./resources/images/rainbow_gradient1.png"
+        }
+    },
+    {
+        "name": "image_rainbow_gradient2",
+        "type": "Image",
+        "data": {
+            "image_file_name": "./resources/images/rainbow_gradient2.png"
+        }
+    },
+    {
         "name": "image_earth_day",
         "type": "Image",
         "data": {
-            "image_file_name": "./resources/images/solarsystem/planets/earth/2k_earth_daymap.jpg",
-            "gamma": 2.2
+            "image_file_name": "./resources/images/solarsystem/planets/earth/2k_earth_daymap.jpg"
         }
     },
     {
         "name": "image_earth_night",
         "type": "Image",
         "data": {
-            "image_file_name": "./resources/images/solarsystem/planets/earth/2k_earth_nightmap.jpg",
-            "gamma": 2.2
+            "image_file_name": "./resources/images/solarsystem/planets/earth/2k_earth_nightmap.jpg"
         }
     },
     {
@@ -624,16 +643,14 @@
         "type": "Image",
         "data": {
             "image_file_name": "./resources/images/solarsystem/2k_sun.jpg",
-            "magnitude": 500.0,
-            "gamma": 2.2
+            "magnitude": 500.0
         }
     },
     {
         "name": "image_stars_milky_way",
         "type": "Image",
         "data": {
-            "image_file_name": "./resources/images/solarsystem/2k_stars_milky_way.jpg",
-            "gamma": 2.2
+            "image_file_name": "./resources/images/solarsystem/2k_stars_milky_way.jpg"
         }
     },
     {
@@ -641,56 +658,56 @@
         "type": "Image",
         "data": {
             "image_file_name": "./resources/images/solarsystem/8k_stars_milky_way.jpg",
-            "magnitude": 5.0,
-            "gamma": 2.2
+            "magnitude": 5.0
         }
     },
     {
         "name": "image_poliigon_wood_floor_044",
         "type": "Image",
         "data": {
-            "image_file_name": "./resources/images/poliigon/WoodFlooring044/REGULAR/3K/WoodFlooring044_COL_3K.jpg",
-            "gamma": 2.2
+            "image_file_name": "./resources/images/poliigon/WoodFlooring044/REGULAR/3K/WoodFlooring044_COL_3K.jpg"
         }
     },
     {
         "name": "image_poliigon_tiles_onyx_opalo_black_001",
         "type": "Image",
         "data": {
-            "image_file_name": "./resources/images/poliigon/TilesOnyxOpaloBlack001/REGULAR/3K/TilesOnyxOpaloBlack001_COL_3K.jpg",
-            "gamma": 2.2
+            "image_file_name": "./resources/images/poliigon/TilesOnyxOpaloBlack001/REGULAR/3K/TilesOnyxOpaloBlack001_COL_3K.jpg"
         }
     },
     {
         "name": "image_poliigon_marble_13",
         "type": "Image",
         "data": {
-            "image_file_name": "./resources/images/poliigon/Marble13/REGULAR/3K/Marble13_COL_3K.jpg",
-            "gamma": 2.2
+            "image_file_name": "./resources/images/poliigon/Marble13/REGULAR/3K/Marble13_COL_3K.jpg"
+        }
+    },
+    {
+        "name": "image_poliigon_marble_062",
+        "type": "Image",
+        "data": {
+            "image_file_name": "./resources/images/poliigon/Marble062/REGULAR/3K/Marble062_COL_3K.jpg"
         }
     },
     {
         "name": "image_poliigon_ground_forest_003",
         "type": "Image",
         "data": {
-            "image_file_name": "./resources/images/poliigon/GroundForest003/REGULAR/3K/GroundForest003_COL_VAR1_3K.jpg",
-            "gamma": 2.2
+            "image_file_name": "./resources/images/poliigon/GroundForest003/REGULAR/3K/GroundForest003_COL_VAR1_3K.jpg"
         }
     },
     {
         "name": "image_poliigon_bricks_flemish_red_001",
         "type": "Image",
         "data": {
-            "image_file_name": "./resources/images/poliigon/BricksFlemishRed001/REGULAR/3K/BricksFlemishRed001_COL_VAR1_3K.jpg",
-            "gamma": 2.2
+            "image_file_name": "./resources/images/poliigon/BricksFlemishRed001/REGULAR/3K/BricksFlemishRed001_COL_VAR1_3K.jpg"
         }
     },
     {
         "name": "image_poliigon_bricks_01",
         "type": "Image",
         "data": {
-            "image_file_name": "./resources/images/poliigon/Bricks01/REGULAR/3K/Bricks01_COL_VAR1_3K.jpg",
-            "gamma": 2.2
+            "image_file_name": "./resources/images/poliigon/Bricks01/REGULAR/3K/Bricks01_COL_VAR1_3K.jpg"
         }
     }
 ]

@@ -10,46 +10,48 @@ import (
 	"fluorescence/shading/material"
 )
 
-type cylinder struct {
-	list *primitivelist.PrimitiveList
-	box  *aabb.AABB
-}
-
-type Data struct {
+// Cylinder represents a capped cylinder object
+type Cylinder struct {
 	A      geometry.Point `json:"a"`
 	B      geometry.Point `json:"b"`
 	Radius float64        `json:"radius"`
+	list   *primitivelist.PrimitiveList
+	box    *aabb.AABB
 }
 
-func New(cd *Data) (*cylinder, error) {
-	uncappedCylinder, err := uncappedcylinder.New(&uncappedcylinder.Data{
-		A:                  cd.A,
-		B:                  cd.B,
-		Radius:             cd.Radius,
+// type Data struct {
+// }
+
+// Setup sets up a cylinder's internal fields
+func (c *Cylinder) Setup() (*Cylinder, error) {
+	uncappedCylinder, err := (&uncappedcylinder.UncappedCylinder{
+		A:                  c.A,
+		B:                  c.B,
+		Radius:             c.Radius,
 		HasInvertedNormals: false,
-	})
+	}).Setup()
 	if err != nil {
 		return nil, err
 	}
-	diskA, err := disk.New(&disk.Data{
-		Center:   cd.A,
-		Normal:   cd.B.To(cd.A).Unit(),
-		Radius:   cd.Radius,
+	diskA, err := (&disk.Disk{
+		Center:   c.A,
+		Normal:   c.B.To(c.A).Unit(),
+		Radius:   c.Radius,
 		IsCulled: false,
-	})
+	}).Setup()
 	if err != nil {
 		return nil, err
 	}
-	diskB, err := disk.New(&disk.Data{
-		Center:   cd.B,
-		Normal:   cd.A.To(cd.B).Unit(),
-		Radius:   cd.Radius,
+	diskB, err := (&disk.Disk{
+		Center:   c.B,
+		Normal:   c.A.To(c.B).Unit(),
+		Radius:   c.Radius,
 		IsCulled: false,
-	})
+	}).Setup()
 	if err != nil {
 		return nil, err
 	}
-	primitiveList, err := primitivelist.NewPrimitiveList(
+	primitiveList, err := primitivelist.FromElements(
 		uncappedCylinder,
 		diskA,
 		diskB,
@@ -57,43 +59,48 @@ func New(cd *Data) (*cylinder, error) {
 	if err != nil {
 		return nil, err
 	}
-	box, _ := primitiveList.BoundingBox(0, 0)
-	return &cylinder{
-		list: primitiveList,
-		box:  box,
-	}, nil
+	c.list = primitiveList
+	c.box, _ = primitiveList.BoundingBox(0, 0)
+	return c, nil
 }
 
-func (c *cylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+// Intersection computer the intersection of this object and a given ray if it exists
+func (c *Cylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	if c.box.Intersection(ray, tMin, tMax) {
 		return c.list.Intersection(ray, tMin, tMax)
 	}
 	return nil, false
 }
 
-func (c *cylinder) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
+// BoundingBox returns an AABB of this object
+func (c *Cylinder) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return c.list.BoundingBox(0, 0)
 }
 
-func (c *cylinder) SetMaterial(m material.Material) {
+// SetMaterial sets this object's material
+func (c *Cylinder) SetMaterial(m material.Material) {
 	c.list.SetMaterial(m)
 }
 
-func (c *cylinder) IsInfinite() bool {
+// IsInfinite returns whether this object is infinite
+func (c *Cylinder) IsInfinite() bool {
 	return false
 }
 
-func (c *cylinder) IsClosed() bool {
+// IsClosed returns whether this object is closed
+func (c *Cylinder) IsClosed() bool {
 	return true
 }
 
-func (c *cylinder) Copy() primitive.Primitive {
+// Copy returns a shallow copy of this object
+func (c *Cylinder) Copy() primitive.Primitive {
 	newC := *c
 	return &newC
 }
 
-func UnitCylinder(xOffset, yOffset, zOffset float64) *cylinder {
-	cd := Data{
+// Unit returns a unit cylinder
+func Unit(xOffset, yOffset, zOffset float64) *Cylinder {
+	c, _ := (&Cylinder{
 		A: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
@@ -105,7 +112,6 @@ func UnitCylinder(xOffset, yOffset, zOffset float64) *cylinder {
 			Z: 0.0 + zOffset,
 		},
 		Radius: 1.0,
-	}
-	c, _ := New(&cd)
+	}).Setup()
 	return c
 }

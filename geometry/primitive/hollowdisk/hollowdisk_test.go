@@ -8,7 +8,7 @@ import (
 var hollowDiskHit bool
 
 func TestHollowDiskIntersectionHit(t *testing.T) {
-	hollowDisk := UnitHollowDisk(0.0, 0.0, 0.0)
+	hollowDisk := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.5,
@@ -28,7 +28,7 @@ func TestHollowDiskIntersectionHit(t *testing.T) {
 }
 
 func BenchmarkHollowDiskIntersectionHit(b *testing.B) {
-	hollowDisk := UnitHollowDisk(0.0, 0.0, 0.0)
+	hollowDisk := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.5,
@@ -50,7 +50,7 @@ func BenchmarkHollowDiskIntersectionHit(b *testing.B) {
 }
 
 func TestHollowDiskIntersectionReverseHit(t *testing.T) {
-	hollowDisk := UnitHollowDisk(0.0, 0.0, 0.0)
+	hollowDisk := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.5,
@@ -70,7 +70,7 @@ func TestHollowDiskIntersectionReverseHit(t *testing.T) {
 }
 
 func BenchmarkHollowDiskIntersectionReverseHit(b *testing.B) {
-	hollowDisk := UnitHollowDisk(0.0, 0.0, 0.0)
+	hollowDisk := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.5,
@@ -92,7 +92,7 @@ func BenchmarkHollowDiskIntersectionReverseHit(b *testing.B) {
 }
 
 func TestHollowDiskIntersectionMiss(t *testing.T) {
-	hollowDisk := UnitHollowDisk(0.0, 0.0, 0.0)
+	hollowDisk := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 1.0,
@@ -112,7 +112,7 @@ func TestHollowDiskIntersectionMiss(t *testing.T) {
 }
 
 func BenchmarkHollowDiskIntersectionMiss(b *testing.B) {
-	hollowDisk := UnitHollowDisk(0.0, 0.0, 0.0)
+	hollowDisk := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 1.0,
@@ -134,7 +134,7 @@ func BenchmarkHollowDiskIntersectionMiss(b *testing.B) {
 }
 
 func TestHollowDiskIntersectionCenterMiss(t *testing.T) {
-	hollowDisk := UnitHollowDisk(0.0, 0.0, 0.0)
+	hollowDisk := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,
@@ -154,7 +154,7 @@ func TestHollowDiskIntersectionCenterMiss(t *testing.T) {
 }
 
 func BenchmarkHollowDiskIntersectionCenterMiss(b *testing.B) {
-	hollowDisk := UnitHollowDisk(0.0, 0.0, 0.0)
+	hollowDisk := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,
@@ -176,7 +176,7 @@ func BenchmarkHollowDiskIntersectionCenterMiss(b *testing.B) {
 }
 
 func TestHollowDiskIntersectionParallelMiss(t *testing.T) {
-	hollowDisk := UnitHollowDisk(0.0, 0.0, 0.0)
+	hollowDisk := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,
@@ -196,7 +196,7 @@ func TestHollowDiskIntersectionParallelMiss(t *testing.T) {
 }
 
 func BenchmarkHollowDiskIntersectionParallelMiss(b *testing.B) {
-	hollowDisk := UnitHollowDisk(0.0, 0.0, 0.0)
+	hollowDisk := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
 		Origin: geometry.Point{
 			X: 0.0,

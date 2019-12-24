@@ -12,30 +12,30 @@ import (
 
 var bvhHit bool
 
-func UnitBVHNTriangles(n int, xOffset, yOffset, zOffset float64) *bvh {
+func UnitBVHNTriangles(n int, xOffset, yOffset, zOffset float64) *BVH {
 	pl := &primitivelist.PrimitiveList{}
 	for i := 0; i < n; i++ {
 		pl.List = append(pl.List, triangle.Unit(xOffset+float64(i), yOffset, zOffset))
 	}
-	bvh, _ := NewBVH(pl)
+	bvh, _ := New(pl)
 	return bvh
 }
 
-func UnitBVHNRectangles(n int, xOffset, yOffset, zOffset float64) *bvh {
+func UnitBVHNRectangles(n int, xOffset, yOffset, zOffset float64) *BVH {
 	pl := &primitivelist.PrimitiveList{}
 	for i := 0; i < n; i++ {
-		pl.List = append(pl.List, rectangle.UnitRectangle(xOffset+float64(i), yOffset, zOffset))
+		pl.List = append(pl.List, rectangle.Unit(xOffset+float64(i), yOffset, zOffset))
 	}
-	bvh, _ := NewBVH(pl)
+	bvh, _ := New(pl)
 	return bvh
 }
 
-func UnitBVHNSpheres(n int, xOffset, yOffset, zOffset float64) *bvh {
+func UnitBVHNSpheres(n int, xOffset, yOffset, zOffset float64) *BVH {
 	pl := &primitivelist.PrimitiveList{}
 	for i := 0; i < n; i++ {
 		pl.List = append(pl.List, sphere.Unit(xOffset+float64(i), yOffset, zOffset))
 	}
-	bvh, _ := NewBVH(pl)
+	bvh, _ := New(pl)
 	return bvh
 }
 

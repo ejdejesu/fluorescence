@@ -10,50 +10,47 @@ import (
 	"math"
 )
 
-type uncappedCylinder struct {
-	ray                geometry.Ray
-	minT               float64
-	maxT               float64
-	radius             float64
-	hasInvertedNormals bool
-	mat                material.Material
-}
-
-// Data holds information needed to contruct a uncappedCylinder
-type Data struct {
+// UncappedCylinder hi
+type UncappedCylinder struct {
 	A                  geometry.Point `json:"a"`
 	B                  geometry.Point `json:"b"`
 	Radius             float64        `json:"radius"`
 	HasInvertedNormals bool           `json:"has_inverted_normals"`
+	ray                geometry.Ray
+	minT, maxT         float64
+	mat                material.Material
 }
 
-// New contructs a new uncappedCylinder given a Data
-func New(ucd *Data) (*uncappedCylinder, error) {
+// Data holds information needed to contruct a uncappedCylinder
+// type Data struct {
+// 	A                  geometry.Point `json:"a"`
+// 	B                  geometry.Point `json:"b"`
+// 	Radius             float64        `json:"radius"`
+// 	HasInvertedNormals bool           `json:"has_inverted_normals"`
+// }
+
+// Setup fills calculated fields in an UncappedCylinder
+func (uc *UncappedCylinder) Setup() (*UncappedCylinder, error) {
 	// if ucd.A == nil || ucd.B == nil {
 	// 	return nil, fmt.Errorf("uncappedCylinder ray is nil")
 	// }
-	if ucd.A.To(ucd.B).Magnitude() == 0 {
+	if uc.A.To(uc.B).Magnitude() == 0 {
 		return nil, fmt.Errorf("uncappedCylinder length is zero vector")
 	}
-	if ucd.Radius <= 0.0 {
+	if uc.Radius <= 0.0 {
 		return nil, fmt.Errorf("uncappedCylinder radius is 0 or negative")
 	}
-	r := geometry.Ray{
-		Origin:    ucd.A,
-		Direction: ucd.A.To(ucd.B).Unit(),
+	uc.ray = geometry.Ray{
+		Origin:    uc.A,
+		Direction: uc.A.To(uc.B).Unit(),
 	}
-	minT := 0.0
-	maxT := r.ClosestTime(ucd.B)
-	return &uncappedCylinder{
-		ray:                r,
-		minT:               minT,
-		maxT:               maxT,
-		radius:             ucd.Radius,
-		hasInvertedNormals: ucd.HasInvertedNormals,
-	}, nil
+	uc.minT = 0.0
+	uc.maxT = uc.ray.ClosestTime(uc.B)
+	return uc, nil
 }
 
-func (uc *uncappedCylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+// Intersection computer the intersection of this object and a given ray if it exists
+func (uc *UncappedCylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	deltaP := uc.ray.Origin.To(ray.Origin)
 	preA := ray.Direction.Sub(uc.ray.Direction.MultScalar(ray.Direction.Dot(uc.ray.Direction)))
 	preB := deltaP.Sub(uc.ray.Direction.MultScalar(deltaP.Dot(uc.ray.Direction)))
@@ -61,7 +58,7 @@ func (uc *uncappedCylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (
 	// terms of the quadratic equation we are solving
 	a := preA.Dot(preA)
 	b := preA.Dot(preB)
-	c := preB.Dot(preB) - (uc.radius * uc.radius)
+	c := preB.Dot(preB) - (uc.Radius * uc.Radius)
 
 	preDiscriminant := b*b - a*c
 
@@ -95,17 +92,18 @@ func (uc *uncappedCylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (
 	return nil, false
 }
 
-func (uc *uncappedCylinder) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
-	diskA, _ := disk.New(&disk.Data{
+// BoundingBox finds the AABB of this object
+func (uc *UncappedCylinder) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
+	diskA, _ := (&disk.Disk{
 		Center: uc.ray.Origin,
 		Normal: uc.ray.Direction,
-		Radius: uc.radius,
-	})
-	diskB, _ := disk.New(&disk.Data{
+		Radius: uc.Radius,
+	}).Setup()
+	diskB, _ := (&disk.Disk{
 		Center: uc.ray.PointAt(uc.maxT),
 		Normal: uc.ray.PointAt(uc.maxT).To(uc.ray.Origin).Unit(),
-		Radius: uc.radius,
-	})
+		Radius: uc.Radius,
+	}).Setup()
 	aabbA, aOk := diskA.BoundingBox(0, 0)
 	if !aOk {
 		return nil, false
@@ -117,25 +115,29 @@ func (uc *uncappedCylinder) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return aabb.SurroundingBox(aabbA, aabbB), true
 }
 
-func (uc *uncappedCylinder) SetMaterial(m material.Material) {
+// SetMaterial sets this object's material
+func (uc *UncappedCylinder) SetMaterial(m material.Material) {
 	uc.mat = m
 }
 
-func (uc *uncappedCylinder) IsInfinite() bool {
+// IsInfinite returns whether this in an infinite geometry object
+func (uc *UncappedCylinder) IsInfinite() bool {
 	return false
 }
 
-func (uc *uncappedCylinder) IsClosed() bool {
+// IsClosed returns whether this object is closed or not
+func (uc *UncappedCylinder) IsClosed() bool {
 	return false
 }
 
-func (uc *uncappedCylinder) Copy() primitive.Primitive {
+// Copy returns a shallow copy of this cylinder
+func (uc *UncappedCylinder) Copy() primitive.Primitive {
 	newUC := *uc
 	return &newUC
 }
 
-func (uc *uncappedCylinder) normalAt(p geometry.Point) geometry.Vector {
-	if uc.hasInvertedNormals {
+func (uc *UncappedCylinder) normalAt(p geometry.Point) geometry.Vector {
+	if uc.HasInvertedNormals {
 		return uc.ray.ClosestPoint(p).To(p).Unit().Negate()
 	}
 	return uc.ray.ClosestPoint(p).To(p).Unit()
@@ -146,8 +148,8 @@ func (uc *uncappedCylinder) normalAt(p geometry.Point) geometry.Vector {
 // A: (0, 0, 0),
 // B: (1, 0, 0),
 // and the Radius is 1
-func Unit(xOffset, yOffset, zOffset float64) *uncappedCylinder {
-	ucd := Data{
+func Unit(xOffset, yOffset, zOffset float64) *UncappedCylinder {
+	uc, _ := (&UncappedCylinder{
 		A: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
@@ -159,7 +161,6 @@ func Unit(xOffset, yOffset, zOffset float64) *uncappedCylinder {
 			Z: 0.0 + zOffset,
 		},
 		Radius: 1.0,
-	}
-	uc, _ := New(&ucd)
+	}).Setup()
 	return uc
 }

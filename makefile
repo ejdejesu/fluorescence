@@ -8,6 +8,8 @@ GOCLEAN=$(GOCMD) clean
 GOGET=$(GOCMD) get
 GOVET=$(GOCMD) vet
 
+GOLINT=golint
+
 BINARY_NAME=fluorescence
 OUTPUT_DIR=./output/
 
@@ -32,6 +34,10 @@ benchmark:
 vet:
 	# go vet
 	$(GOVET)
+lint:
+	# golint
+	$(GOLINT) ./...
+perfect: lint vet
 clean:
 	# go clean
 	$(GOCLEAN)

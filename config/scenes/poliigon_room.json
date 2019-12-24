@@ -4,7 +4,7 @@
     "objects": [
         {
             "object_name": "light_center_rectangle",
-            "material_name": "white_diffuse"
+            "material_name": "white_light"
         },
         {
             "object_name": "large_center_sphere_outer",

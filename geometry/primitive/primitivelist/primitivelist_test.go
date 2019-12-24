@@ -22,7 +22,7 @@ func UnitPrimitiveListNTriangles(n int, xOffset, yOffset, zOffset float64) *Prim
 func UnitPrimitiveListNRectangles(n int, xOffset, yOffset, zOffset float64) *PrimitiveList {
 	pl := &PrimitiveList{}
 	for i := 0; i < n; i++ {
-		pl.List = append(pl.List, rectangle.UnitRectangle(xOffset+float64(i), yOffset, zOffset))
+		pl.List = append(pl.List, rectangle.Unit(xOffset+float64(i), yOffset, zOffset))
 	}
 	return pl
 }

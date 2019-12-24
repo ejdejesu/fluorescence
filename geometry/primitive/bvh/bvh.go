@@ -11,15 +11,17 @@ import (
 	"sort"
 )
 
-type bvh struct {
-	Left     primitive.Primitive
-	Right    primitive.Primitive
+// BVH represents a bounding volume hierarchy
+type BVH struct {
+	left     primitive.Primitive
+	right    primitive.Primitive
 	isSingle bool
 	box      *aabb.AABB
 }
 
-func NewBVH(pl *primitivelist.PrimitiveList) (*bvh, error) {
-	newBVH := &bvh{}
+// New sets up and returns a new BVH
+func New(pl *primitivelist.PrimitiveList) (*BVH, error) {
+	newBVH := &BVH{}
 
 	// can we do the sort?
 	_, ok := pl.BoundingBox(0, 0)
@@ -55,29 +57,29 @@ func NewBVH(pl *primitivelist.PrimitiveList) (*bvh, error) {
 
 	// fill children
 	if len(pl.List) == 1 {
-		newBVH.Left = pl.List[0]
+		newBVH.left = pl.List[0]
 		newBVH.isSingle = true
 	} else {
-		left, err := NewBVH(pl.FirstHalfCopy())
+		left, err := New(pl.FirstHalfCopy())
 		if err != nil {
 			return nil, err
 		}
-		right, err := NewBVH(pl.LastHalfCopy())
+		right, err := New(pl.LastHalfCopy())
 		if err != nil {
 			return nil, err
 		}
-		newBVH.Left = left
-		newBVH.Right = right
+		newBVH.left = left
+		newBVH.right = right
 	}
 	// est. box
-	leftBox, leftOk := newBVH.Left.BoundingBox(0, 0)
+	leftBox, leftOk := newBVH.left.BoundingBox(0, 0)
 	if newBVH.isSingle {
 		if !leftOk {
 			return nil, fmt.Errorf("no bounding box for some leaf of BVH")
 		}
 		newBVH.box = leftBox
 	} else {
-		rightBox, rightOk := newBVH.Right.BoundingBox(0, 0)
+		rightBox, rightOk := newBVH.right.BoundingBox(0, 0)
 		if !leftOk || !rightOk {
 			return nil, fmt.Errorf("no bounding box for some leaf of BVH")
 		}
@@ -86,17 +88,18 @@ func NewBVH(pl *primitivelist.PrimitiveList) (*bvh, error) {
 	return newBVH, nil
 }
 
-func (b *bvh) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+// Intersection computer the intersection of this object and a given ray if it exists
+func (b *BVH) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	hitBox := b.box.Intersection(ray, tMin, tMax)
 	if hitBox {
-		leftRayHit, doesHitLeft := b.Left.Intersection(ray, tMin, tMax)
+		leftRayHit, doesHitLeft := b.left.Intersection(ray, tMin, tMax)
 		if b.isSingle {
 			if doesHitLeft {
 				return leftRayHit, true
 			}
 			return nil, false
 		}
-		rightRayHit, doesHitRight := b.Right.Intersection(ray, tMin, tMax)
+		rightRayHit, doesHitRight := b.right.Intersection(ray, tMin, tMax)
 		if doesHitLeft && doesHitRight {
 			if leftRayHit.Time < rightRayHit.Time {
 				return leftRayHit, true
@@ -112,32 +115,37 @@ func (b *bvh) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayH
 	return nil, false
 }
 
-func (b *bvh) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
+// BoundingBox returns a new AABB for this object
+func (b *BVH) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return b.box, true
 }
 
-func (b *bvh) SetMaterial(m material.Material) {
-	b.Left.SetMaterial(m)
+// SetMaterial sets this object's material
+func (b *BVH) SetMaterial(m material.Material) {
+	b.left.SetMaterial(m)
 	if !b.isSingle {
-		b.Right.SetMaterial(m)
+		b.right.SetMaterial(m)
 	}
 }
 
-func (b *bvh) IsInfinite() bool {
+// IsInfinite returns whether this object is infinite
+func (b *BVH) IsInfinite() bool {
 	if b.isSingle {
-		return b.Left.IsInfinite()
+		return b.left.IsInfinite()
 	}
-	return b.Left.IsInfinite() || b.Right.IsInfinite()
+	return b.left.IsInfinite() || b.right.IsInfinite()
 }
 
-func (b *bvh) IsClosed() bool {
+// IsClosed returns whether this object is closed
+func (b *BVH) IsClosed() bool {
 	if b.isSingle {
-		return b.Left.IsClosed()
+		return b.left.IsClosed()
 	}
-	return b.Left.IsClosed() && b.Right.IsClosed()
+	return b.left.IsClosed() && b.right.IsClosed()
 }
 
-func (b *bvh) Copy() primitive.Primitive {
+// Copy returns a shallow copy of this object
+func (b *BVH) Copy() primitive.Primitive {
 	newB := *b
 	return &newB
 }

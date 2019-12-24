@@ -212,7 +212,7 @@ func LoadConfigs(
 	// if we are using a BVH ...
 	if parameters.UseBVH {
 		// ... construct it from the bounded objects ..
-		sceneBVH, err := bvh.NewBVH(boundedSceneObjects)
+		sceneBVH, err := bvh.New(boundedSceneObjects)
 		if err != nil {
 			return nil, err
 		}
@@ -274,145 +274,145 @@ func loadObjects(fileName string) (map[string]primitive.Primitive, error) {
 		}
 		switch o.TypeName {
 		case "Box":
-			var bd box.Data
+			var b box.Box
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
 			}
-			json.Unmarshal(dataBytes, &bd)
-			newBox, err := box.New(&bd)
+			json.Unmarshal(dataBytes, &b)
+			newBox, err := b.Setup()
 			if err != nil {
 				return nil, err
 			}
 			objectsMap[o.Name] = newBox
 		case "Cylinder":
-			var cd cylinder.Data
+			var c cylinder.Cylinder
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
 			}
-			json.Unmarshal(dataBytes, &cd)
-			newCylinder, err := cylinder.New(&cd)
+			json.Unmarshal(dataBytes, &c)
+			newCylinder, err := c.Setup()
 			if err != nil {
 				return nil, err
 			}
 			objectsMap[o.Name] = newCylinder
 		case "HollowCylinder":
-			var hcd hollowcylinder.Data
+			var hc hollowcylinder.HollowCylinder
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
 			}
-			json.Unmarshal(dataBytes, &hcd)
-			newHollowCylinder, err := hollowcylinder.New(&hcd)
+			json.Unmarshal(dataBytes, &hc)
+			newHollowCylinder, err := hc.Setup()
 			if err != nil {
 				return nil, err
 			}
 			objectsMap[o.Name] = newHollowCylinder
 		case "InfiniteCylinder":
-			var icd infinitecylinder.Data
+			var ic infinitecylinder.InfiniteCylinder
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
 			}
-			json.Unmarshal(dataBytes, &icd)
-			newInfiniteCylinder, err := infinitecylinder.New(&icd)
+			json.Unmarshal(dataBytes, &ic)
+			newInfiniteCylinder, err := ic.Setup()
 			if err != nil {
 				return nil, err
 			}
 			objectsMap[o.Name] = newInfiniteCylinder
 		case "UncappedCylinder":
-			var ucd uncappedcylinder.Data
+			var uc uncappedcylinder.UncappedCylinder
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
 			}
-			json.Unmarshal(dataBytes, &ucd)
-			newUncappedCylinder, err := uncappedcylinder.New(&ucd)
+			json.Unmarshal(dataBytes, &uc)
+			newUncappedCylinder, err := uc.Setup()
 			if err != nil {
 				return nil, err
 			}
 			objectsMap[o.Name] = newUncappedCylinder
 		case "Disk":
-			var dd disk.Data
+			var d disk.Disk
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
 			}
-			json.Unmarshal(dataBytes, &dd)
-			newDisk, err := disk.New(&dd)
+			json.Unmarshal(dataBytes, &d)
+			newDisk, err := d.Setup()
 			if err != nil {
 				return nil, err
 			}
 			objectsMap[o.Name] = newDisk
 		case "HollowDisk":
-			var hdd hollowdisk.Data
+			var hd hollowdisk.HollowDisk
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
 			}
-			json.Unmarshal(dataBytes, &hdd)
-			newHollowDisk, err := hollowdisk.New(&hdd)
+			json.Unmarshal(dataBytes, &hd)
+			newHollowDisk, err := hd.Setup()
 			if err != nil {
 				return nil, err
 			}
 			objectsMap[o.Name] = newHollowDisk
 		case "Plane":
-			var pd plane.Data
+			var p plane.Plane
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
 			}
-			json.Unmarshal(dataBytes, &pd)
-			newPlane, err := plane.New(&pd)
+			json.Unmarshal(dataBytes, &p)
+			newPlane, err := p.Setup()
 			if err != nil {
 				return nil, err
 			}
 			objectsMap[o.Name] = newPlane
 		case "Pyramid":
-			var pd pyramid.Data
+			var p pyramid.Pyramid
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
 			}
-			json.Unmarshal(dataBytes, &pd)
-			newPyramid, err := pyramid.New(&pd)
+			json.Unmarshal(dataBytes, &p)
+			newPyramid, err := p.Setup()
 			if err != nil {
 				return nil, err
 			}
 			objectsMap[o.Name] = newPyramid
 		case "Rectangle":
-			var rd rectangle.Data
+			var r rectangle.Rectangle
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
 			}
-			json.Unmarshal(dataBytes, &rd)
-			newRectangle, err := rectangle.New(&rd)
+			json.Unmarshal(dataBytes, &r)
+			newRectangle, err := r.Setup()
 			if err != nil {
 				return nil, err
 			}
 			objectsMap[o.Name] = newRectangle
 		case "Sphere":
-			var sd sphere.Data
+			var s sphere.Sphere
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
 			}
-			json.Unmarshal(dataBytes, &sd)
-			newSphere, err := sphere.New(&sd)
+			json.Unmarshal(dataBytes, &s)
+			newSphere, err := s.Setup()
 			if err != nil {
 				return nil, err
 			}
 			objectsMap[o.Name] = newSphere
 		case "Triangle":
-			var td triangle.Data
+			var t triangle.Triangle
 			dataBytes, err := json.Marshal(o.Data)
 			if err != nil {
 				return nil, err
 			}
-			json.Unmarshal(dataBytes, &td)
-			newTriangle, err := triangle.New(&td)
+			json.Unmarshal(dataBytes, &t)
+			newTriangle, err := t.Setup()
 			if err != nil {
 				return nil, err
 			}

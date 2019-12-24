@@ -5,11 +5,13 @@ import (
 	"math"
 )
 
+// AABB represents an Axis-Aligned Bounding Box
 type AABB struct {
 	A geometry.Point
 	B geometry.Point
 }
 
+// SurroundingBox represents an encompassing box for two smaller AABBs
 func SurroundingBox(aabb1, aabb2 *AABB) *AABB {
 	return &AABB{
 		A: geometry.Point{
@@ -30,6 +32,7 @@ func SurroundingBox(aabb1, aabb2 *AABB) *AABB {
 // 	// return aabb.IntersectionClassic(ray, t0, t1)
 // }
 
+// Intersection computer the intersection of this object and a given ray if it exists
 func (aabb *AABB) Intersection(ray geometry.Ray, t0, t1 float64) bool {
 	var tx0, tx1, ty0, ty1, tz0, tz1 float64
 
@@ -100,7 +103,7 @@ func (aabb *AABB) Intersection(ray geometry.Ray, t0, t1 float64) bool {
 	return true
 }
 
-func (aabb *AABB) IntersectionClassic(ray geometry.Ray, t0, t1 float64) bool {
+func (aabb *AABB) intersectionClassic(ray geometry.Ray, t0, t1 float64) bool {
 	tMin := t0
 	tMax := t1
 	// compute X

@@ -9,68 +9,66 @@ import (
 	"math"
 )
 
-type hollowDisk struct {
-	center             geometry.Point
-	normal             geometry.Vector
-	innerRadius        float64
-	outerRadius        float64
-	isCulled           bool
+// HollowDisk represents a hollow disk geometry object
+type HollowDisk struct {
+	Center             geometry.Point  `json:"center"`
+	Normal             geometry.Vector `json:"normal"`
+	InnerRadius        float64         `json:"inner_radius"`
+	OuterRadius        float64         `json:"outer_radius"`
+	IsCulled           bool            `json:"is_culled"`
 	innerRadiusSquared float64
 	outerRadiusSquared float64
 	mat                material.Material
 }
 
-type Data struct {
-	Center      geometry.Point  `json:"center"`
-	Normal      geometry.Vector `json:"normal"`
-	InnerRadius float64         `json:"inner_radius"`
-	OuterRadius float64         `json:"outer_radius"`
-	IsCulled    bool            `json:"is_culled"`
-}
+// type Data struct {
+// 	Center      geometry.Point
+// 	Normal      geometry.Vector
+// 	InnerRadius float64
+// 	OuterRadius float64
+// 	IsCulled    bool
+// }
 
-func New(hdd *Data) (*hollowDisk, error) {
-	// if hdd.Center == nil || hdd.Normal == nil {
-	// 	return nil, fmt.Errorf("hollowDisk center or normal is nil")
+// Setup sets up this hollow disk
+func (hd *HollowDisk) Setup() (*HollowDisk, error) {
+	// if hd.Center == nil || hd.Normal == nil {
+	// 	return nil, fmt.Errorf("hollow disk center or normal is nil")
 	// }
-	if hdd.InnerRadius > hdd.OuterRadius {
-		return nil, fmt.Errorf("hollowDisk inner radius is lesser than radius")
+	if hd.InnerRadius > hd.OuterRadius {
+		return nil, fmt.Errorf("hollow disk inner radius is lesser than radius")
 	}
-	if hdd.InnerRadius == hdd.OuterRadius {
-		return nil, fmt.Errorf("hollowDisk outer radius equals inner radius")
+	if hd.InnerRadius == hd.OuterRadius {
+		return nil, fmt.Errorf("hollow disk outer radius equals inner radius")
 	}
-	if hdd.InnerRadius < 0.0 {
-		return nil, fmt.Errorf("hollowDisk inner radius is negative")
+	if hd.InnerRadius < 0.0 {
+		return nil, fmt.Errorf("hollow disk inner radius is negative")
 	}
-	if hdd.OuterRadius <= 0 {
-		return nil, fmt.Errorf("hollowDisk outer radius is 0 or negative")
+	if hd.OuterRadius <= 0 {
+		return nil, fmt.Errorf("hollow disk outer radius is 0 or negative")
 	}
-	return &hollowDisk{
-		center:             hdd.Center,
-		normal:             hdd.Normal.Unit(),
-		innerRadius:        hdd.InnerRadius,
-		outerRadius:        hdd.OuterRadius,
-		isCulled:           hdd.IsCulled,
-		innerRadiusSquared: hdd.InnerRadius * hdd.InnerRadius,
-		outerRadiusSquared: hdd.OuterRadius * hdd.OuterRadius,
-	}, nil
+	hd.Normal = hd.Normal.Unit()
+	hd.innerRadiusSquared = hd.InnerRadius * hd.InnerRadius
+	hd.outerRadiusSquared = hd.OuterRadius * hd.OuterRadius
+	return hd, nil
 }
 
-func (hd *hollowDisk) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
-	denominator := ray.Direction.Dot(hd.normal)
-	if hd.isCulled && denominator > -1e-7 {
+// Intersection computer the intersection of this object and a given ray if it exists
+func (hd *HollowDisk) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+	denominator := ray.Direction.Dot(hd.Normal)
+	if hd.IsCulled && denominator > -1e-7 {
 		return nil, false
 	} else if denominator < 1e-7 && denominator > -1e-7 {
 		return nil, false
 	}
-	planeVector := ray.Origin.To(hd.center)
-	t := planeVector.Dot(hd.normal) / denominator
+	planeVector := ray.Origin.To(hd.Center)
+	t := planeVector.Dot(hd.Normal) / denominator
 
 	if t < tMin || t > tMax {
 		return nil, false
 	}
 
 	hitPoint := ray.PointAt(t)
-	diskVector := hd.center.To(hitPoint)
+	diskVector := hd.Center.To(hitPoint)
 
 	// // fmt.Println(d.radiusSquared, d.Center)
 	if diskVector.Dot(diskVector) > hd.outerRadiusSquared {
@@ -85,49 +83,55 @@ func (hd *hollowDisk) Intersection(ray geometry.Ray, tMin, tMax float64) (*mater
 
 	return &material.RayHit{
 		Ray:         ray,
-		NormalAtHit: hd.normal,
+		NormalAtHit: hd.Normal,
 		Time:        t,
 		Material:    hd.mat,
 	}, true
 }
 
-func (hd *hollowDisk) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
-	eX := hd.outerRadius * math.Sqrt(1.0-hd.normal.X*hd.normal.X)
-	eY := hd.outerRadius * math.Sqrt(1.0-hd.normal.Y*hd.normal.Y)
-	eZ := hd.outerRadius * math.Sqrt(1.0-hd.normal.Z*hd.normal.Z)
+// BoundingBox returns an AABB of this object
+func (hd *HollowDisk) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
+	eX := hd.OuterRadius * math.Sqrt(1.0-hd.Normal.X*hd.Normal.X)
+	eY := hd.OuterRadius * math.Sqrt(1.0-hd.Normal.Y*hd.Normal.Y)
+	eZ := hd.OuterRadius * math.Sqrt(1.0-hd.Normal.Z*hd.Normal.Z)
 	return &aabb.AABB{
 		A: geometry.Point{
-			X: hd.center.X - eX,
-			Y: hd.center.Y - eY,
-			Z: hd.center.Z - eZ,
+			X: hd.Center.X - eX,
+			Y: hd.Center.Y - eY,
+			Z: hd.Center.Z - eZ,
 		},
 		B: geometry.Point{
-			X: hd.center.X + eX,
-			Y: hd.center.Y + eY,
-			Z: hd.center.Z + eZ,
+			X: hd.Center.X + eX,
+			Y: hd.Center.Y + eY,
+			Z: hd.Center.Z + eZ,
 		},
 	}, true
 }
 
-func (hd *hollowDisk) SetMaterial(m material.Material) {
+// SetMaterial sets thie object's material
+func (hd *HollowDisk) SetMaterial(m material.Material) {
 	hd.mat = m
 }
 
-func (hd *hollowDisk) IsInfinite() bool {
+// IsInfinite returns whether this object is infinite
+func (hd *HollowDisk) IsInfinite() bool {
 	return false
 }
 
-func (hd *hollowDisk) IsClosed() bool {
+// IsClosed returns whether this object is closed
+func (hd *HollowDisk) IsClosed() bool {
 	return false
 }
 
-func (hd *hollowDisk) Copy() primitive.Primitive {
+// Copy returns a shallow copy of thie object
+func (hd *HollowDisk) Copy() primitive.Primitive {
 	newHD := *hd
 	return &newHD
 }
 
-func UnitHollowDisk(xOffset, yOffset, zOffset float64) *hollowDisk {
-	hdd := Data{
+// Unit return a unit hollow disk
+func Unit(xOffset, yOffset, zOffset float64) *HollowDisk {
+	hd, _ := (&HollowDisk{
 		Center: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
@@ -140,7 +144,6 @@ func UnitHollowDisk(xOffset, yOffset, zOffset float64) *hollowDisk {
 		},
 		InnerRadius: 0.5,
 		OuterRadius: 1.0,
-	}
-	hd, _ := New(&hdd)
+	}).Setup()
 	return hd
 }

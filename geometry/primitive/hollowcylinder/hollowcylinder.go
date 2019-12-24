@@ -10,58 +10,60 @@ import (
 	"fluorescence/shading/material"
 )
 
-type hollowCylinder struct {
-	list *primitivelist.PrimitiveList
-	box  *aabb.AABB
-}
-
-type Data struct {
+// HollowCylinder represents a hollow cylinder geometry object
+type HollowCylinder struct {
 	A           geometry.Point `json:"a"`
 	B           geometry.Point `json:"b"`
 	InnerRadius float64        `json:"inner_radius"`
 	OuterRadius float64        `json:"outer_radius"`
+	list        *primitivelist.PrimitiveList
+	box         *aabb.AABB
 }
 
-func New(hcd *Data) (*hollowCylinder, error) {
-	outerUncappedCylinder, err := uncappedcylinder.New(&uncappedcylinder.Data{
-		A:                  hcd.A,
-		B:                  hcd.B,
-		Radius:             hcd.OuterRadius,
+// type Data struct {
+// }
+
+// Setup sets up this hollow cylinder's internal fields
+func (hc *HollowCylinder) Setup() (*HollowCylinder, error) {
+	outerUncappedCylinder, err := (&uncappedcylinder.UncappedCylinder{
+		A:                  hc.A,
+		B:                  hc.B,
+		Radius:             hc.OuterRadius,
 		HasInvertedNormals: false,
-	})
+	}).Setup()
 	if err != nil {
 		return nil, err
 	}
-	innerUncappedCylinder, err := uncappedcylinder.New(&uncappedcylinder.Data{
-		A:                  hcd.A,
-		B:                  hcd.B,
-		Radius:             hcd.InnerRadius,
+	innerUncappedCylinder, err := (&uncappedcylinder.UncappedCylinder{
+		A:                  hc.A,
+		B:                  hc.B,
+		Radius:             hc.InnerRadius,
 		HasInvertedNormals: true,
-	})
+	}).Setup()
 	if err != nil {
 		return nil, err
 	}
-	hollowDiskA, err := hollowdisk.New(&hollowdisk.Data{
-		Center:      hcd.A,
-		Normal:      hcd.B.To(hcd.A).Unit(),
-		InnerRadius: hcd.InnerRadius,
-		OuterRadius: hcd.OuterRadius,
+	hollowDiskA, err := (&hollowdisk.HollowDisk{
+		Center:      hc.A,
+		Normal:      hc.B.To(hc.A).Unit(),
+		InnerRadius: hc.InnerRadius,
+		OuterRadius: hc.OuterRadius,
 		IsCulled:    false,
-	})
+	}).Setup()
 	if err != nil {
 		return nil, err
 	}
-	hollowDiskB, err := hollowdisk.New(&hollowdisk.Data{
-		Center:      hcd.B,
-		Normal:      hcd.A.To(hcd.B).Unit(),
-		InnerRadius: hcd.InnerRadius,
-		OuterRadius: hcd.OuterRadius,
+	hollowDiskB, err := (&hollowdisk.HollowDisk{
+		Center:      hc.B,
+		Normal:      hc.A.To(hc.B).Unit(),
+		InnerRadius: hc.InnerRadius,
+		OuterRadius: hc.OuterRadius,
 		IsCulled:    false,
-	})
+	}).Setup()
 	if err != nil {
 		return nil, err
 	}
-	primitiveList, err := primitivelist.NewPrimitiveList(
+	primitiveList, err := primitivelist.FromElements(
 		innerUncappedCylinder,
 		outerUncappedCylinder,
 		hollowDiskA,
@@ -70,43 +72,48 @@ func New(hcd *Data) (*hollowCylinder, error) {
 	if err != nil {
 		return nil, err
 	}
-	box, _ := primitiveList.BoundingBox(0, 0)
-	return &hollowCylinder{
-		list: primitiveList,
-		box:  box,
-	}, nil
+	hc.list = primitiveList
+	hc.box, _ = primitiveList.BoundingBox(0, 0)
+	return hc, nil
 }
 
-func (hc *hollowCylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+// Intersection computer the intersection of this object and a given ray if it exists
+func (hc *HollowCylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	if hc.box.Intersection(ray, tMin, tMax) {
 		return hc.list.Intersection(ray, tMin, tMax)
 	}
 	return nil, false
 }
 
-func (hc *hollowCylinder) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
+// BoundingBox returns an AABB of this object
+func (hc *HollowCylinder) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return hc.list.BoundingBox(0, 0)
 }
 
-func (hc *hollowCylinder) SetMaterial(m material.Material) {
+// SetMaterial sets this object's material
+func (hc *HollowCylinder) SetMaterial(m material.Material) {
 	hc.list.SetMaterial(m)
 }
 
-func (hc *hollowCylinder) IsInfinite() bool {
+// IsInfinite returns whether this object is infinite
+func (hc *HollowCylinder) IsInfinite() bool {
 	return false
 }
 
-func (hc *hollowCylinder) IsClosed() bool {
+// IsClosed returns whether this object is closed
+func (hc *HollowCylinder) IsClosed() bool {
 	return true
 }
 
-func (hc *hollowCylinder) Copy() primitive.Primitive {
+// Copy returns a shallow copy of this object
+func (hc *HollowCylinder) Copy() primitive.Primitive {
 	newHC := *hc
 	return &newHC
 }
 
-func UnitHollowCylinder(xOffset, yOffset, zOffset float64) *hollowCylinder {
-	hcd := Data{
+// Unit return a unit hollow cylinder
+func Unit(xOffset, yOffset, zOffset float64) *HollowCylinder {
+	hc, _ := (&HollowCylinder{
 		A: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
@@ -119,7 +126,6 @@ func UnitHollowCylinder(xOffset, yOffset, zOffset float64) *hollowCylinder {
 		},
 		InnerRadius: 0.5,
 		OuterRadius: 1.0,
-	}
-	hc, _ := New(&hcd)
+	}).Setup()
 	return hc
 }

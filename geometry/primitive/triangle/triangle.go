@@ -9,43 +9,41 @@ import (
 	"math"
 )
 
-// triangle is an internal representation of a triangle geometry contruct
-type triangle struct {
-	a, b, c  geometry.Point  // points of the triangle
-	normal   geometry.Vector // normal of the triangle's surface
-	isCulled bool            // whether or not the triangle is culled, or single-sided
+// Triangle is an internal representation of a Triangle geometry contruct
+type Triangle struct {
+	A        geometry.Point  `json:"a"`
+	B        geometry.Point  `json:"b"`
+	C        geometry.Point  `json:"c"`
+	normal   geometry.Vector // normal of the Triangle's surface
+	IsCulled bool            `json:"is_culled"` // whether or not the Triangle is culled, or single-sided
 	mat      material.Material
 }
 
-// Data holds information needed to contruct a triangle
-type Data struct {
-	A        geometry.Point `json:"a"`
-	B        geometry.Point `json:"b"`
-	C        geometry.Point `json:"c"`
-	IsCulled bool           `json:"is_culled"`
-}
+// Data holds information needed to contruct a Triangle
+// type Data struct {
+// 	A        geometry.Point `json:"a"`
+// 	B        geometry.Point `json:"b"`
+// 	C        geometry.Point `json:"c"`
+// 	IsCulled bool           `json:"is_culled"`
+// }
 
-// New contructs a new triangle given a Data
-func New(td *Data) (*triangle, error) {
-	if td.A == td.B || td.A == td.C || td.B == td.C {
-		return nil, fmt.Errorf("triangle resolves to line or point")
+// Setup fills calculated fields in an Triangle
+func (t *Triangle) Setup() (*Triangle, error) {
+	if t.A == t.B || t.A == t.C || t.B == t.C {
+		return nil, fmt.Errorf("Triangle resolves to line or point")
 	}
-	return &triangle{
-		a:        td.A,
-		b:        td.B,
-		c:        td.C,
-		normal:   td.A.To(td.B).Cross(td.A.To(td.C)).Unit(),
-		isCulled: td.IsCulled,
-	}, nil
+	t.normal = t.A.To(t.B).Cross(t.A.To(t.C)).Unit()
+	return t, nil
 }
 
-func (t *triangle) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
-	ab := t.a.To(t.b)
-	ac := t.a.To(t.c)
+// Intersection computer the intersection of this object and a given ray if it exists
+func (t *Triangle) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+	ab := t.A.To(t.B)
+	ac := t.A.To(t.C)
 	pVector := ray.Direction.Cross(ac)
 	determinant := ab.Dot(pVector)
-	if t.isCulled && determinant < 1e-7 {
-		// This ray is parallel to this triangle or back-facing.
+	if t.IsCulled && determinant < 1e-7 {
+		// This ray is parallel to this Triangle or back-facing.
 		return nil, false
 	} else if determinant > -1e-7 && determinant < 1e-7 {
 		return nil, false
@@ -53,7 +51,7 @@ func (t *triangle) Intersection(ray geometry.Ray, tMin, tMax float64) (*material
 
 	inverseDeterminant := 1.0 / determinant
 
-	tVector := t.a.To(ray.Origin)
+	tVector := t.A.To(ray.Origin)
 	u := inverseDeterminant * (tVector.Dot(pVector))
 	if u < 0.0 || u > 1.0 {
 		return nil, false
@@ -81,61 +79,66 @@ func (t *triangle) Intersection(ray geometry.Ray, tMin, tMax float64) (*material
 	return nil, false
 }
 
-func (t *triangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
+// BoundingBox returns an AABB for this object
+func (t *Triangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return &aabb.AABB{
 		A: geometry.Point{
-			X: math.Min(math.Min(t.a.X, t.a.X), t.c.X) - 1e-7,
-			Y: math.Min(math.Min(t.a.Y, t.a.Y), t.c.Y) - 1e-7,
-			Z: math.Min(math.Min(t.a.Z, t.a.Z), t.c.Z) - 1e-7,
+			X: math.Min(math.Min(t.A.X, t.A.X), t.C.X) - 1e-7,
+			Y: math.Min(math.Min(t.A.Y, t.A.Y), t.C.Y) - 1e-7,
+			Z: math.Min(math.Min(t.A.Z, t.A.Z), t.C.Z) - 1e-7,
 		},
 		B: geometry.Point{
-			X: math.Max(math.Max(t.a.X, t.b.X), t.c.X) + 1e-7,
-			Y: math.Max(math.Max(t.a.Y, t.b.Y), t.c.Y) + 1e-7,
-			Z: math.Max(math.Max(t.a.Z, t.b.Z), t.c.Z) + 1e-7,
+			X: math.Max(math.Max(t.A.X, t.B.X), t.C.X) + 1e-7,
+			Y: math.Max(math.Max(t.A.Y, t.B.Y), t.C.Y) + 1e-7,
+			Z: math.Max(math.Max(t.A.Z, t.B.Z), t.C.Z) + 1e-7,
 		},
 	}, true
 }
 
-func (t *triangle) SetMaterial(m material.Material) {
+// SetMaterial sets the material of this object
+func (t *Triangle) SetMaterial(m material.Material) {
 	t.mat = m
 }
 
-func (t *triangle) IsInfinite() bool {
+// IsInfinite returns whether this object is infinite
+func (t *Triangle) IsInfinite() bool {
 	return false
 }
 
-func (t *triangle) IsClosed() bool {
+// IsClosed returns whether this object is closed
+func (t *Triangle) IsClosed() bool {
 	return false
 }
 
-func (t *triangle) Copy() primitive.Primitive {
+// Copy returns a shallow copy of this object
+func (t *Triangle) Copy() primitive.Primitive {
 	newT := *t
 	return &newT
 }
 
-// Unit creates a unit triangle.
-// The points of this triangle are:
+// Unit creates a unit Triangle.
+// The points of this Triangle are:
 // A: (0, 0, 0),
 // B: (1, 0, 0),
 // C: (0, 1, 0).
-func Unit(xOffset, yOffset, zOffset float64) *triangle {
-	return &triangle{
-		a: geometry.Point{
+func Unit(xOffset, yOffset, zOffset float64) *Triangle {
+	t, _ := (&Triangle{
+		A: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		b: geometry.Point{
+		B: geometry.Point{
 			X: 1.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		c: geometry.Point{
+		C: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 1.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		isCulled: true,
-		mat:      nil,
-	}
+		IsCulled: true,
+	}).Setup()
+	return t
 }

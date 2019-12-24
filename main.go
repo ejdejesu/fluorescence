@@ -13,6 +13,7 @@ import (
 func main() {
 
 	maxThreads := int64(runtime.NumCPU())
+	fmt.Printf("Max Threads: %d\n", maxThreads)
 	// maxThreads := int64(runtime.NumCPU() * 10)
 	// maxThreads := int64(runtime.NumCPU() * 1000)
 	// maxThreads := int64(1)

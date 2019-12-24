@@ -9,56 +9,50 @@ import (
 	"math"
 )
 
-type disk struct {
-	center        geometry.Point
-	normal        geometry.Vector
-	radius        float64
-	isCulled      bool
+// Disk represent a disk geometric object
+type Disk struct {
+	Center        geometry.Point  `json:"center"`
+	Normal        geometry.Vector `json:"normal"`
+	Radius        float64         `json:"radius"`
+	IsCulled      bool            `json:"is_culled"`
 	radiusSquared float64
 	mat           material.Material
 }
 
-type Data struct {
-	Center   geometry.Point  `json:"center"`
-	Normal   geometry.Vector `json:"normal"`
-	Radius   float64         `json:"radius"`
-	IsCulled bool            `json:"is_culled"`
-}
+// type Data struct {
+// }
 
-func New(dd *Data) (*disk, error) {
-	// if dd.Center == nil || dd.Normal == nil {
+// Setup sets up a disk's internal fields
+func (d *Disk) Setup() (*Disk, error) {
+	// if d.Center == nil || d.Normal == nil {
 	// 	return nil, fmt.Errorf("disk center or normal is nil")
 	// }
-	if dd.Radius <= 0.0 {
+	if d.Radius <= 0.0 {
 		return nil, fmt.Errorf("disk radius is 0 or negative")
 	}
-	return &disk{
-		center:        dd.Center,
-		normal:        dd.Normal.Unit(),
-		radius:        dd.Radius,
-		isCulled:      dd.IsCulled,
-		radiusSquared: dd.Radius * dd.Radius,
-	}, nil
+	d.radiusSquared = d.Radius * d.Radius
+	return d, nil
 }
 
-func (d *disk) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
-	denominator := ray.Direction.Dot(d.normal)
-	if d.isCulled && denominator > -1e-7 {
+// Intersection computer the intersection of this object and a given ray if it exists
+func (d *Disk) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
+	denominator := ray.Direction.Dot(d.Normal)
+	if d.IsCulled && denominator > -1e-7 {
 		return nil, false
 	} else if denominator < 1e-7 && denominator > -1e-7 {
 		return nil, false
 	}
-	planeVector := ray.Origin.To(d.center)
-	t := planeVector.Dot(d.normal) / denominator
+	planeVector := ray.Origin.To(d.Center)
+	t := planeVector.Dot(d.Normal) / denominator
 
 	if t < tMin || t > tMax {
 		return nil, false
 	}
 
 	hitPoint := ray.PointAt(t)
-	diskVector := d.center.To(hitPoint)
+	diskVector := d.Center.To(hitPoint)
 
-	// // fmt.Println(d.radiusSquared, d.Center)
+	// // fmt.Println(d.RadiusSquared, d.Center)
 	if diskVector.Dot(diskVector) > d.radiusSquared {
 		return nil, false
 	}
@@ -68,49 +62,55 @@ func (d *disk) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.Ray
 
 	return &material.RayHit{
 		Ray:         ray,
-		NormalAtHit: d.normal,
-		Time:           t,
+		NormalAtHit: d.Normal,
+		Time:        t,
 		Material:    d.mat,
 	}, true
 }
 
-func (d *disk) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
-	eX := d.radius * math.Sqrt(1.0-d.normal.X*d.normal.X)
-	eY := d.radius * math.Sqrt(1.0-d.normal.Y*d.normal.Y)
-	eZ := d.radius * math.Sqrt(1.0-d.normal.Z*d.normal.Z)
+// BoundingBox return an AABB of this disk
+func (d *Disk) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
+	eX := d.Radius * math.Sqrt(1.0-d.Normal.X*d.Normal.X)
+	eY := d.Radius * math.Sqrt(1.0-d.Normal.Y*d.Normal.Y)
+	eZ := d.Radius * math.Sqrt(1.0-d.Normal.Z*d.Normal.Z)
 	return &aabb.AABB{
 		A: geometry.Point{
-			X: d.center.X - eX - 1e-7,
-			Y: d.center.Y - eY - 1e-7,
-			Z: d.center.Z - eZ - 1e-7,
+			X: d.Center.X - eX - 1e-7,
+			Y: d.Center.Y - eY - 1e-7,
+			Z: d.Center.Z - eZ - 1e-7,
 		},
 		B: geometry.Point{
-			X: d.center.X + eX + 1e-7,
-			Y: d.center.Y + eY + 1e-7,
-			Z: d.center.Z + eZ + 1e-7,
+			X: d.Center.X + eX + 1e-7,
+			Y: d.Center.Y + eY + 1e-7,
+			Z: d.Center.Z + eZ + 1e-7,
 		},
 	}, true
 }
 
-func (d *disk) SetMaterial(m material.Material) {
+// SetMaterial sets this object's material
+func (d *Disk) SetMaterial(m material.Material) {
 	d.mat = m
 }
 
-func (d *disk) IsInfinite() bool {
+// IsInfinite returns whether this object is infinite
+func (d *Disk) IsInfinite() bool {
 	return false
 }
 
-func (d *disk) IsClosed() bool {
+// IsClosed returns whether this object is closed
+func (d *Disk) IsClosed() bool {
 	return false
 }
 
-func (d *disk) Copy() primitive.Primitive {
+// Copy return a shallow copy of this object
+func (d *Disk) Copy() primitive.Primitive {
 	newD := *d
 	return &newD
 }
 
-func UnitDisk(xOffset, yOffset, zOffset float64) *disk {
-	dd := Data{
+// Unit return a unit disk
+func Unit(xOffset, yOffset, zOffset float64) *Disk {
+	d, _ := (&Disk{
 		Center: geometry.Point{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
@@ -122,7 +122,6 @@ func UnitDisk(xOffset, yOffset, zOffset float64) *disk {
 			Z: -1.0 + zOffset,
 		},
 		Radius: 1.0,
-	}
-	d, _ := New(&dd)
+	}).Setup()
 	return d
 }

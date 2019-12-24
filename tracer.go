@@ -24,6 +24,10 @@ func TraceImage(params *Parameters, img *image.RGBA64, doneChan chan<- int, maxT
 
 	tiles := getTiles(params, img)
 
+	rand.Shuffle(len(tiles), func(i, j int) {
+		tiles[i], tiles[j] = tiles[j], tiles[i]
+	})
+
 	sem := semaphore.NewWeighted(maxThreads)
 	runtime.LockOSThread()
 

@@ -8,12 +8,18 @@ import (
 	"math"
 )
 
+// PrimitiveList holds a list of Primitives to process
 type PrimitiveList struct {
 	List []primitive.Primitive
 }
 
+// ByXPos is a sort technique to sort by X axis location
 type ByXPos PrimitiveList
+
+// ByYPos is a sort technique to sort by Y axis location
 type ByYPos PrimitiveList
+
+// ByZPos is a sort technique to sort by Z axis location
 type ByZPos PrimitiveList
 
 func (a ByXPos) Len() int {
@@ -58,7 +64,8 @@ func (a ByZPos) Less(i, j int) bool {
 	return box1.A.Z < box2.A.Z
 }
 
-func NewPrimitiveList(primitives ...primitive.Primitive) (*PrimitiveList, error) {
+// FromElements creates a primitive list from variadic inputs
+func FromElements(primitives ...primitive.Primitive) (*PrimitiveList, error) {
 	primitiveList := &PrimitiveList{}
 	for _, p := range primitives {
 		primitiveList.List = append(primitiveList.List, p)
@@ -66,6 +73,7 @@ func NewPrimitiveList(primitives ...primitive.Primitive) (*PrimitiveList, error)
 	return primitiveList, nil
 }
 
+// Intersection computer the intersection of this list and a given ray
 func (pl *PrimitiveList) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	var rayHit *material.RayHit
 	minT := math.MaxFloat64
@@ -84,6 +92,7 @@ func (pl *PrimitiveList) Intersection(ray geometry.Ray, tMin, tMax float64) (*ma
 	return nil, false
 }
 
+// BoundingBox returns an AABB of this object
 func (pl *PrimitiveList) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	box, ok := pl.List[0].BoundingBox(t0, t1)
 	if !ok {
@@ -99,12 +108,14 @@ func (pl *PrimitiveList) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return box, true
 }
 
+// SetMaterial sets this object's material
 func (pl *PrimitiveList) SetMaterial(m material.Material) {
 	for _, p := range pl.List {
 		p.SetMaterial(m)
 	}
 }
 
+// IsInfinite returns whether this object is infinite
 func (pl *PrimitiveList) IsInfinite() bool {
 	for _, p := range pl.List {
 		if p.IsInfinite() {
@@ -114,6 +125,7 @@ func (pl *PrimitiveList) IsInfinite() bool {
 	return false
 }
 
+// IsClosed returns whether this object is closed
 func (pl *PrimitiveList) IsClosed() bool {
 	for _, p := range pl.List {
 		if !p.IsClosed() {
@@ -123,6 +135,7 @@ func (pl *PrimitiveList) IsClosed() bool {
 	return false
 }
 
+// Copy returns a shallow copy of this object
 func (pl *PrimitiveList) Copy() primitive.Primitive {
 	newPL := &PrimitiveList{}
 	for _, p := range pl.List {
@@ -131,6 +144,7 @@ func (pl *PrimitiveList) Copy() primitive.Primitive {
 	return newPL
 }
 
+// FirstHalfCopy returns a new list with a copy of the first n/2 elements
 func (pl *PrimitiveList) FirstHalfCopy() *PrimitiveList {
 	newPL := &PrimitiveList{}
 	lowerBound := 0
@@ -141,6 +155,7 @@ func (pl *PrimitiveList) FirstHalfCopy() *PrimitiveList {
 	return newPL
 }
 
+// LastHalfCopy returns a new list with a copy of the last n/2 - 1 elements
 func (pl *PrimitiveList) LastHalfCopy() *PrimitiveList {
 	newPL := &PrimitiveList{}
 	lowerBound := len(pl.List) / 2

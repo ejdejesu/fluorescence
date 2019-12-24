@@ -29,9 +29,17 @@ func newXYRectangle(a, b geometry.Point, isCulled, hasNegativeNormal bool) *xyRe
 
 	var normal geometry.Vector
 	if hasNegativeNormal {
-		normal = geometry.Vector{0.0, 0.0, -1.0}
+		normal = geometry.Vector{
+			X: 0.0,
+			Y: 0.0,
+			Z: -1.0,
+		}
 	} else {
-		normal = geometry.Vector{0.0, 0.0, 1.0}
+		normal = geometry.Vector{
+			X: 0.0,
+			Y: 0.0,
+			Z: 1.0,
+		}
 	}
 	return &xyRectangle{
 		x0:       x0,
@@ -44,6 +52,7 @@ func newXYRectangle(a, b geometry.Point, isCulled, hasNegativeNormal bool) *xyRe
 	}
 }
 
+// Intersection computer the intersection of this object and a given ray if it exists
 func (r *xyRectangle) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 	// Ray is coming from behind rectangle
 	denominator := ray.Direction.Dot(r.normal)
@@ -85,6 +94,7 @@ func (r *xyRectangle) Intersection(ray geometry.Ray, tMin, tMax float64) (*mater
 	}, true
 }
 
+// BoundingBox return an AABB of this object
 func (r *xyRectangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return &aabb.AABB{
 		A: geometry.Point{
@@ -100,18 +110,22 @@ func (r *xyRectangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	}, true
 }
 
+// SetMaterial sets this object's material
 func (r *xyRectangle) SetMaterial(m material.Material) {
 	r.mat = m
 }
 
+// IsInfinite return whether this object is infinite
 func (r *xyRectangle) IsInfinite() bool {
 	return false
 }
 
+// IsClosed returns whether this object is closed
 func (r *xyRectangle) IsClosed() bool {
 	return false
 }
 
+// Copy returns a shallow copy of this object
 func (r *xyRectangle) Copy() primitive.Primitive {
 	newR := *r
 	return &newR

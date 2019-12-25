@@ -1,23 +1,24 @@
 {
-    "image_width": 500,
-    "image_height": 500,
+    "image_width": 100,
+    "image_height": 100,
     "file_type": "png",
     "file_directory": "./output/",
     "version": "0.8",
     "gamma_correction": 2.2,
     "texture_gamma": 2.2,
     "generate_new_file": true,
-    "sample_count": 100,
+    "sample_count": 1000000,
     "tile_width": 16,
     "tile_height": 16,
     "max_bounces": 10,
     "use_bvh": false,
+    "background_color_magnitude": 0.0,
     "background_color": {
-        "red": 0.0,
-        "green": 0.0,
-        "blue": 0.0
+        "red": 0.53,
+        "green": 0.81,
+        "blue": 1.0
     },
     "t_min": 1e-7,
     "t_max": 1e+300,
-    "scene_file_name": "poliigon_room.json"
+    "scene_file_name": "cornell_box.json"
 }

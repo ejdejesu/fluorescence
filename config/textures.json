@@ -44,6 +44,83 @@
         }
     },
     {
+        "name": "color_sky_half",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.265,
+                "green": 0.405,
+                "blue": 0.5
+            }
+        }
+    },
+    {
+        "name": "color_sky",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.53,
+                "green": 0.81,
+                "blue": 1.0
+            }
+        }
+    },
+    {
+        "name": "color_sky_double",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 1.06,
+                "green": 1.62,
+                "blue": 2.0
+            }
+        }
+    },
+    {
+        "name": "color_sky_five",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 2.65,
+                "green": 4.05,
+                "blue": 5.0
+            }
+        }
+    },
+    {
+        "name": "color_sky_ten",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 5.3,
+                "green": 8.1,
+                "blue": 10.0
+            }
+        }
+    },
+    {
+        "name": "color_sky_twenty_five",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 13.25,
+                "green": 20.25,
+                "blue": 25.0
+            }
+        }
+    },
+    {
+        "name": "color_sky_fifty",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 26.5,
+                "green": 40.5,
+                "blue": 50.0
+            }
+        }
+    },
+    {
         "name": "color_white_half",
         "type": "Color",
         "data": {
@@ -95,6 +172,17 @@
                 "red": 50.0,
                 "green": 50.0,
                 "blue": 50.0
+            }
+        }
+    },
+    {
+        "name": "color_white_sun",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 500.0,
+                "green": 500.0,
+                "blue": 500.0
             }
         }
     },

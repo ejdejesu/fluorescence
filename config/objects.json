@@ -41,12 +41,12 @@
         "data": {
             "a": {
                 "x": 5.0,
-                "y": 0.0,
+                "y": 0.0001,
                 "z": -5.0
             },
             "b": {
                 "x": 5.0,
-                "y": 1.0,
+                "y": 0.9999,
                 "z": -5.0
             },
             "radius": 2.0
@@ -58,12 +58,12 @@
         "data": {
             "a": {
                 "x": 5.0,
-                "y": 0.0,
+                "y": 0.0001,
                 "z": -5.0
             },
             "b": {
                 "x": 5.0,
-                "y": 1.0,
+                "y": 0.9999,
                 "z": -5.0
             },
             "inner_radius": 1.5,
@@ -76,12 +76,12 @@
         "data": {
             "a": {
                 "x": 5.0,
-                "y": 0.0,
+                "y": 0.0001,
                 "z": -5.0
             },
             "b": {
                 "x": 5.0,
-                "y": 1.0,
+                "y": 0.9999,
                 "z": -5.0
             },
             "radius": 1.499
@@ -93,7 +93,7 @@
         "data": {
             "a": {
                 "x": 5.0,
-                "y": 0.0,
+                "y": 0.0001,
                 "z": -5.0
             },
             "b": {
@@ -132,7 +132,7 @@
             },
             "b": {
                 "x": 5.0,
-                "y": 1.0,
+                "y": 0.9999,
                 "z": -5.0
             },
             "radius": 2.0
@@ -271,6 +271,78 @@
             "b": {
                 "x": 0.0,
                 "y": 10.0,
+                "z": -10.0
+            },
+            "is_culled": true,
+            "has_negative_normal": false
+        }
+    },
+    {
+        "name": "left_top_rectangle",
+        "type": "Rectangle",
+        "data": {
+            "a": {
+                "x": 0.0,
+                "y": 9.0,
+                "z": 0.0
+            },
+            "b": {
+                "x": 0.0,
+                "y": 10.0,
+                "z": -10.0
+            },
+            "is_culled": true,
+            "has_negative_normal": false
+        }
+    },
+    {
+        "name": "left_bottom_rectangle",
+        "type": "Rectangle",
+        "data": {
+            "a": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "b": {
+                "x": 0.0,
+                "y": 7.0,
+                "z": -10.0
+            },
+            "is_culled": true,
+            "has_negative_normal": false
+        }
+    },
+    {
+        "name": "left_left_rectangle",
+        "type": "Rectangle",
+        "data": {
+            "a": {
+                "x": 0.0,
+                "y": 7.0,
+                "z": 0.0
+            },
+            "b": {
+                "x": 0.0,
+                "y": 9.0,
+                "z": -1.0
+            },
+            "is_culled": true,
+            "has_negative_normal": false
+        }
+    },
+    {
+        "name": "left_right_rectangle",
+        "type": "Rectangle",
+        "data": {
+            "a": {
+                "x": 0.0,
+                "y": 7.0,
+                "z": -3.0
+            },
+            "b": {
+                "x": 0.0,
+                "y": 9.0,
                 "z": -10.0
             },
             "is_culled": true,
@@ -545,6 +617,35 @@
                 "z": 0.0
             },
             "is_culled": true
+        }
+    },
+    {
+        "name": "sky_plane",
+        "type": "Plane",
+        "data": {
+            "point": {
+                "x": 0.0,
+                "y": 1000000.0,
+                "z": 0.0
+            },
+            "normal": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 0.0
+            },
+            "is_culled": true
+        }
+    },
+    {
+        "name": "sun_near_left",
+        "type": "Sphere",
+        "data": {
+            "center": {
+                "x": -500.0,
+                "y": 500.0,
+                "z": 500.0
+            },
+            "radius": 100.0
         }
     },
     {

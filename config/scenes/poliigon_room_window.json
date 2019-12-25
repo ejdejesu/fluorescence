@@ -1,0 +1,58 @@
+{
+    "scene_name": "Poliigon Room Window",
+    "camera_name": "perfect_main",
+    "objects": [
+        {
+            "object_name": "sun_plane",
+            "material_name": "sky_light_ten"
+        },
+        {
+            "object_name": "large_center_sphere_outer",
+            "material_name": "glass"
+        },
+        {
+            "object_name": "large_center_sphere_inner",
+            "material_name": "image_poliigon_marble_062"
+        },
+        {
+            "object_name": "center_platform_cylinder",
+            "material_name": "glass"
+        },
+        {
+            "object_name": "top_rectangle",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "bottom_rectangle",
+            "material_name": "image_poliigon_wood_floor_044"
+        },
+        {
+            "object_name": "left_top_rectangle",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "left_bottom_rectangle",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "left_left_rectangle",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "left_right_rectangle",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "right_rectangle",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "near_rectangle",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "far_rectangle",
+            "material_name": "image_poliigon_tiles_onyx_opalo_black_001"
+        }
+    ]
+}

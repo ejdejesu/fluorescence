@@ -103,6 +103,54 @@
         "data": {}
     },
     {
+        "name": "sun_light",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_white_sun",
+        "data": {}
+    },
+    {
+        "name": "sky_light_half",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_sky_half",
+        "data": {}
+    },
+    {
+        "name": "sky_light",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_sky",
+        "data": {}
+    },
+    {
+        "name": "sky_light_double",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_sky_double",
+        "data": {}
+    },
+    {
+        "name": "sky_light_five",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_sky_five",
+        "data": {}
+    },
+    {
+        "name": "sky_light_ten",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_sky_ten",
+        "data": {}
+    },
+    {
+        "name": "sky_light_twenty_five",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_sky_twenty_five",
+        "data": {}
+    },
+    {
+        "name": "sky_light_fifty",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_sky_fifty",
+        "data": {}
+    },
+    {
         "name": "white_light_half",
         "type": "Lambertian",
         "emittance_texture_name": "color_white_half",

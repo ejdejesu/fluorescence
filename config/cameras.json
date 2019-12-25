@@ -23,6 +23,29 @@
         }
     },
     {
+        "name": "perfect_main",
+        "data": {
+            "eye_location": {
+                "x": 5.0,
+                "y": 5.0,
+                "z": 13.72
+            },
+            "target_location": {
+                "x": 5.0,
+                "y": 5.0,
+                "z": 0.0
+            },
+            "up_vector": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+            },
+            "vertical_fov": 40.0,
+            "aperture": 0.0,
+            "focus_distance": 1.0
+        }
+    },
+    {
         "name": "left",
         "data": {
             "eye_location": {

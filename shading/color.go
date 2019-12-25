@@ -65,6 +65,21 @@ func clamp(val, min, max float64) float64 {
 	return val
 }
 
+// Scale scales all elements equally so the max channel is 1.0
+func (c Color) Scale() Color {
+	max := math.Max(c.Red, math.Max(c.Green, c.Blue))
+	return c.MultScalar(1.0 / max)
+}
+
+// ScaleDown scales as Scale does, but only if any channel exceeds 1.0
+func (c Color) ScaleDown() Color {
+	max := math.Max(c.Red, math.Max(c.Green, c.Blue))
+	if max > 1.0 {
+		return c.MultScalar(1.0 / max)
+	}
+	return c
+}
+
 // ToRGBA converts our Color into an RGBA representation from the color library
 func (c Color) ToRGBA() color.RGBA {
 	return color.RGBA{

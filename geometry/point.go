@@ -8,6 +8,9 @@ type Point Vector
 // PointZero is the zero point, or the origin
 var PointZero = Point{}
 
+// PointMax is the maximum representable point
+var PointMax = Point{math.MaxFloat64, math.MaxFloat64, math.MaxFloat64}
+
 // MinComponents returns the Point construction of the minimums of two points component-wise
 func MinComponents(p, q Point) Point {
 	return Point{math.Min(p.X, q.X), math.Min(p.Y, q.Y), math.Min(p.Z, q.Z)}
@@ -41,6 +44,11 @@ func (p Point) SubPoint(q Point) Vector {
 // SubVector subtracts a Vector v from a Point p
 func (p Point) SubVector(v Vector) Point {
 	return Point{p.X - v.X, p.Y - v.Y, p.Z - v.Z}
+}
+
+// Negate negates the components of a Point
+func (p Point) Negate() Point {
+	return Point{-p.X, -p.Y, -p.Z}
 }
 
 // asVector converts a Point to a Vector

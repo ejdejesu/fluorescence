@@ -1,0 +1,38 @@
+{
+    "scene_name": "Cornell Box True",
+    "camera_name": "main",
+    "objects": [
+        {
+            "object_name": "left_box",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "right_box",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "cbt_light",
+            "material_name": "white_light_fifteen"
+        },
+        {
+            "object_name": "top_rectangle",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "bottom_rectangle",
+            "material_name": "white_diffuse"
+        },
+        {
+            "object_name": "left_rectangle",
+            "material_name": "red_diffuse"
+        },
+        {
+            "object_name": "right_rectangle",
+            "material_name": "green_diffuse"
+        },
+        {
+            "object_name": "far_rectangle",
+            "material_name": "white_diffuse"
+        }
+    ]
+}

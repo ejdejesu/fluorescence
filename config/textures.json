@@ -33,6 +33,28 @@
         }
     },
     {
+        "name": "color_vantablack",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.00035,
+                "green": 0.00035,
+                "blue": 0.00035
+            }
+        }
+    },
+    {
+        "name": "color_pure_black",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.0,
+                "green": 0.0,
+                "blue": 0.0
+            }
+        }
+    },
+    {
         "name": "color_grey",
         "type": "Color",
         "data": {
@@ -161,6 +183,17 @@
                 "red": 5.0,
                 "green": 5.0,
                 "blue": 5.0
+            }
+        }
+    },
+    {
+        "name": "color_white_fifteen",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 15.0,
+                "green": 15.0,
+                "blue": 15.0
             }
         }
     },

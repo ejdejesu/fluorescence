@@ -16,6 +16,9 @@ type Vector struct {
 // VectorZero references the zero vector
 var VectorZero = Vector{}
 
+// VectorMax references the maximum representable float64 vector
+var VectorMax = Vector{math.MaxFloat64, math.MaxFloat64, math.MaxFloat64}
+
 // VectorUp references the up vector (positive Y) with the standard cartesian axes as an orthogonal system
 var VectorUp = Vector{0.0, 1.0, 0.0}
 

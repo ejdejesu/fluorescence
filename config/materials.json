@@ -25,6 +25,18 @@
         "data": {}
     },
     {
+        "name": "vantablack_diffuse",
+        "type": "Lambertian",
+        "reflectance_texture_name": "color_vantablack",
+        "data": {}
+    },
+    {
+        "name": "pure_black_diffuse",
+        "type": "Lambertian",
+        "reflectance_texture_name": "color_pure_black",
+        "data": {}
+    },
+    {
         "name": "red_diffuse",
         "type": "Lambertian",
         "reflectance_texture_name": "color_red_real",
@@ -175,9 +187,57 @@
         "data": {}
     },
     {
+        "name": "white_light_fifteen",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_white_fifteen",
+        "data": {}
+    },
+    {
         "name": "white_light_fifty",
         "type": "Lambertian",
         "emittance_texture_name": "color_white_fifty",
+        "data": {}
+    },
+    {
+        "name": "white_light_half_r",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_white_half",
+        "reflectance_texture_name": "color_white_real",
+        "data": {}
+    },
+    {
+        "name": "white_light_r",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_white",
+        "reflectance_texture_name": "color_white_real",
+        "data": {}
+    },
+    {
+        "name": "white_light_double_r",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_white_double",
+        "reflectance_texture_name": "color_white_real",
+        "data": {}
+    },
+    {
+        "name": "white_light_five_r",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_white_five",
+        "reflectance_texture_name": "color_white_real",
+        "data": {}
+    },
+    {
+        "name": "white_light_fifteen_r",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_white_fifteen",
+        "reflectance_texture_name": "color_white_real",
+        "data": {}
+    },
+    {
+        "name": "white_light_fifty_r",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_white_fifty",
+        "reflectance_texture_name": "color_white_real",
         "data": {}
     },
     {

@@ -67,9 +67,10 @@ func tracePixel(p *Parameters, x, y int, rng *rand.Rand) shading.Color {
 		tempColor := traceRay(p, ray, rng, 0)
 		pixelColor = pixelColor.Add(tempColor)
 	}
-	// return pixelColor.DivScalar(float64(p.SampleCount)).Clamp(0, 1).Pow(1.0 / p.GammaCorrection)
-	// return pixelColor.DivScalar(float64(p.SampleCount)).Scale().Pow(1.0 / p.GammaCorrection)
-	return pixelColor.DivScalar(float64(p.SampleCount)).ScaleDown().Pow(1.0 / p.GammaCorrection)
+	if p.UseScalingTruncation {
+		return pixelColor.DivScalar(float64(p.SampleCount)).ScaleDown().Pow(1.0 / p.GammaCorrection)
+	}
+	return pixelColor.DivScalar(float64(p.SampleCount)).Clamp(0, 1).Pow(1.0 / p.GammaCorrection)
 
 }
 

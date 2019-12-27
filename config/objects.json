@@ -476,6 +476,24 @@
         }
     },
     {
+        "name": "cbt_light",
+        "type": "Rectangle",
+        "data": {
+            "a": {
+                "x": 4.0,
+                "y": 9.9999,
+                "z": -4.0
+            },
+            "b": {
+                "x": 6.0,
+                "y": 9.9999,
+                "z": -6.0
+            },
+            "is_culled": true,
+            "has_negative_normal": true
+        }
+    },
+    {
         "name": "light_center_rectangle_quarter",
         "type": "Rectangle",
         "data": {
@@ -880,6 +898,103 @@
             },
             "radius": 2.0,
             "has_inverted_normals": true
+        }
+    },
+    {
+        "name": "left_box",
+        "type": "Translation",
+        "data": {
+            "displacement": {
+                "x": 3.4,
+                "y": 0.0001,
+                "z": -7.0
+            },
+            "type": "RotationY",
+            "data": {
+                "angle": 15.0,
+                "type": "Box",
+                "data": {
+                    "a": {
+                        "x": -1.5,
+                        "y": 0.0,
+                        "z": 1.5
+                    },
+                    "b": {
+                        "x": 1.5,
+                        "y": 6.0,
+                        "z": -1.5
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "right_box",
+        "type": "Translation",
+        "data": {
+            "displacement": {
+                "x": 5.0,
+                "y": 0.0001,
+                "z": -2.0
+            },
+            "type": "RotationY",
+            "data": {
+                "angle": 45.0,
+                "type": "RotationX",
+                "data": {
+                    "angle": 45.0,
+                    "type": "RotationY",
+                    "data": {
+                        "angle": 45.0,
+                        "type": "Box",
+                        "data": {
+                            "a": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "b": {
+                                "x": 2.0,
+                                "y": 2.0,
+                                "z": -2.0
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "right_box_quaternion",
+        "type": "Translation",
+        "data": {
+            "displacement": {
+                "x": 6.5,
+                "y": 1.5001,
+                "z": -3.0
+            },
+            "type": "Quaternion",
+            "data": {
+                "axis_angles": [
+                    45.0,
+                    0.0,
+                    45.0
+                ],
+                "order": "XYZ",
+                "type": "Box",
+                "data": {
+                    "a": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "b": {
+                        "x": 1.5,
+                        "y": 1.5,
+                        "z": -1.5
+                    }
+                }
+            }
         }
     }
 ]

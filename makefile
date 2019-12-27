@@ -16,7 +16,7 @@ OUTPUT_DIR=./output/
 ## Actions ##
 all: clean install run
 
-restart: clean clean-output install run
+restart: flush all
 
 run:
 	# execute binary

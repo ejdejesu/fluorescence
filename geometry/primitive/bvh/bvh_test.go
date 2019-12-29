@@ -44,12 +44,12 @@ func ithTriangleOfNBVHTest(i int, n int, shouldHit bool, t *testing.T) {
 	var r geometry.Ray
 	if shouldHit {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.1 + float64(i-1),
 				Y: 0.1,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -58,12 +58,12 @@ func ithTriangleOfNBVHTest(i int, n int, shouldHit bool, t *testing.T) {
 
 	} else {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.9,
 				Y: 0.9,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -83,12 +83,12 @@ func ithTriangleOfNBVHBenchmark(i int, n int, shouldHit bool, b *testing.B) {
 	var r geometry.Ray
 	if shouldHit {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.1 + float64(i-1),
 				Y: 0.1,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -97,12 +97,12 @@ func ithTriangleOfNBVHBenchmark(i int, n int, shouldHit bool, b *testing.B) {
 
 	} else {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.9,
 				Y: 0.9,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -122,12 +122,12 @@ func ithSphereOfNBVHTest(i int, n int, shouldHit bool, t *testing.T) {
 	var r geometry.Ray
 	if shouldHit {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.0 + float64(i-1),
 				Y: 0.0,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -136,12 +136,12 @@ func ithSphereOfNBVHTest(i int, n int, shouldHit bool, t *testing.T) {
 
 	} else {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.0,
 				Y: 1.0,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -161,12 +161,12 @@ func ithSphereOfNBVHBenchmark(i int, n int, shouldHit bool, b *testing.B) {
 	var r geometry.Ray
 	if shouldHit {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.0 + float64(i-1),
 				Y: 0.0,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -175,12 +175,12 @@ func ithSphereOfNBVHBenchmark(i int, n int, shouldHit bool, b *testing.B) {
 
 	} else {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.0,
 				Y: 1.0,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -200,12 +200,12 @@ func ithRectangleOfNBVHTest(i int, n int, shouldHit bool, t *testing.T) {
 	var r geometry.Ray
 	if shouldHit {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.5 + float64(i-1),
 				Y: 0.5,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -214,12 +214,12 @@ func ithRectangleOfNBVHTest(i int, n int, shouldHit bool, t *testing.T) {
 
 	} else {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.5,
 				Y: 1.5,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -239,12 +239,12 @@ func ithRectangleOfNBVHBenchmark(i int, n int, shouldHit bool, b *testing.B) {
 	var r geometry.Ray
 	if shouldHit {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.5 + float64(i-1),
 				Y: 0.5,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -253,12 +253,12 @@ func ithRectangleOfNBVHBenchmark(i int, n int, shouldHit bool, b *testing.B) {
 
 	} else {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.5,
 				Y: 1.5,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,

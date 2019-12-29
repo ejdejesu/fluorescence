@@ -8,14 +8,16 @@ import (
 	"fluorescence/shading/material"
 	"fmt"
 	"math"
+
+	"github.com/go-gl/mathgl/mgl64"
 )
 
 // UncappedCylinder hi
 type UncappedCylinder struct {
-	A                  geometry.Point `json:"a"`
-	B                  geometry.Point `json:"b"`
-	Radius             float64        `json:"radius"`
-	HasInvertedNormals bool           `json:"has_inverted_normals"`
+	A                  mgl64.Vec3 `json:"a"`
+	B                  mgl64.Vec3 `json:"b"`
+	Radius             float64    `json:"radius"`
+	HasInvertedNormals bool       `json:"has_inverted_normals"`
 	ray                geometry.Ray
 	minT, maxT         float64
 	mat                material.Material
@@ -23,8 +25,8 @@ type UncappedCylinder struct {
 
 // Data holds information needed to contruct a uncappedCylinder
 // type Data struct {
-// 	A                  geometry.Point `json:"a"`
-// 	B                  geometry.Point `json:"b"`
+// 	A                 mgl64.Vec3 `json:"a"`
+// 	B                 mgl64.Vec3 `json:"b"`
 // 	Radius             float64        `json:"radius"`
 // 	HasInvertedNormals bool           `json:"has_inverted_normals"`
 // }
@@ -34,7 +36,7 @@ func (uc *UncappedCylinder) Setup() (*UncappedCylinder, error) {
 	// if ucd.A == nil || ucd.B == nil {
 	// 	return nil, fmt.Errorf("uncappedCylinder ray is nil")
 	// }
-	if uc.A.To(uc.B).Magnitude() == 0 {
+	if uc.B.Sub(uc.A).Len() == 0 {
 		return nil, fmt.Errorf("uncappedCylinder length is zero vector")
 	}
 	if uc.Radius <= 0.0 {
@@ -42,7 +44,7 @@ func (uc *UncappedCylinder) Setup() (*UncappedCylinder, error) {
 	}
 	uc.ray = geometry.Ray{
 		Origin:    uc.A,
-		Direction: uc.A.To(uc.B).Unit(),
+		Direction: uc.B.Sub(uc.A).Normalize(),
 	}
 	uc.minT = 0.0
 	uc.maxT = uc.ray.ClosestTime(uc.B)
@@ -51,9 +53,9 @@ func (uc *UncappedCylinder) Setup() (*UncappedCylinder, error) {
 
 // Intersection computer the intersection of this object and a given ray if it exists
 func (uc *UncappedCylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
-	deltaP := uc.ray.Origin.To(ray.Origin)
-	preA := ray.Direction.Sub(uc.ray.Direction.MultScalar(ray.Direction.Dot(uc.ray.Direction)))
-	preB := deltaP.Sub(uc.ray.Direction.MultScalar(deltaP.Dot(uc.ray.Direction)))
+	deltaP := ray.Origin.Sub(uc.ray.Origin)
+	preA := ray.Direction.Sub(uc.ray.Direction.Mul(ray.Direction.Dot(uc.ray.Direction)))
+	preB := deltaP.Sub(uc.ray.Direction.Mul(deltaP.Dot(uc.ray.Direction)))
 
 	// terms of the quadratic equation we are solving
 	a := preA.Dot(preA)
@@ -101,7 +103,7 @@ func (uc *UncappedCylinder) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	}).Setup()
 	diskB, _ := (&disk.Disk{
 		Center: uc.ray.PointAt(uc.maxT),
-		Normal: uc.ray.PointAt(uc.maxT).To(uc.ray.Origin).Unit(),
+		Normal: uc.ray.Origin.Sub(uc.ray.PointAt(uc.maxT)).Normalize(),
 		Radius: uc.Radius,
 	}).Setup()
 	aabbA, aOk := diskA.BoundingBox(0, 0)
@@ -136,11 +138,11 @@ func (uc *UncappedCylinder) Copy() primitive.Primitive {
 	return &newUC
 }
 
-func (uc *UncappedCylinder) normalAt(p geometry.Point) geometry.Vector {
+func (uc *UncappedCylinder) normalAt(p mgl64.Vec3) mgl64.Vec3 {
 	if uc.HasInvertedNormals {
-		return uc.ray.ClosestPoint(p).To(p).Unit().Negate()
+		return p.Sub(uc.ray.ClosestPoint(p)).Normalize().Mul(-1.0)
 	}
-	return uc.ray.ClosestPoint(p).To(p).Unit()
+	return p.Sub(uc.ray.ClosestPoint(p)).Normalize()
 }
 
 // Unit creates a unit uncappedCylinder.
@@ -150,15 +152,15 @@ func (uc *UncappedCylinder) normalAt(p geometry.Point) geometry.Vector {
 // and the Radius is 1
 func Unit(xOffset, yOffset, zOffset float64) *UncappedCylinder {
 	uc, _ := (&UncappedCylinder{
-		A: geometry.Point{
-			X: 0.0 + xOffset,
-			Y: 0.0 + yOffset,
-			Z: 0.0 + zOffset,
+		A: mgl64.Vec3{
+			0.0 + xOffset,
+			0.0 + yOffset,
+			0.0 + zOffset,
 		},
-		B: geometry.Point{
-			X: 0.0 + xOffset,
-			Y: 1.0 + yOffset,
-			Z: 0.0 + zOffset,
+		B: mgl64.Vec3{
+			0.0 + xOffset,
+			1.0 + yOffset,
+			0.0 + zOffset,
 		},
 		Radius: 1.0,
 	}).Setup()

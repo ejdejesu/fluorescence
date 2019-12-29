@@ -10,12 +10,12 @@ var planeHit bool
 func TestPlaneIntersectionHit(t *testing.T) {
 	plane := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.5,
 			Y: 0.5,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -30,12 +30,12 @@ func TestPlaneIntersectionHit(t *testing.T) {
 func BenchmarkPlaneIntersectionHit(b *testing.B) {
 	plane := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.5,
 			Y: 0.5,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -52,12 +52,12 @@ func BenchmarkPlaneIntersectionHit(b *testing.B) {
 func TestPlaneIntersectionMiss(t *testing.T) {
 	plane := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.5,
 			Y: 0.5,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 1.0,
 			Y: 0.0,
 			Z: 0.0,
@@ -72,12 +72,12 @@ func TestPlaneIntersectionMiss(t *testing.T) {
 func BenchmarkPlaneIntersectionMiss(b *testing.B) {
 	plane := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.5,
 			Y: 0.5,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 1.0,
 			Y: 0.0,
 			Z: 0.0,

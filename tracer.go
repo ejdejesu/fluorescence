@@ -15,8 +15,8 @@ import (
 
 // Tile holds information about a section of pixels on the image
 type Tile struct {
-	Origin geometry.Point  // Top left corner of Tile
-	Span   geometry.Vector // Width and Height of Tile
+	Originmgl64.Vec3  // Top left corner of Tile
+	Span  mgl64.Vec3 // Width and Height of Tile
 }
 
 // TraceImage is the powerhouse function, driving the raycasting algorith by casting rays into the scene
@@ -54,8 +54,8 @@ func traceTile(p *Parameters, rng *rand.Rand, img *image.RGBA64, dc chan<- int, 
 }
 
 // tracePixel gets the color for a pixel
-func tracePixel(p *Parameters, x, y int, rng *rand.Rand) shading.Color {
-	pixelColor := shading.Color{}
+func tracePixel(p *Parameters, x, y int, rng *rand.Rand) mgl64.Vec3 {
+	pixelColor := mgl64.Vec3{}
 	for s := 0; s < p.SampleCount; s++ {
 		// pick a random spot on the pixel to shoot a ray into
 		// this is purely random, NOT stratified
@@ -75,12 +75,12 @@ func tracePixel(p *Parameters, x, y int, rng *rand.Rand) shading.Color {
 }
 
 // traceRay casts in individual ray into the scene
-func traceRay(parameters *Parameters, r geometry.Ray, rng *rand.Rand, depth int) shading.Color {
+func traceRay(parameters *Parameters, r geometry.Ray, rng *rand.Rand, depth int) mgl64.Vec3 {
 
 	// if we've gone too deep...
 	if depth > parameters.MaxBounces {
 		// ...just return BLACK
-		return shading.ColorBlack
+		return mgl64.Vec3Black
 	}
 	// check if we've hit something
 	rayHit, hitSomething := parameters.Scene.Objects.Intersection(r, parameters.TMin, parameters.TMax)
@@ -95,7 +95,7 @@ func traceRay(parameters *Parameters, r geometry.Ray, rng *rand.Rand, depth int)
 
 	// if the surface is BLACK, it's not going to let any incoming light contribute to the outgoing color
 	// so we can safely say no light is reflected and simply return the emittance of the material
-	if mat.Reflectance(rayHit.U, rayHit.V) == shading.ColorBlack {
+	if mat.Reflectance(rayHit.U, rayHit.V) == mgl64.Vec3Black {
 		return mat.Emittance(rayHit.U, rayHit.V)
 	}
 
@@ -103,7 +103,7 @@ func traceRay(parameters *Parameters, r geometry.Ray, rng *rand.Rand, depth int)
 	scatteredRay, wasScattered := rayHit.Material.Scatter(*rayHit, rng)
 	// if no ray could have reflected to us, we just return BLACK
 	if !wasScattered {
-		return shading.ColorBlack
+		return mgl64.Vec3Black
 	}
 	// get the color that came to this point and gave us the outgoing ray
 	incomingColor := traceRay(parameters, scatteredRay, rng, depth+1)
@@ -119,11 +119,11 @@ func getTiles(p *Parameters, i *image.RGBA64) []Tile {
 			width := math.Min(float64(p.TileWidth), float64(p.ImageWidth-x))
 			height := math.Min(float64(p.TileHeight), float64(p.ImageHeight-y))
 			tiles = append(tiles, Tile{
-				Origin: geometry.Point{
+				Origin:mgl64.Vec3{
 					X: float64(x),
 					Y: float64(y),
 				},
-				Span: geometry.Vector{
+				Span:mgl64.Vec3{
 					X: width,
 					Y: height,
 				},

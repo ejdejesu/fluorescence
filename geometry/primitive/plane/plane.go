@@ -6,22 +6,24 @@ import (
 	"fluorescence/geometry/primitive/aabb"
 	"fluorescence/shading/material"
 	"fmt"
+
+	"github.com/go-gl/mathgl/mgl64"
 )
 
 // Plane represents an infinite plane
 type Plane struct {
-	Point    geometry.Point  `json:"point"`
-	Normal   geometry.Vector `json:"normal"`
-	IsCulled bool            `json:"is_culled"`
+	Point    mgl64.Vec3 `json:"point"`
+	Normal   mgl64.Vec3 `json:"normal"`
+	IsCulled bool       `json:"is_culled"`
 	mat      material.Material
 }
 
 // Setup sets up this Plane's internal fields
 func (p *Plane) Setup() (*Plane, error) {
-	if p.Normal.Magnitude() == 0.0 {
+	if p.Normal.Len() == 0.0 {
 		return nil, fmt.Errorf("Plane normal is zero vector")
 	}
-	p.Normal = p.Normal.Unit()
+	p.Normal = p.Normal.Normalize()
 	return p, nil
 }
 
@@ -33,7 +35,7 @@ func (p *Plane) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.Ra
 	} else if denominator < 1e-7 && denominator > -1e-7 {
 		return nil, false
 	}
-	PlaneVector := ray.Origin.To(p.Point)
+	PlaneVector := p.Point.Sub(ray.Origin)
 	t := PlaneVector.Dot(p.Normal) / denominator
 
 	if t < tMin || t > tMax {
@@ -77,15 +79,15 @@ func (p *Plane) Copy() primitive.Primitive {
 // Unit returns a unit plane
 func Unit(xOffset, yOffset, zOffset float64) *Plane {
 	p, _ := (&Plane{
-		Point: geometry.Point{
-			X: 0.0 + xOffset,
-			Y: 0.0 + yOffset,
-			Z: 0.0 + zOffset,
+		Point: mgl64.Vec3{
+			0.0 + xOffset,
+			0.0 + yOffset,
+			0.0 + zOffset,
 		},
-		Normal: geometry.Vector{
-			X: 0.0 + xOffset,
-			Y: 0.0 + yOffset,
-			Z: -1.0 + zOffset,
+		Normal: mgl64.Vec3{
+			0.0 + xOffset,
+			0.0 + yOffset,
+			-1.0 + zOffset,
 		},
 	}).Setup()
 	return p

@@ -40,12 +40,12 @@ func ithTriangleOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T)
 	var r geometry.Ray
 	if shouldHit {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.1 + float64(i-1),
 				Y: 0.1,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -54,12 +54,12 @@ func ithTriangleOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T)
 
 	} else {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.9,
 				Y: 0.9,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -79,12 +79,12 @@ func ithTriangleOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *testi
 	var r geometry.Ray
 	if shouldHit {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.1 + float64(i-1),
 				Y: 0.1,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -93,12 +93,12 @@ func ithTriangleOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *testi
 
 	} else {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.9,
 				Y: 0.9,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -118,12 +118,12 @@ func ithSphereOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T) {
 	var r geometry.Ray
 	if shouldHit {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.0 + float64(i-1),
 				Y: 0.0,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -132,12 +132,12 @@ func ithSphereOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T) {
 
 	} else {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.0,
 				Y: 1.0,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -157,12 +157,12 @@ func ithSphereOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *testing
 	var r geometry.Ray
 	if shouldHit {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.0 + float64(i-1),
 				Y: 0.0,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -171,12 +171,12 @@ func ithSphereOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *testing
 
 	} else {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.0,
 				Y: 1.0,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -196,12 +196,12 @@ func ithRectangleOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T
 	var r geometry.Ray
 	if shouldHit {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.5 + float64(i-1),
 				Y: 0.5,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -210,12 +210,12 @@ func ithRectangleOfNPrimitiveListTest(i int, n int, shouldHit bool, t *testing.T
 
 	} else {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.5,
 				Y: 1.5,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -235,12 +235,12 @@ func ithRectangleOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *test
 	var r geometry.Ray
 	if shouldHit {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.5 + float64(i-1),
 				Y: 0.5,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,
@@ -249,12 +249,12 @@ func ithRectangleOfNPrimitiveListBenchmark(i int, n int, shouldHit bool, b *test
 
 	} else {
 		r = geometry.Ray{
-			Origin: geometry.Point{
+			Origin:mgl64.Vec3{
 				X: 0.5,
 				Y: 1.5,
 				Z: 1.0,
 			},
-			Direction: geometry.Vector{
+			Direction:mgl64.Vec3{
 				X: 0.0,
 				Y: 0.0,
 				Z: -1.0,

@@ -8,14 +8,16 @@ import (
 	"fluorescence/geometry/primitive/primitivelist"
 	"fluorescence/geometry/primitive/uncappedcylinder"
 	"fluorescence/shading/material"
+
+	"github.com/go-gl/mathgl/mgl64"
 )
 
 // HollowCylinder represents a hollow cylinder geometry object
 type HollowCylinder struct {
-	A           geometry.Point `json:"a"`
-	B           geometry.Point `json:"b"`
-	InnerRadius float64        `json:"inner_radius"`
-	OuterRadius float64        `json:"outer_radius"`
+	A           mgl64.Vec3 `json:"a"`
+	B           mgl64.Vec3 `json:"b"`
+	InnerRadius float64    `json:"inner_radius"`
+	OuterRadius float64    `json:"outer_radius"`
 	list        *primitivelist.PrimitiveList
 	box         *aabb.AABB
 }
@@ -114,12 +116,12 @@ func (hc *HollowCylinder) Copy() primitive.Primitive {
 // Unit return a unit hollow cylinder
 func Unit(xOffset, yOffset, zOffset float64) *HollowCylinder {
 	hc, _ := (&HollowCylinder{
-		A: geometry.Point{
+		A: mgl64.Vec3{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		B: geometry.Point{
+		B: mgl64.Vec3{
 			X: 0.0 + xOffset,
 			Y: 1.0 + yOffset,
 			Z: 0.0 + zOffset,

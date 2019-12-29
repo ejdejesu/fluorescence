@@ -9,12 +9,12 @@ var aabbHit bool
 
 func basicAABB(xOffset, yOffset, zOffset float64) *AABB {
 	return &AABB{
-		A: geometry.Point{
+		A:mgl64.Vec3{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		B: geometry.Point{
+		B:mgl64.Vec3{
 			X: 1.0 + xOffset,
 			Y: 1.0 + yOffset,
 			Z: 1.0 + zOffset,
@@ -25,12 +25,12 @@ func basicAABB(xOffset, yOffset, zOffset float64) *AABB {
 func TestAABBIntersectionXAxisHit(t *testing.T) {
 	aabb := basicAABB(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: -1.0,
 			Y: 0.5,
 			Z: 0.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 1.0,
 			Y: 0.0,
 			Z: 0.0,
@@ -45,12 +45,12 @@ func TestAABBIntersectionXAxisHit(t *testing.T) {
 func BenchmarkAABBIntersectionXAxisHit(b *testing.B) {
 	aabb := basicAABB(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: -1.0,
 			Y: 0.5,
 			Z: 0.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 1.0,
 			Y: 0.0,
 			Z: 0.0,
@@ -67,12 +67,12 @@ func BenchmarkAABBIntersectionXAxisHit(b *testing.B) {
 func TestAABBIntersectionXAxisMiss(t *testing.T) {
 	aabb := basicAABB(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: -1.0,
 			Y: 1.5,
 			Z: 0.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 1.0,
 			Y: 0.0,
 			Z: 0.0,
@@ -87,12 +87,12 @@ func TestAABBIntersectionXAxisMiss(t *testing.T) {
 func BenchmarkAABBIntersectionXAxisMiss(b *testing.B) {
 	aabb := basicAABB(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: -1.0,
 			Y: 1.5,
 			Z: 0.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 1.0,
 			Y: 0.0,
 			Z: 0.0,
@@ -109,12 +109,12 @@ func BenchmarkAABBIntersectionXAxisMiss(b *testing.B) {
 func TestAABBIntersectionYAxisHit(t *testing.T) {
 	aabb := basicAABB(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.5,
 			Y: -1.0,
 			Z: 0.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 1.0,
 			Z: 0.0,
@@ -129,12 +129,12 @@ func TestAABBIntersectionYAxisHit(t *testing.T) {
 func BenchmarkAABBIntersectionYAxisHit(b *testing.B) {
 	aabb := basicAABB(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.5,
 			Y: -1.0,
 			Z: 0.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 1.0,
 			Z: 0.0,
@@ -151,12 +151,12 @@ func BenchmarkAABBIntersectionYAxisHit(b *testing.B) {
 func TestAABBIntersectionYAxisMiss(t *testing.T) {
 	aabb := basicAABB(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.5,
 			Y: -1.0,
 			Z: 1.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 1.0,
 			Z: 0.0,
@@ -171,12 +171,12 @@ func TestAABBIntersectionYAxisMiss(t *testing.T) {
 func BenchmarkAABBIntersectionYAxisMiss(b *testing.B) {
 	aabb := basicAABB(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.5,
 			Y: -1.0,
 			Z: 1.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 1.0,
 			Z: 0.0,
@@ -193,12 +193,12 @@ func BenchmarkAABBIntersectionYAxisMiss(b *testing.B) {
 func TestAABBIntersectionZAxisHit(t *testing.T) {
 	aabb := basicAABB(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.5,
 			Y: 0.5,
 			Z: -1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: 1.0,
@@ -213,12 +213,12 @@ func TestAABBIntersectionZAxisHit(t *testing.T) {
 func BenchmarkAABBIntersectionZAxisHit(b *testing.B) {
 	aabb := basicAABB(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.5,
 			Y: 0.5,
 			Z: -1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: 1.0,
@@ -235,12 +235,12 @@ func BenchmarkAABBIntersectionZAxisHit(b *testing.B) {
 func TestAABBIntersectionZAxisMiss(t *testing.T) {
 	aabb := basicAABB(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 1.5,
 			Y: 0.5,
 			Z: -1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: 1.0,
@@ -255,12 +255,12 @@ func TestAABBIntersectionZAxisMiss(t *testing.T) {
 func BenchmarkAABBIntersectionZAxisMiss(b *testing.B) {
 	aabb := basicAABB(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 1.5,
 			Y: 0.5,
 			Z: -1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: 1.0,

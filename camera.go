@@ -9,9 +9,9 @@ import (
 // A Camera holds information about the scene's camera
 // and facilitates the casting of Rays into the scene
 type Camera struct {
-	EyeLocation    geometry.Point  `json:"eye_location"`
-	TargetLocation geometry.Point  `json:"target_location"`
-	UpVector       geometry.Vector `json:"up_vector"`
+	EyeLocation   mgl64.Vec3  `json:"eye_location"`
+	TargetLocationmgl64.Vec3  `json:"target_location"`
+	UpVector      mgl64.Vec3 `json:"up_vector"`
 	VerticalFOV    float64         `json:"vertical_fov"`
 	AspectRatio    float64         `json:"aspect_ratio"`
 	Aperture       float64         `json:"aperture"`
@@ -22,13 +22,13 @@ type Camera struct {
 	halfWidth  float64
 	halfHeight float64
 
-	w geometry.Vector
-	u geometry.Vector
-	v geometry.Vector
+	wmgl64.Vec3
+	umgl64.Vec3
+	vmgl64.Vec3
 
-	lowerLeftCorner geometry.Point
-	horizonal       geometry.Vector
-	verical         geometry.Vector
+	lowerLeftCornermgl64.Vec3
+	horizonal      mgl64.Vec3
+	verical        mgl64.Vec3
 }
 
 // Setup is called after allocating the Camera struct and filling the exported fields
@@ -60,7 +60,7 @@ func (c *Camera) Setup(p *Parameters) error {
 // GetRay returns a Ray from the eye location to a point on the view place u% across and v% up
 func (c *Camera) GetRay(u float64, v float64, rng *rand.Rand) geometry.Ray {
 	randomOnLens := geometry.RandomOnUnitDisk(rng).MultScalar(c.lensRadius)
-	offset := c.u.MultScalar(randomOnLens.X).Add(c.v.MultScalar(randomOnLens.Y))
+	offset := c.u.MultScalar(randomOnLens.X()).Add(c.v.MultScalar(randomOnLens.Y))
 	return geometry.Ray{
 		Origin: c.EyeLocation.AddVector(offset),
 		Direction: c.lowerLeftCorner.AddVector(

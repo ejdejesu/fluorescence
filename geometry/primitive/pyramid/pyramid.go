@@ -13,8 +13,8 @@ import (
 
 // Pyramid represents a pyramid geometric shape
 type Pyramid struct {
-	A                  geometry.Point `json:"a"`
-	B                  geometry.Point `json:"b"`
+	A                 mgl64.Vec3 `json:"a"`
+	B                 mgl64.Vec3 `json:"b"`
 	Height             float64        `json:"height"`
 	HasInvertedNormals bool           `json:"has_inverted_normals"`
 	list               *primitivelist.PrimitiveList
@@ -26,21 +26,21 @@ func (p *Pyramid) Setup() (*Pyramid, error) {
 	if p.Height <= 0 {
 		return nil, fmt.Errorf("pyramid height is 0 or negative")
 	}
-	if p.A.Y != p.B.Y {
+	if p.A.Y()!= p.B.Y(){
 		return nil, fmt.Errorf("pyramid is not directed upwards")
 	}
 
 	c1 := geometry.MinComponents(p.A, p.B)
 	c3 := geometry.MaxComponents(p.A, p.B)
-	c2 := geometry.Point{
-		X: c1.X,
-		Y: c1.Y,
-		Z: c3.Z,
+	c2 :=mgl64.Vec3{
+		X: c1.X()
+		Y: c1.Y()
+		Z: c3.Z(),
 	}
-	c4 := geometry.Point{
-		X: c3.X,
-		Y: c1.Y,
-		Z: c1.Z,
+	c4 :=mgl64.Vec3{
+		X: c3.X()
+		Y: c1.Y()
+		Z: c1.Z(),
 	}
 
 	base, err := (&rectangle.Rectangle{
@@ -145,12 +145,12 @@ func (p *Pyramid) Copy() primitive.Primitive {
 // Unit return a unit pyramid
 func Unit(xOffset, yOffset, zOffset float64) *Pyramid {
 	p, _ := (&Pyramid{
-		A: geometry.Point{
+		A:mgl64.Vec3{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		B: geometry.Point{
+		B:mgl64.Vec3{
 			X: 1.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: 1.0 + zOffset,

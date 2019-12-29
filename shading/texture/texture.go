@@ -1,8 +1,10 @@
 package texture
 
-import "fluorescence/shading"
+import (
+	"github.com/go-gl/mathgl/mgl64"
+)
 
 // Texture defines behaviors of a Texture implementation
 type Texture interface {
-	Value(u, v float64) shading.Color
+	Value(u, v float64) mgl64.Vec3
 }

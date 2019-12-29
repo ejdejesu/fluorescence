@@ -5,13 +5,15 @@ import (
 	"fluorescence/geometry/primitive"
 	"fluorescence/geometry/primitive/aabb"
 	"fluorescence/shading/material"
+
+	"github.com/go-gl/mathgl/mgl64"
 )
 
 // Translation is a primitive with a translation attached
 type Translation struct {
-	Displacement geometry.Vector `json:"displacement"`
-	TypeName     string          `json:"type"`
-	Data         interface{}     `json:"data"`
+	Displacement mgl64.Vec3  `json:"displacement"`
+	TypeName     string      `json:"type"`
+	Data         interface{} `json:"data"`
 	Primitive    primitive.Primitive
 }
 
@@ -24,11 +26,11 @@ func (t *Translation) Setup() (*Translation, error) {
 func (t *Translation) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
 
 	// translate the ray to the object
-	ray.Origin = ray.Origin.SubVector(t.Displacement)
+	ray.Origin = ray.Origin.Sub(t.Displacement)
 
 	rh, ok := t.Primitive.Intersection(ray, tMin, tMax)
 	if ok {
-		rh.Ray.Origin = rh.Ray.Origin.AddVector(t.Displacement)
+		rh.Ray.Origin = rh.Ray.Origin.Add(t.Displacement)
 	}
 	return rh, ok
 }
@@ -38,8 +40,8 @@ func (t *Translation) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	box, ok := t.Primitive.BoundingBox(t0, t1)
 	if ok {
 		box = &aabb.AABB{
-			A: box.A.AddVector(t.Displacement),
-			B: box.B.AddVector(t.Displacement),
+			A: box.A.Add(t.Displacement),
+			B: box.B.Add(t.Displacement),
 		}
 	}
 	return box, ok

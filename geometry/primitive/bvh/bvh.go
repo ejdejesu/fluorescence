@@ -34,9 +34,9 @@ func New(pl *primitivelist.PrimitiveList) (*BVH, error) {
 	firstBox, _ := pl.List[0].BoundingBox(0, 0)
 	lastBox, _ := pl.List[len(pl.List)-1].BoundingBox(0, 0)
 
-	xDif := math.Abs(firstBox.A.X - lastBox.A.X)
-	yDif := math.Abs(firstBox.A.Y - lastBox.A.Y)
-	zDif := math.Abs(firstBox.A.Z - lastBox.A.Z)
+	xDif := math.Abs(firstBox.A.X() - lastBox.A.X())
+	yDif := math.Abs(firstBox.A.Y() - lastBox.A.Y())
+	zDif := math.Abs(firstBox.A.Z() - lastBox.A.Z())
 	if xDif > yDif && xDif > zDif {
 		axisNum = 0
 	} else if yDif > xDif && yDif > zDif {

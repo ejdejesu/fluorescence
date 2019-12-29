@@ -10,12 +10,12 @@ var triHit bool
 func TestTriangleIntersectionHit(t *testing.T) {
 	tri := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.1,
 			Y: 0.1,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -30,12 +30,12 @@ func TestTriangleIntersectionHit(t *testing.T) {
 func BenchmarkTriangleIntersectionHit(b *testing.B) {
 	tri := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.1,
 			Y: 0.1,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -52,12 +52,12 @@ func BenchmarkTriangleIntersectionHit(b *testing.B) {
 func TestTriangleIntersectionMiss(t *testing.T) {
 	tri := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.9,
 			Y: 0.9,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -72,12 +72,12 @@ func TestTriangleIntersectionMiss(t *testing.T) {
 func BenchmarkTriangleIntersectionMiss(b *testing.B) {
 	tri := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.9,
 			Y: 0.9,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,

@@ -1,13 +1,15 @@
 package texture
 
 import (
-	"fluorescence/shading"
+	"fluorescence/geometry"
 	"fmt"
 	"image"
 	"image/jpeg"
 	"image/png"
 	"os"
 	"strings"
+
+	"github.com/go-gl/mathgl/mgl64"
 )
 
 // Image holds information about a texture based on an image
@@ -42,12 +44,12 @@ func (it *Image) Load() error {
 
 // Value returns the color of the image at the given texture coordinates
 // parameters u and v have a valid range [0.0, 1.0)
-func (it *Image) Value(u, v float64) shading.Color {
+func (it *Image) Value(u, v float64) mgl64.Vec3 {
 	// convert to image coordinates
 	x := int(u * float64(it.Image.Bounds().Dx()-1))
 	y := int((1.0 - v) * float64(it.Image.Bounds().Dy()-1))
 	// get the color of the image at that point
 	color := it.Image.At(x, y)
 	// convert to a color, de-gamma, and apply magnitude
-	return shading.MakeColor(color).Pow(it.Gamma).MultScalar(it.Magnitude)
+	return geometry.Pow(geometry.ColorToVec3(color), it.Gamma).Mul(it.Magnitude)
 }

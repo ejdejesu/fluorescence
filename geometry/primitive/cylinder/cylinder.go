@@ -8,13 +8,15 @@ import (
 	"fluorescence/geometry/primitive/primitivelist"
 	"fluorescence/geometry/primitive/uncappedcylinder"
 	"fluorescence/shading/material"
+
+	"github.com/go-gl/mathgl/mgl64"
 )
 
 // Cylinder represents a capped cylinder object
 type Cylinder struct {
-	A      geometry.Point `json:"a"`
-	B      geometry.Point `json:"b"`
-	Radius float64        `json:"radius"`
+	A      mgl64.Vec3 `json:"a"`
+	B      mgl64.Vec3 `json:"b"`
+	Radius float64    `json:"radius"`
 	list   *primitivelist.PrimitiveList
 	box    *aabb.AABB
 }
@@ -35,7 +37,7 @@ func (c *Cylinder) Setup() (*Cylinder, error) {
 	}
 	diskA, err := (&disk.Disk{
 		Center:   c.A,
-		Normal:   c.B.To(c.A).Unit(),
+		Normal:   c.A.Sub(c.B).Normalize(),
 		Radius:   c.Radius,
 		IsCulled: false,
 	}).Setup()
@@ -44,7 +46,7 @@ func (c *Cylinder) Setup() (*Cylinder, error) {
 	}
 	diskB, err := (&disk.Disk{
 		Center:   c.B,
-		Normal:   c.A.To(c.B).Unit(),
+		Normal:   c.B.Sub(c.A).Normalize(),
 		Radius:   c.Radius,
 		IsCulled: false,
 	}).Setup()
@@ -101,15 +103,15 @@ func (c *Cylinder) Copy() primitive.Primitive {
 // Unit returns a unit cylinder
 func Unit(xOffset, yOffset, zOffset float64) *Cylinder {
 	c, _ := (&Cylinder{
-		A: geometry.Point{
-			X: 0.0 + xOffset,
-			Y: 0.0 + yOffset,
-			Z: 0.0 + zOffset,
+		A: mgl64.Vec3{
+			0.0 + xOffset,
+			0.0 + yOffset,
+			0.0 + zOffset,
 		},
-		B: geometry.Point{
-			X: 0.0 + xOffset,
-			Y: 1.0 + yOffset,
-			Z: 0.0 + zOffset,
+		B: mgl64.Vec3{
+			0.0 + xOffset,
+			1.0 + yOffset,
+			0.0 + zOffset,
 		},
 		Radius: 1.0,
 	}).Setup()

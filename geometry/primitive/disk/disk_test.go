@@ -10,12 +10,12 @@ var diskHit bool
 func TestDiskIntersectionHit(t *testing.T) {
 	disk := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -30,12 +30,12 @@ func TestDiskIntersectionHit(t *testing.T) {
 func BenchmarkDiskIntersectionHit(b *testing.B) {
 	disk := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -52,12 +52,12 @@ func BenchmarkDiskIntersectionHit(b *testing.B) {
 func TestDiskIntersectionReverseHit(t *testing.T) {
 	disk := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: 1.0,
@@ -72,12 +72,12 @@ func TestDiskIntersectionReverseHit(t *testing.T) {
 func BenchmarkDiskIntersectionReverseHit(b *testing.B) {
 	disk := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: 1.0,
@@ -94,12 +94,12 @@ func BenchmarkDiskIntersectionReverseHit(b *testing.B) {
 func TestDiskIntersectionMiss(t *testing.T) {
 	disk := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 1.0,
 			Y: 1.0,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -114,12 +114,12 @@ func TestDiskIntersectionMiss(t *testing.T) {
 func BenchmarkDiskIntersectionMiss(b *testing.B) {
 	disk := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 1.0,
 			Y: 1.0,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -136,12 +136,12 @@ func BenchmarkDiskIntersectionMiss(b *testing.B) {
 func TestDiskIntersectionParallelMiss(t *testing.T) {
 	disk := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 1.0,
 			Y: 0.0,
 			Z: 0.0,
@@ -156,12 +156,12 @@ func TestDiskIntersectionParallelMiss(t *testing.T) {
 func BenchmarkDiskIntersectionParallelMiss(b *testing.B) {
 	disk := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 1.0,
 			Y: 0.0,
 			Z: 0.0,

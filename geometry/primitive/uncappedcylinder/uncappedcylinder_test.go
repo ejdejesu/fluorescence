@@ -10,12 +10,12 @@ var ucHit bool
 func TestUncappedCylinderIntersectionHit(t *testing.T) {
 	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.5,
 			Z: 1.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -30,12 +30,12 @@ func TestUncappedCylinderIntersectionHit(t *testing.T) {
 func BenchmarkUncappedCylinderIntersectionHit(b *testing.B) {
 	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.5,
 			Z: 1.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -52,12 +52,12 @@ func BenchmarkUncappedCylinderIntersectionHit(b *testing.B) {
 func TestUncappedCylinderIntersectionSecondHit(t *testing.T) {
 	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.5,
 			Z: 0.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -72,12 +72,12 @@ func TestUncappedCylinderIntersectionSecondHit(t *testing.T) {
 func BenchmarkUncappedCylinderIntersectionSecondHit(b *testing.B) {
 	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.5,
 			Z: 0.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -94,12 +94,12 @@ func BenchmarkUncappedCylinderIntersectionSecondHit(b *testing.B) {
 func TestUncappedCylinderIntersectionSideMiss(t *testing.T) {
 	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 1.5,
 			Y: 0.5,
 			Z: 1.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -114,12 +114,12 @@ func TestUncappedCylinderIntersectionSideMiss(t *testing.T) {
 func BenchmarkUncappedCylinderIntersectionSideMiss(b *testing.B) {
 	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 1.5,
 			Y: 0.5,
 			Z: 1.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -136,12 +136,12 @@ func BenchmarkUncappedCylinderIntersectionSideMiss(b *testing.B) {
 func TestUncappedCylinderIntersectionBehindMiss(t *testing.T) {
 	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.5,
 			Z: -1.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -156,12 +156,12 @@ func TestUncappedCylinderIntersectionBehindMiss(t *testing.T) {
 func BenchmarkUncappedCylinderIntersectionBehindMiss(b *testing.B) {
 	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.5,
 			Z: -1.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -178,12 +178,12 @@ func BenchmarkUncappedCylinderIntersectionBehindMiss(b *testing.B) {
 func TestUncappedCylinderIntersectionTopMiss(t *testing.T) {
 	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 1.5,
 			Z: 1.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -198,12 +198,12 @@ func TestUncappedCylinderIntersectionTopMiss(t *testing.T) {
 func BenchmarkUncappedCylinderIntersectionTopMiss(b *testing.B) {
 	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 1.5,
 			Z: 1.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -220,12 +220,12 @@ func BenchmarkUncappedCylinderIntersectionTopMiss(b *testing.B) {
 func TestUncappedCylinderIntersectionBottomMiss(t *testing.T) {
 	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: -0.5,
 			Z: 1.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -240,12 +240,12 @@ func TestUncappedCylinderIntersectionBottomMiss(t *testing.T) {
 func BenchmarkUncappedCylinderIntersectionBottomMiss(b *testing.B) {
 	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: -0.5,
 			Z: 1.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -262,12 +262,12 @@ func BenchmarkUncappedCylinderIntersectionBottomMiss(b *testing.B) {
 func TestUncappedCylinderIntersectionParallelMiss(t *testing.T) {
 	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.5,
 			Z: 1.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 1.0,
 			Z: 0.0,
@@ -282,12 +282,12 @@ func TestUncappedCylinderIntersectionParallelMiss(t *testing.T) {
 func BenchmarkUncappedCylinderIntersectionParallelMiss(b *testing.B) {
 	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.5,
 			Z: 1.5,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 1.0,
 			Z: 0.0,
@@ -304,12 +304,12 @@ func BenchmarkUncappedCylinderIntersectionParallelMiss(b *testing.B) {
 func TestUncappedCylinderIntersectionInsideParallelMiss(t *testing.T) {
 	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.5,
 			Z: 0.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 1.0,
 			Z: 0.0,
@@ -324,12 +324,12 @@ func TestUncappedCylinderIntersectionInsideParallelMiss(t *testing.T) {
 func BenchmarkUncappedCylinderIntersectionInsideParallelMiss(b *testing.B) {
 	uc := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.5,
 			Z: 0.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 1.0,
 			Z: 0.0,

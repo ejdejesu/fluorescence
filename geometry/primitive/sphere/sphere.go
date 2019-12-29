@@ -7,20 +7,22 @@ import (
 	"fluorescence/shading/material"
 	"fmt"
 	"math"
+
+	"github.com/go-gl/mathgl/mgl64"
 )
 
 // Sphere represents a sphere geometry object
 type Sphere struct {
-	Center             geometry.Point `json:"center"`
-	Radius             float64        `json:"radius"`
-	HasInvertedNormals bool           `json:"has_inverted_normals"`
+	Center             mgl64.Vec3 `json:"center"`
+	Radius             float64    `json:"radius"`
+	HasInvertedNormals bool       `json:"has_inverted_normals"`
 	box                *aabb.AABB
 	mat                material.Material
 }
 
 // Data holds information needed to construct a new sphere
 // type Data struct {
-// 	Center             geometry.Point
+// 	Center            mgl64.Vec3
 // 	Radius             float64
 // 	HasInvertedNormals bool
 // }
@@ -43,7 +45,7 @@ func (s *Sphere) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.R
 	// 	return nil, false
 	// }
 
-	centerToRayOrigin := s.Center.To(ray.Origin)
+	centerToRayOrigin := ray.Origin.Sub(s.Center)
 
 	// terms of the quadratic equation we are solving
 	a := ray.Direction.Dot(ray.Direction)
@@ -59,10 +61,10 @@ func (s *Sphere) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.R
 		// return if within range
 		if t1 >= tMin && t1 <= tMax {
 			hitPoint := ray.PointAt(t1)
-			unitHitPoint := s.Center.To(hitPoint).DivScalar(s.Radius)
+			unitHitPoint := hitPoint.Sub(s.Center).Mul(1.0 / s.Radius)
 
-			phi := math.Atan2(unitHitPoint.Z, unitHitPoint.X)
-			theta := math.Asin(unitHitPoint.Y)
+			phi := math.Atan2(unitHitPoint.Z(), unitHitPoint.X())
+			theta := math.Asin(unitHitPoint.Y())
 
 			u := 1 - (phi+math.Pi)/(2*math.Pi)
 			v := (theta + math.Pi/2) / math.Pi
@@ -80,10 +82,10 @@ func (s *Sphere) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.R
 		t2 := (-b + root) / a
 		if t2 >= tMin && t2 <= tMax {
 			hitPoint := ray.PointAt(t1)
-			unitHitPoint := s.Center.To(hitPoint).DivScalar(s.Radius)
+			unitHitPoint := hitPoint.Sub(s.Center).Mul(1.0 / s.Radius)
 
-			phi := math.Atan2(unitHitPoint.Z, unitHitPoint.X)
-			theta := math.Asin(unitHitPoint.Y)
+			phi := math.Atan2(unitHitPoint.Z(), unitHitPoint.X())
+			theta := math.Asin(unitHitPoint.Y())
 
 			u := 1.0 - (phi+math.Pi)/(2*math.Pi)
 			v := (theta + math.Pi/2) / math.Pi
@@ -105,15 +107,15 @@ func (s *Sphere) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.R
 // BoundingBox returns the AABB of this object
 func (s *Sphere) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return &aabb.AABB{
-		A: s.Center.SubVector(geometry.Vector{
-			X: s.Radius + 1e-7,
-			Y: s.Radius + 1e-7,
-			Z: s.Radius + 1e-7,
+		A: s.Center.Sub(mgl64.Vec3{
+			s.Radius + 1e-7,
+			s.Radius + 1e-7,
+			s.Radius + 1e-7,
 		}),
-		B: s.Center.AddVector(geometry.Vector{
-			X: s.Radius + 1e-7,
-			Y: s.Radius + 1e-7,
-			Z: s.Radius + 1e-7,
+		B: s.Center.Add(mgl64.Vec3{
+			s.Radius + 1e-7,
+			s.Radius + 1e-7,
+			s.Radius + 1e-7,
 		}),
 	}, true
 }
@@ -139,20 +141,20 @@ func (s *Sphere) Copy() primitive.Primitive {
 	return &newS
 }
 
-func (s *Sphere) normalAt(p geometry.Point) geometry.Vector {
+func (s *Sphere) normalAt(p mgl64.Vec3) mgl64.Vec3 {
 	if s.HasInvertedNormals {
-		return p.To(s.Center).Unit()
+		return s.Center.Sub(p).Normalize()
 	}
-	return s.Center.To(p).Unit()
+	return p.Sub(s.Center).Normalize()
 }
 
 // Unit returns a unit sphere
 func Unit(xOffset, yOffset, zOffset float64) *Sphere {
 	s, _ := (&Sphere{
-		Center: geometry.Point{
-			X: 0.0 + xOffset,
-			Y: 0.0 + yOffset,
-			Z: 0.0 + zOffset,
+		Center: mgl64.Vec3{
+			0.0 + xOffset,
+			0.0 + yOffset,
+			0.0 + zOffset,
 		},
 		Radius: 0.5,
 	}).Setup()

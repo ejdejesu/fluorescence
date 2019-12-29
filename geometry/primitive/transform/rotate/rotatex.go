@@ -6,6 +6,8 @@ import (
 	"fluorescence/geometry/primitive/aabb"
 	"fluorescence/shading/material"
 	"math"
+
+	"github.com/go-gl/mathgl/mgl64"
 )
 
 // RotationX is a primitive with a rotations around the y axis attached
@@ -35,17 +37,17 @@ func (rx *RotationX) Intersection(ray geometry.Ray, tMin, tMax float64) (*materi
 
 	rotatedRay := ray
 
-	rotatedRay.Origin.Y = rx.cosTheta*ray.Origin.Y + rx.sinTheta*ray.Origin.Z
-	rotatedRay.Origin.Z = -rx.sinTheta*ray.Origin.Y + rx.cosTheta*ray.Origin.Z
+	rotatedRay.Origin[1] = rx.cosTheta*ray.Origin.Y() + rx.sinTheta*ray.Origin.Z()
+	rotatedRay.Origin[2] = -rx.sinTheta*ray.Origin.Y() + rx.cosTheta*ray.Origin.Z()
 
-	rotatedRay.Direction.Y = rx.cosTheta*ray.Direction.Y + rx.sinTheta*ray.Direction.Z
-	rotatedRay.Direction.Z = -rx.sinTheta*ray.Direction.Y + rx.cosTheta*ray.Direction.Z
+	rotatedRay.Direction[1] = rx.cosTheta*ray.Direction.Y() + rx.sinTheta*ray.Direction.Z()
+	rotatedRay.Direction[2] = -rx.sinTheta*ray.Direction.Y() + rx.cosTheta*ray.Direction.Z()
 
 	rayHit, wasHit := rx.Primitive.Intersection(rotatedRay, tMin, tMax)
 	if wasHit {
 		unrotatedNormal := rayHit.NormalAtHit
-		unrotatedNormal.Y = rx.cosTheta*rayHit.NormalAtHit.Y - rx.sinTheta*rayHit.NormalAtHit.Z
-		unrotatedNormal.Z = rx.sinTheta*rayHit.NormalAtHit.Y + rx.cosTheta*rayHit.NormalAtHit.Z
+		unrotatedNormal[1] = rx.cosTheta*rayHit.NormalAtHit.Y() - rx.sinTheta*rayHit.NormalAtHit.Z()
+		unrotatedNormal[2] = rx.sinTheta*rayHit.NormalAtHit.Y() + rx.cosTheta*rayHit.NormalAtHit.Z()
 		return &material.RayHit{
 			Ray:         ray,
 			NormalAtHit: unrotatedNormal,
@@ -65,22 +67,22 @@ func (rx *RotationX) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	if !ok {
 		return nil, false
 	}
-	minPoint := geometry.PointMax
-	maxPoint := geometry.PointMax.Negate()
+	minPoint := geometry.Vec3Max
+	maxPoint := geometry.Vec3Max.Mul(-1.0)
 	for i := 0.0; i < 2; i++ {
 		for j := 0.0; j < 2; j++ {
 			for k := 0.0; k < 2; k++ {
-				x := i*box.B.X + (1-i)*box.A.X
-				y := j*box.B.Y + (1-j)*box.A.Y
-				z := k*box.B.Z + (1-k)*box.A.Z
+				x := i*box.B.X() + (1-i)*box.A.X()
+				y := j*box.B.Y() + (1-j)*box.A.Y()
+				z := k*box.B.Z() + (1-k)*box.A.Z()
 
 				newY := rx.cosTheta*y - rx.sinTheta*z
 				newZ := rx.sinTheta*y + rx.cosTheta*z
 
-				rotatedCorner := geometry.Point{
-					X: x,
-					Y: newY,
-					Z: newZ,
+				rotatedCorner := mgl64.Vec3{
+					x,
+					newY,
+					newZ,
 				}
 
 				maxPoint = geometry.MaxComponents(maxPoint, rotatedCorner)

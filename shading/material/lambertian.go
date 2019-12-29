@@ -2,9 +2,10 @@ package material
 
 import (
 	"fluorescence/geometry"
-	"fluorescence/shading"
 	"fluorescence/shading/texture"
 	"math/rand"
+
+	"github.com/go-gl/mathgl/mgl64"
 )
 
 // Lambertian represents an approximation to a ideally-diffuse material
@@ -15,12 +16,12 @@ type Lambertian struct {
 }
 
 // Reflectance returns the reflective color at texture coordinates (u, v)
-func (l Lambertian) Reflectance(u, v float64) shading.Color {
+func (l Lambertian) Reflectance(u, v float64) mgl64.Vec3 {
 	return l.ReflectanceTexture.Value(u, v)
 }
 
 // Emittance returns the emissive color at texture coordinates (u, v)
-func (l Lambertian) Emittance(u, v float64) shading.Color {
+func (l Lambertian) Emittance(u, v float64) mgl64.Vec3 {
 	return l.EmittanceTexture.Value(u, v)
 }
 
@@ -33,9 +34,9 @@ func (l Lambertian) IsSpecular() bool {
 // Scatter returns an incoming ray given a RayHit representing the outgoing ray
 func (l Lambertian) Scatter(rayHit RayHit, rng *rand.Rand) (geometry.Ray, bool) {
 	hitPoint := rayHit.Ray.PointAt(rayHit.Time)
-	target := hitPoint.AddVector(rayHit.NormalAtHit).AddVector(geometry.RandomInUnitSphere(rng))
+	target := hitPoint.Add(rayHit.NormalAtHit).Add(geometry.RandomInUnitSphere(rng))
 	return geometry.Ray{
 		Origin:    hitPoint,
-		Direction: hitPoint.To(target),
+		Direction: target.Sub(hitPoint),
 	}, true
 }

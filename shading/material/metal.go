@@ -2,9 +2,10 @@ package material
 
 import (
 	"fluorescence/geometry"
-	"fluorescence/shading"
 	"fluorescence/shading/texture"
 	"math/rand"
+
+	"github.com/go-gl/mathgl/mgl64"
 )
 
 // Metal is an implementation of a Material
@@ -16,12 +17,12 @@ type Metal struct {
 }
 
 // Reflectance returns the reflective color at texture coordinates (u, v)
-func (m Metal) Reflectance(u, v float64) shading.Color {
+func (m Metal) Reflectance(u, v float64) mgl64.Vec3 {
 	return m.ReflectanceTexture.Value(u, v)
 }
 
 // Emittance returns the emissive color at texture coordinates (u, v)
-func (m Metal) Emittance(u, v float64) shading.Color {
+func (m Metal) Emittance(u, v float64) mgl64.Vec3 {
 	return m.EmittanceTexture.Value(u, v)
 }
 
@@ -36,8 +37,8 @@ func (m Metal) Scatter(rayHit RayHit, rng *rand.Rand) (geometry.Ray, bool) {
 	hitPoint := rayHit.Ray.PointAt(rayHit.Time)
 	normal := rayHit.NormalAtHit
 
-	reflectionVector := rayHit.Ray.Direction.Unit().ReflectAround(normal)
-	reflectionVector = reflectionVector.Add(geometry.RandomInUnitSphere(rng).MultScalar(m.Fuzziness))
+	reflectionVector := geometry.ReflectAround(rayHit.Ray.Direction.Normalize(), normal)
+	reflectionVector = reflectionVector.Add(geometry.RandomInUnitSphere(rng).Mul(m.Fuzziness))
 	if reflectionVector.Dot(normal) > 0 {
 		return geometry.Ray{
 			Origin:    hitPoint,

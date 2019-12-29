@@ -43,7 +43,7 @@ type Parameters struct {
 	MaxBounces           int           `json:"max_bounces"`                // amount of reflections to check before giving up
 	UseBVH               bool          `json:"use_bvh"`                    // should the program generate and use a Bounding Volume Hierarchy?
 	BGColorMagnitude     float64       `json:"background_color_magnitude"` // amount to scale bg color by
-	BackgroundColor      shading.Color `json:"background_color"`           // color to return when nothing is intersected
+	BackgroundColor      mgl64.Vec3 `json:"background_color"`           // color to return when nothing is intersected
 	TMin                 float64       `json:"t_min"`                      // minimum ray "time" to count intersection
 	TMax                 float64       `json:"t_max"`                      // maximum ray "time" to count intersection
 	SceneFileName        string        `json:"scene_file_name"`            // file name of scene config file
@@ -195,7 +195,7 @@ func LoadConfigs(
 	// 	for y := 0.5; y < 10.0; y++ {
 	// 		for z := -0.5; z > -10.0; z-- {
 	// 			newSphere, err := sphere.New(&sphere.Data{
-	// 				Center: geometry.Point{
+	// 				Center:mgl64.Vec3{
 	// 					X: x,
 	// 					Y: y,
 	// 					Z: z,

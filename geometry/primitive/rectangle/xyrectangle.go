@@ -6,6 +6,8 @@ import (
 	"fluorescence/geometry/primitive/aabb"
 	"fluorescence/shading/material"
 	"math"
+
+	"github.com/go-gl/mathgl/mgl64"
 )
 
 type xyRectangle struct {
@@ -15,30 +17,30 @@ type xyRectangle struct {
 	y1       float64
 	z        float64
 	isCulled bool
-	normal   geometry.Vector
+	normal   mgl64.Vec3
 	mat      material.Material
 }
 
-func newXYRectangle(a, b geometry.Point, isCulled, hasNegativeNormal bool) *xyRectangle {
-	x0 := math.Min(a.X, b.X)
-	x1 := math.Max(a.X, b.X)
-	y0 := math.Min(a.Y, b.Y)
-	y1 := math.Max(a.Y, b.Y)
+func newXYRectangle(a, b mgl64.Vec3, isCulled, hasNegativeNormal bool) *xyRectangle {
+	x0 := math.Min(a.X(), b.X())
+	x1 := math.Max(a.X(), b.X())
+	y0 := math.Min(a.Y(), b.Y())
+	y1 := math.Max(a.Y(), b.Y())
 
-	z := a.Z
+	z := a.Z()
 
-	var normal geometry.Vector
+	var normal mgl64.Vec3
 	if hasNegativeNormal {
-		normal = geometry.Vector{
-			X: 0.0,
-			Y: 0.0,
-			Z: -1.0,
+		normal = mgl64.Vec3{
+			0.0,
+			0.0,
+			-1.0,
 		}
 	} else {
-		normal = geometry.Vector{
-			X: 0.0,
-			Y: 0.0,
-			Z: 1.0,
+		normal = mgl64.Vec3{
+			0.0,
+			0.0,
+			1.0,
 		}
 	}
 	return &xyRectangle{
@@ -63,18 +65,18 @@ func (r *xyRectangle) Intersection(ray geometry.Ray, tMin, tMax float64) (*mater
 	}
 
 	// Ray is parallel to plane
-	if ray.Direction.Z == 0 {
+	if ray.Direction.Z() == 0 {
 		return nil, false
 	}
 
-	t := (r.z - ray.Origin.Z) / ray.Direction.Z
+	t := (r.z - ray.Origin.Z()) / ray.Direction.Z()
 
 	if t < tMin || t > tMax {
 		return nil, false
 	}
 
-	x := ray.Origin.X + (t * ray.Direction.X)
-	y := ray.Origin.Y + (t * ray.Direction.Y)
+	x := ray.Origin.X() + (t * ray.Direction.X())
+	y := ray.Origin.Y() + (t * ray.Direction.Y())
 
 	// plane intersection not within rectangle
 	if x < r.x0 || x > r.x1 || y < r.y0 || y > r.y1 {
@@ -97,15 +99,15 @@ func (r *xyRectangle) Intersection(ray geometry.Ray, tMin, tMax float64) (*mater
 // BoundingBox return an AABB of this object
 func (r *xyRectangle) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	return &aabb.AABB{
-		A: geometry.Point{
-			X: r.x0 - 1e-7,
-			Y: r.y0 - 1e-7,
-			Z: r.z - 1e-7,
+		A: mgl64.Vec3{
+			r.x0 - 1e-7,
+			r.y0 - 1e-7,
+			r.z - 1e-7,
 		},
-		B: geometry.Point{
-			X: r.x1 + 1e-7,
-			Y: r.y1 + 1e-7,
-			Z: r.z + 1e-7,
+		B: mgl64.Vec3{
+			r.x1 + 1e-7,
+			r.y1 + 1e-7,
+			r.z + 1e-7,
 		},
 	}, true
 }

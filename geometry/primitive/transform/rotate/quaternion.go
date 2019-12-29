@@ -71,33 +71,12 @@ func (q *Quaternion) Intersection(ray geometry.Ray, tMin, tMax float64) (*materi
 
 	rotatedRay := ray
 
-	originMGL := mgl64.Vec3{rotatedRay.Origin.X, rotatedRay.Origin.Y, rotatedRay.Origin.Z}
-	directionMGL := mgl64.Vec3{rotatedRay.Direction.X, rotatedRay.Direction.Y, rotatedRay.Direction.Z}
-
-	rotatedOriginMGL := q.inverse.Rotate(originMGL)
-	rotatedDirectionMGL := q.inverse.Rotate(directionMGL)
-
-	rotatedRay.Origin = geometry.Point{
-		X: rotatedOriginMGL.X(),
-		Y: rotatedOriginMGL.Y(),
-		Z: rotatedOriginMGL.Z(),
-	}
-
-	rotatedRay.Direction = geometry.Vector{
-		X: rotatedDirectionMGL.X(),
-		Y: rotatedDirectionMGL.Y(),
-		Z: rotatedDirectionMGL.Z(),
-	}
+	rotatedRay.Origin = q.inverse.Rotate(ray.Origin)
+	rotatedRay.Direction = q.inverse.Rotate(ray.Direction)
 
 	rayHit, wasHit := q.Primitive.Intersection(rotatedRay, tMin, tMax)
 	if wasHit {
-		rotatedNormalMGL := mgl64.Vec3{rayHit.NormalAtHit.X, rayHit.NormalAtHit.Y, rayHit.NormalAtHit.Z}
-		unrotatedNormalMGL := q.quaternion.Rotate(rotatedNormalMGL)
-		unrotatedNormal := geometry.Vector{
-			X: unrotatedNormalMGL.X(),
-			Y: unrotatedNormalMGL.Y(),
-			Z: unrotatedNormalMGL.Z(),
-		}
+		unrotatedNormal := q.quaternion.Rotate(rayHit.NormalAtHit)
 		return &material.RayHit{
 			Ray:         ray,
 			NormalAtHit: unrotatedNormal,
@@ -117,23 +96,18 @@ func (q *Quaternion) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 	if !ok {
 		return nil, false
 	}
-	minPoint := geometry.PointMax
-	maxPoint := geometry.PointMax.Negate()
+	minPoint := geometry.Vec3Max
+	maxPoint := geometry.Negate(geometry.Vec3Max)
 	for i := 0.0; i < 2; i++ {
 		for j := 0.0; j < 2; j++ {
 			for k := 0.0; k < 2; k++ {
-				x := i*box.B.X + (1-i)*box.A.X
-				y := j*box.B.Y + (1-j)*box.A.Y
-				z := k*box.B.Z + (1-k)*box.A.Z
-
-				unrotatedCornerMGL := mgl64.Vec3{x, y, z}
-				rotatedCornerMGL := q.quaternion.Rotate(unrotatedCornerMGL)
-
-				rotatedCorner := geometry.Point{
-					X: rotatedCornerMGL.X(),
-					Y: rotatedCornerMGL.Y(),
-					Z: rotatedCornerMGL.Z(),
+				unrotatedCorner := mgl64.Vec3{
+					i*box.B.X() + (1-i)*box.A.X(),
+					j*box.B.Y() + (1-j)*box.A.Y(),
+					k*box.B.Z() + (1-k)*box.A.Z(),
 				}
+
+				rotatedCorner := q.quaternion.Rotate(unrotatedCorner)
 
 				maxPoint = geometry.MaxComponents(maxPoint, rotatedCorner)
 				minPoint = geometry.MinComponents(minPoint, rotatedCorner)

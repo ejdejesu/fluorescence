@@ -7,23 +7,25 @@ import (
 	"fluorescence/shading/material"
 	"fmt"
 	"math"
+
+	"github.com/go-gl/mathgl/mgl64"
 )
 
 // HollowDisk represents a hollow disk geometry object
 type HollowDisk struct {
-	Center             geometry.Point  `json:"center"`
-	Normal             geometry.Vector `json:"normal"`
-	InnerRadius        float64         `json:"inner_radius"`
-	OuterRadius        float64         `json:"outer_radius"`
-	IsCulled           bool            `json:"is_culled"`
+	Center             mgl64.Vec3 `json:"center"`
+	Normal             mgl64.Vec3 `json:"normal"`
+	InnerRadius        float64    `json:"inner_radius"`
+	OuterRadius        float64    `json:"outer_radius"`
+	IsCulled           bool       `json:"is_culled"`
 	innerRadiusSquared float64
 	outerRadiusSquared float64
 	mat                material.Material
 }
 
 // type Data struct {
-// 	Center      geometry.Point
-// 	Normal      geometry.Vector
+// 	Center     mgl64.Vec3
+// 	Normal     mgl64.Vec3
 // 	InnerRadius float64
 // 	OuterRadius float64
 // 	IsCulled    bool
@@ -46,7 +48,7 @@ func (hd *HollowDisk) Setup() (*HollowDisk, error) {
 	if hd.OuterRadius <= 0 {
 		return nil, fmt.Errorf("hollow disk outer radius is 0 or negative")
 	}
-	hd.Normal = hd.Normal.Unit()
+	hd.Normal = hd.Normal.Normalize()
 	hd.innerRadiusSquared = hd.InnerRadius * hd.InnerRadius
 	hd.outerRadiusSquared = hd.OuterRadius * hd.OuterRadius
 	return hd, nil
@@ -60,7 +62,7 @@ func (hd *HollowDisk) Intersection(ray geometry.Ray, tMin, tMax float64) (*mater
 	} else if denominator < 1e-7 && denominator > -1e-7 {
 		return nil, false
 	}
-	planeVector := ray.Origin.To(hd.Center)
+	planeVector := hd.Center.Sub(ray.Origin)
 	t := planeVector.Dot(hd.Normal) / denominator
 
 	if t < tMin || t > tMax {
@@ -68,7 +70,7 @@ func (hd *HollowDisk) Intersection(ray geometry.Ray, tMin, tMax float64) (*mater
 	}
 
 	hitPoint := ray.PointAt(t)
-	diskVector := hd.Center.To(hitPoint)
+	diskVector := hitPoint.Sub(hd.Center)
 
 	// // fmt.Println(d.radiusSquared, d.Center)
 	if diskVector.Dot(diskVector) > hd.outerRadiusSquared {
@@ -91,19 +93,19 @@ func (hd *HollowDisk) Intersection(ray geometry.Ray, tMin, tMax float64) (*mater
 
 // BoundingBox returns an AABB of this object
 func (hd *HollowDisk) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
-	eX := hd.OuterRadius * math.Sqrt(1.0-hd.Normal.X*hd.Normal.X)
-	eY := hd.OuterRadius * math.Sqrt(1.0-hd.Normal.Y*hd.Normal.Y)
-	eZ := hd.OuterRadius * math.Sqrt(1.0-hd.Normal.Z*hd.Normal.Z)
+	eX := hd.OuterRadius * math.Sqrt(1.0-hd.Normal.X()*hd.Normal.X())
+	eY := hd.OuterRadius * math.Sqrt(1.0-hd.Normal.Y()*hd.Normal.Y())
+	eZ := hd.OuterRadius * math.Sqrt(1.0-hd.Normal.Z()*hd.Normal.Z())
 	return &aabb.AABB{
-		A: geometry.Point{
-			X: hd.Center.X - eX,
-			Y: hd.Center.Y - eY,
-			Z: hd.Center.Z - eZ,
+		A: mgl64.Vec3{
+			hd.Center.X() - eX,
+			hd.Center.Y() - eY,
+			hd.Center.Z() - eZ,
 		},
-		B: geometry.Point{
-			X: hd.Center.X + eX,
-			Y: hd.Center.Y + eY,
-			Z: hd.Center.Z + eZ,
+		B: mgl64.Vec3{
+			hd.Center.X() + eX,
+			hd.Center.Y() + eY,
+			hd.Center.Z() + eZ,
 		},
 	}, true
 }
@@ -132,15 +134,15 @@ func (hd *HollowDisk) Copy() primitive.Primitive {
 // Unit return a unit hollow disk
 func Unit(xOffset, yOffset, zOffset float64) *HollowDisk {
 	hd, _ := (&HollowDisk{
-		Center: geometry.Point{
-			X: 0.0 + xOffset,
-			Y: 0.0 + yOffset,
-			Z: 0.0 + zOffset,
+		Center: mgl64.Vec3{
+			0.0 + xOffset,
+			0.0 + yOffset,
+			0.0 + zOffset,
 		},
-		Normal: geometry.Vector{
-			X: 0.0 + xOffset,
-			Y: 0.0 + yOffset,
-			Z: -1.0 + zOffset,
+		Normal: mgl64.Vec3{
+			0.0 + xOffset,
+			0.0 + yOffset,
+			-1.0 + zOffset,
 		},
 		InnerRadius: 0.5,
 		OuterRadius: 1.0,

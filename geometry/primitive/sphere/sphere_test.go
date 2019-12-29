@@ -10,12 +10,12 @@ var sphereHit bool
 func TestSphereIntersectionHit(t *testing.T) {
 	sphere := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -30,12 +30,12 @@ func TestSphereIntersectionHit(t *testing.T) {
 func BenchmarkSphereIntersectionHit(b *testing.B) {
 	sphere := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -52,12 +52,12 @@ func BenchmarkSphereIntersectionHit(b *testing.B) {
 func TestSphereIntersectionMiss(t *testing.T) {
 	sphere := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 1.0,
 			Y: 0.0,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -72,12 +72,12 @@ func TestSphereIntersectionMiss(t *testing.T) {
 func BenchmarkSphereIntersectionMiss(b *testing.B) {
 	sphere := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 1.0,
 			Y: 0.0,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,

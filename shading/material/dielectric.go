@@ -2,10 +2,11 @@ package material
 
 import (
 	"fluorescence/geometry"
-	"fluorescence/shading"
 	"fluorescence/shading/texture"
 	"math"
 	"math/rand"
+
+	"github.com/go-gl/mathgl/mgl64"
 )
 
 // Dielectric is an implementation of a Material
@@ -17,12 +18,12 @@ type Dielectric struct {
 }
 
 // Reflectance returns the reflective color at texture coordinates (u, v)
-func (d Dielectric) Reflectance(u, v float64) shading.Color {
+func (d Dielectric) Reflectance(u, v float64) mgl64.Vec3 {
 	return d.ReflectanceTexture.Value(u, v)
 }
 
 // Emittance returns the emissive color at texture coordinates (u, v)
-func (d Dielectric) Emittance(u, v float64) shading.Color {
+func (d Dielectric) Emittance(u, v float64) mgl64.Vec3 {
 	return d.EmittanceTexture.Value(u, v)
 }
 
@@ -36,13 +37,13 @@ func (d Dielectric) IsSpecular() bool {
 func (d Dielectric) Scatter(rayHit RayHit, rng *rand.Rand) (geometry.Ray, bool) {
 	hitPoint := rayHit.Ray.PointAt(rayHit.Time)
 	normal := rayHit.NormalAtHit
-	reflectionVector := rayHit.Ray.Direction.Unit().ReflectAround(normal)
+	reflectionVector := geometry.ReflectAround(rayHit.Ray.Direction.Normalize(), normal)
 
-	var refractiveNormal geometry.Vector
+	var refractiveNormal mgl64.Vec3
 	var ratioOfRefractiveIndices, cosine float64
 
 	if rayHit.Ray.Direction.Dot(normal) > 0 {
-		refractiveNormal = geometry.VectorZero.Sub(normal)
+		refractiveNormal = normal.Mul(-1.0)
 		ratioOfRefractiveIndices = d.RefractiveIndex
 		preCos := rayHit.Ray.Direction.Dot(normal)
 		cosine = math.Sqrt(1.0 - (d.RefractiveIndex*d.RefractiveIndex)*(1.0-(preCos*preCos)))
@@ -52,7 +53,7 @@ func (d Dielectric) Scatter(rayHit RayHit, rng *rand.Rand) (geometry.Ray, bool) 
 		cosine = -(rayHit.Ray.Direction.Dot(normal))
 	}
 
-	refractedVector, ok := rayHit.Ray.Direction.RefractAround(refractiveNormal, ratioOfRefractiveIndices)
+	refractedVector, ok := geometry.RefractAround(rayHit.Ray.Direction, refractiveNormal, ratioOfRefractiveIndices)
 	var reflectionProbability float64
 	reflectionProbability = schlick(cosine, d.RefractiveIndex)
 

@@ -49,19 +49,19 @@ func (a ByZPos) Swap(i, j int) {
 func (a ByXPos) Less(i, j int) bool {
 	box1, _ := a.List[i].BoundingBox(0, 0)
 	box2, _ := a.List[j].BoundingBox(0, 0)
-	return box1.A.X < box2.A.X
+	return box1.A.X() < box2.A.X()
 }
 
 func (a ByYPos) Less(i, j int) bool {
 	box1, _ := a.List[i].BoundingBox(0, 0)
 	box2, _ := a.List[j].BoundingBox(0, 0)
-	return box1.A.Y < box2.A.Y
+	return box1.A.Y() < box2.A.Y()
 }
 
 func (a ByZPos) Less(i, j int) bool {
 	box1, _ := a.List[i].BoundingBox(0, 0)
 	box2, _ := a.List[j].BoundingBox(0, 0)
-	return box1.A.Z < box2.A.Z
+	return box1.A.Z() < box2.A.Z()
 }
 
 // FromElements creates a primitive list from variadic inputs

@@ -7,6 +7,8 @@ import (
 	"fluorescence/shading/material"
 	"fmt"
 	"math"
+
+	"github.com/go-gl/mathgl/mgl64"
 )
 
 // InfiniteCylinder represents an infinitely long cylinder
@@ -31,13 +33,13 @@ func (ic *InfiniteCylinder) Setup() (*InfiniteCylinder, error) {
 	// if ic.Ray.Origin == nil || ic.Ray.Direction == nil {
 	// 	return nil, fmt.Errorf("infinite cylinder ray origin or ray direction is nil")
 	// }
-	if ic.Ray.Direction.Magnitude() == 0 {
+	if ic.Ray.Direction.Len() == 0 {
 		return nil, fmt.Errorf("infinite cylinder ray direction is zero vector")
 	}
 	if ic.Radius <= 0.0 {
 		return nil, fmt.Errorf("infinite cylinder radius is 0 or negative")
 	}
-	ic.Ray.Direction.Unit()
+	ic.Ray.Direction.Normalize()
 	return &InfiniteCylinder{
 		Ray:                ic.Ray,
 		Radius:             ic.Radius,
@@ -47,9 +49,9 @@ func (ic *InfiniteCylinder) Setup() (*InfiniteCylinder, error) {
 
 // Intersection computer the intersection of this object and a given ray if it exists
 func (ic *InfiniteCylinder) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.RayHit, bool) {
-	deltaP := ic.Ray.Origin.To(ray.Origin)
-	preA := ray.Direction.Sub(ic.Ray.Direction.MultScalar(ray.Direction.Dot(ic.Ray.Direction)))
-	preB := deltaP.Sub(ic.Ray.Direction.MultScalar(deltaP.Dot(ic.Ray.Direction)))
+	deltaP := ray.Origin.Sub(ic.Ray.Origin)
+	preA := ray.Direction.Sub(ic.Ray.Direction.Mul(ray.Direction.Dot(ic.Ray.Direction)))
+	preB := deltaP.Sub(ic.Ray.Direction.Mul(deltaP.Dot(ic.Ray.Direction)))
 
 	// terms of the quadratic equation we are solving
 	a := preA.Dot(preA)
@@ -114,26 +116,26 @@ func (ic *InfiniteCylinder) Copy() primitive.Primitive {
 
 // normalAt returns the normal of this object at the specified point
 // the point is assumed to be on the surface of the object
-func (ic *InfiniteCylinder) normalAt(p geometry.Point) geometry.Vector {
+func (ic *InfiniteCylinder) normalAt(p mgl64.Vec3) mgl64.Vec3 {
 	if ic.HasInvertedNormals {
-		return ic.Ray.ClosestPoint(p).To(p).Unit().Negate()
+		return p.Sub(ic.Ray.ClosestPoint(p)).Normalize().Mul(-1.0)
 	}
-	return ic.Ray.ClosestPoint(p).To(p).Unit()
+	return p.Sub(ic.Ray.ClosestPoint(p)).Normalize()
 }
 
 // Unit returns a unit infinite cylinder
 func Unit(xOffset, yOffset, zOffset float64) *InfiniteCylinder {
 	ic, _ := (&InfiniteCylinder{
 		Ray: geometry.Ray{
-			Origin: geometry.Point{
-				X: 0.0 + xOffset,
-				Y: 0.0 + yOffset,
-				Z: 0.0 + zOffset,
+			Origin: mgl64.Vec3{
+				0.0 + xOffset,
+				0.0 + yOffset,
+				0.0 + zOffset,
 			},
-			Direction: geometry.Vector{
-				X: 0.0 + xOffset,
-				Y: 1.0 + yOffset,
-				Z: 0.0 + zOffset,
+			Direction: mgl64.Vec3{
+				0.0 + xOffset,
+				1.0 + yOffset,
+				0.0 + zOffset,
 			},
 		},
 		Radius: 1.0,

@@ -7,14 +7,16 @@ import (
 	"fluorescence/shading/material"
 	"fmt"
 	"math"
+
+	"github.com/go-gl/mathgl/mgl64"
 )
 
 // Disk represent a disk geometric object
 type Disk struct {
-	Center        geometry.Point  `json:"center"`
-	Normal        geometry.Vector `json:"normal"`
-	Radius        float64         `json:"radius"`
-	IsCulled      bool            `json:"is_culled"`
+	Center        mgl64.Vec3 `json:"center"`
+	Normal        mgl64.Vec3 `json:"normal"`
+	Radius        float64    `json:"radius"`
+	IsCulled      bool       `json:"is_culled"`
 	radiusSquared float64
 	mat           material.Material
 }
@@ -42,7 +44,7 @@ func (d *Disk) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.Ray
 	} else if denominator < 1e-7 && denominator > -1e-7 {
 		return nil, false
 	}
-	planeVector := ray.Origin.To(d.Center)
+	planeVector := d.Center.Sub(ray.Origin)
 	t := planeVector.Dot(d.Normal) / denominator
 
 	if t < tMin || t > tMax {
@@ -50,7 +52,7 @@ func (d *Disk) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.Ray
 	}
 
 	hitPoint := ray.PointAt(t)
-	diskVector := d.Center.To(hitPoint)
+	diskVector := hitPoint.Sub(d.Center)
 
 	// // fmt.Println(d.RadiusSquared, d.Center)
 	if diskVector.Dot(diskVector) > d.radiusSquared {
@@ -70,19 +72,19 @@ func (d *Disk) Intersection(ray geometry.Ray, tMin, tMax float64) (*material.Ray
 
 // BoundingBox return an AABB of this disk
 func (d *Disk) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
-	eX := d.Radius * math.Sqrt(1.0-d.Normal.X*d.Normal.X)
-	eY := d.Radius * math.Sqrt(1.0-d.Normal.Y*d.Normal.Y)
-	eZ := d.Radius * math.Sqrt(1.0-d.Normal.Z*d.Normal.Z)
+	eX := d.Radius * math.Sqrt(1.0-d.Normal.X()*d.Normal.X())
+	eY := d.Radius * math.Sqrt(1.0-d.Normal.Y()*d.Normal.Y())
+	eZ := d.Radius * math.Sqrt(1.0-d.Normal.Z()*d.Normal.Z())
 	return &aabb.AABB{
-		A: geometry.Point{
-			X: d.Center.X - eX - 1e-7,
-			Y: d.Center.Y - eY - 1e-7,
-			Z: d.Center.Z - eZ - 1e-7,
+		A: mgl64.Vec3{
+			d.Center.X() - eX - 1e-7,
+			d.Center.Y() - eY - 1e-7,
+			d.Center.Z() - eZ - 1e-7,
 		},
-		B: geometry.Point{
-			X: d.Center.X + eX + 1e-7,
-			Y: d.Center.Y + eY + 1e-7,
-			Z: d.Center.Z + eZ + 1e-7,
+		B: mgl64.Vec3{
+			d.Center.X() + eX + 1e-7,
+			d.Center.Y() + eY + 1e-7,
+			d.Center.Z() + eZ + 1e-7,
 		},
 	}, true
 }
@@ -111,15 +113,15 @@ func (d *Disk) Copy() primitive.Primitive {
 // Unit return a unit disk
 func Unit(xOffset, yOffset, zOffset float64) *Disk {
 	d, _ := (&Disk{
-		Center: geometry.Point{
-			X: 0.0 + xOffset,
-			Y: 0.0 + yOffset,
-			Z: 0.0 + zOffset,
+		Center: mgl64.Vec3{
+			0.0 + xOffset,
+			0.0 + yOffset,
+			0.0 + zOffset,
 		},
-		Normal: geometry.Vector{
-			X: 0.0 + xOffset,
-			Y: 0.0 + yOffset,
-			Z: -1.0 + zOffset,
+		Normal: mgl64.Vec3{
+			0.0 + xOffset,
+			0.0 + yOffset,
+			-1.0 + zOffset,
 		},
 		Radius: 1.0,
 	}).Setup()

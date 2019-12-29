@@ -10,12 +10,12 @@ var rectHit bool
 func TestRectangleIntersectionHit(t *testing.T) {
 	rect := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.5,
 			Y: 0.5,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -30,12 +30,12 @@ func TestRectangleIntersectionHit(t *testing.T) {
 func BenchmarkRectangleIntersectionHit(b *testing.B) {
 	rect := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 0.5,
 			Y: 0.5,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -52,12 +52,12 @@ func BenchmarkRectangleIntersectionHit(b *testing.B) {
 func TestRectangleIntersectionMiss(t *testing.T) {
 	rect := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 1.5,
 			Y: 0.5,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,
@@ -72,12 +72,12 @@ func TestRectangleIntersectionMiss(t *testing.T) {
 func BenchmarkRectangleIntersectionMiss(b *testing.B) {
 	rect := Unit(0.0, 0.0, 0.0)
 	r := geometry.Ray{
-		Origin: geometry.Point{
+		Origin:mgl64.Vec3{
 			X: 1.5,
 			Y: 0.5,
 			Z: 1.0,
 		},
-		Direction: geometry.Vector{
+		Direction:mgl64.Vec3{
 			X: 0.0,
 			Y: 0.0,
 			Z: -1.0,

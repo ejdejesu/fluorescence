@@ -8,13 +8,15 @@ import (
 	"fluorescence/geometry/primitive/rectangle"
 	"fluorescence/shading/material"
 	"fmt"
+
+	"github.com/go-gl/mathgl/mgl64"
 )
 
 // Box represents a box
 type Box struct {
-	A                  geometry.Point `json:"a"`
-	B                  geometry.Point `json:"b"`
-	HasInvertedNormals bool           `json:"has_inverted_normals"`
+	A                  mgl64.Vec3 `json:"a"`
+	B                  mgl64.Vec3 `json:"b"`
+	HasInvertedNormals bool       `json:"has_inverted_normals"`
 	list               *primitivelist.PrimitiveList
 	box                *aabb.AABB
 }
@@ -27,16 +29,16 @@ func (b *Box) Setup() (*Box, error) {
 	c1 := geometry.MinComponents(b.A, b.B)
 	c8 := geometry.MaxComponents(b.A, b.B)
 
-	if c1.X == c8.X || c1.Y == c8.Y || c1.Z == c8.Z {
+	if c1.X() == c8.X() || c1.Y()== c8.Y()|| c1.Z() == c8.Z() {
 		return nil, fmt.Errorf("box resolves to point, line, or plane")
 	}
 
 	rNegX, err := (&rectangle.Rectangle{
 		A: c1,
-		B: geometry.Point{
-			X: c1.X,
-			Y: c8.Y,
-			Z: c8.Z,
+		B: mgl64.Vec3{
+			X: c1.X()
+			Y: c8.Y()
+			Z: c8.Z(),
 		},
 		HasNegativeNormal: !b.HasInvertedNormals,
 	}).Setup()
@@ -45,10 +47,10 @@ func (b *Box) Setup() (*Box, error) {
 	}
 
 	rPosX, err := (&rectangle.Rectangle{
-		A: geometry.Point{
-			X: c8.X,
-			Y: c1.Y,
-			Z: c1.Z,
+		A: mgl64.Vec3{
+			X: c8.X()
+			Y: c1.Y()
+			Z: c1.Z(),
 		},
 		B:                 c8,
 		HasNegativeNormal: b.HasInvertedNormals,
@@ -59,10 +61,10 @@ func (b *Box) Setup() (*Box, error) {
 
 	rNegY, err := (&rectangle.Rectangle{
 		A: c1,
-		B: geometry.Point{
-			X: c8.X,
-			Y: c1.Y,
-			Z: c8.Z,
+		B: mgl64.Vec3{
+			X: c8.X()
+			Y: c1.Y()
+			Z: c8.Z(),
 		},
 		HasNegativeNormal: !b.HasInvertedNormals,
 	}).Setup()
@@ -71,10 +73,10 @@ func (b *Box) Setup() (*Box, error) {
 	}
 
 	rPosY, err := (&rectangle.Rectangle{
-		A: geometry.Point{
-			X: c1.X,
-			Y: c8.Y,
-			Z: c1.Z,
+		A: mgl64.Vec3{
+			X: c1.X()
+			Y: c8.Y()
+			Z: c1.Z(),
 		},
 		B:                 c8,
 		HasNegativeNormal: b.HasInvertedNormals,
@@ -85,10 +87,10 @@ func (b *Box) Setup() (*Box, error) {
 
 	rNegZ, err := (&rectangle.Rectangle{
 		A: c1,
-		B: geometry.Point{
-			X: c8.X,
-			Y: c8.Y,
-			Z: c1.Z,
+		B: mgl64.Vec3{
+			X: c8.X()
+			Y: c8.Y()
+			Z: c1.Z(),
 		},
 		HasNegativeNormal: !b.HasInvertedNormals,
 	}).Setup()
@@ -97,10 +99,10 @@ func (b *Box) Setup() (*Box, error) {
 	}
 
 	rPosZ, err := (&rectangle.Rectangle{
-		A: geometry.Point{
-			X: c1.X,
-			Y: c1.Y,
-			Z: c8.Z,
+		A: mgl64.Vec3{
+			X: c1.X()
+			Y: c1.Y()
+			Z: c8.Z(),
 		},
 		B:                 c8,
 		HasNegativeNormal: b.HasInvertedNormals,
@@ -156,12 +158,12 @@ func (b *Box) Copy() primitive.Primitive {
 // Unit returns a unit box
 func Unit(xOffset, yOffset, zOffset float64) *Box {
 	b, _ := (&Box{
-		A: geometry.Point{
+		A: mgl64.Vec3{
 			X: 0.0 + xOffset,
 			Y: 0.0 + yOffset,
 			Z: 0.0 + zOffset,
 		},
-		B: geometry.Point{
+		B: mgl64.Vec3{
 			X: 1.0 + xOffset,
 			Y: 1.0 + yOffset,
 			Z: 1.0 + zOffset,

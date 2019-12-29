@@ -154,6 +154,28 @@
         }
     },
     {
+        "name": "color_white_tenth",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.1,
+                "green": 0.1,
+                "blue": 0.1
+            }
+        }
+    },
+    {
+        "name": "color_white_quarter",
+        "type": "Color",
+        "data": {
+            "color": {
+                "red": 0.25,
+                "green": 0.25,
+                "blue": 0.25
+            }
+        }
+    },
+    {
         "name": "color_white",
         "type": "Color",
         "data": {

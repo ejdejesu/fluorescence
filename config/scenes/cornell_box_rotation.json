@@ -1,22 +1,22 @@
 {
-    "scene_name": "Cornell Box Light Box",
+    "scene_name": "Cornell Box Rotation",
     "camera_name": "main",
     "objects": [
         {
             "object_name": "light_center_rectangle",
-            "material_name": "white_light_r"
-        },
-        {
-            "object_name": "left_box",
             "material_name": "white_diffuse"
         },
         {
-            "object_name": "right_box_quaternion",
+            "object_name": "large_box_outer",
             "material_name": "glass"
         },
         {
-            "object_name": "right_box_quaternion_inner",
+            "object_name": "large_box_inner",
             "material_name": "glass"
+        },
+        {
+            "object_name": "large_box_light",
+            "material_name": "white_light_double_r"
         },
         {
             "object_name": "top_rectangle",

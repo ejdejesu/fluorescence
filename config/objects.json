@@ -969,9 +969,42 @@
         "type": "Translation",
         "data": {
             "displacement": {
-                "x": 6.5,
-                "y": 1.5001,
+                "x": 7.0,
+                "y": 2.5001,
                 "z": -3.0
+            },
+            "type": "Quaternion",
+            "data": {
+                "axis_angles": [
+                    30.0,
+                    0.0,
+                    60.0
+                ],
+                "order": "XYZ",
+                "type": "Box",
+                "data": {
+                    "a": {
+                        "x": -1.25,
+                        "y": -1.25,
+                        "z": 1.25
+                    },
+                    "b": {
+                        "x": 1.25,
+                        "y": 1.25,
+                        "z": -1.25
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "large_box_light",
+        "type": "Translation",
+        "data": {
+            "displacement": {
+                "x": 5.0,
+                "y": 5.0,
+                "z": -5.0
             },
             "type": "Quaternion",
             "data": {
@@ -983,15 +1016,118 @@
                 "order": "XYZ",
                 "type": "Box",
                 "data": {
+                    "has_inverted_normals": false,
                     "a": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
+                        "x": -0.8,
+                        "y": -0.8,
+                        "z": 0.8
                     },
                     "b": {
-                        "x": 1.5,
-                        "y": 1.5,
-                        "z": -1.5
+                        "x": 0.8,
+                        "y": 0.8,
+                        "z": -0.8
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "large_box_inner",
+        "type": "Translation",
+        "data": {
+            "displacement": {
+                "x": 5.0,
+                "y": 5.0,
+                "z": -5.0
+            },
+            "type": "Quaternion",
+            "data": {
+                "axis_angles": [
+                    45.0,
+                    0.0,
+                    45.0
+                ],
+                "order": "XYZ",
+                "type": "Box",
+                "data": {
+                    "has_inverted_normals": true,
+                    "a": {
+                        "x": -2.2,
+                        "y": -2.2,
+                        "z": 2.2
+                    },
+                    "b": {
+                        "x": 2.2,
+                        "y": 2.2,
+                        "z": -2.2
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "large_box_outer",
+        "type": "Translation",
+        "data": {
+            "displacement": {
+                "x": 5.0,
+                "y": 5.0,
+                "z": -5.0
+            },
+            "type": "Quaternion",
+            "data": {
+                "axis_angles": [
+                    45.0,
+                    0.0,
+                    45.0
+                ],
+                "order": "XYZ",
+                "type": "Box",
+                "data": {
+                    "has_inverted_normals": false,
+                    "a": {
+                        "x": -2.8,
+                        "y": -2.8,
+                        "z": 2.8
+                    },
+                    "b": {
+                        "x": 2.8,
+                        "y": 2.8,
+                        "z": -2.8
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "right_box_quaternion_inner",
+        "type": "Translation",
+        "data": {
+            "displacement": {
+                "x": 7.0,
+                "y": 2.5001,
+                "z": -3.0
+            },
+            "type": "Quaternion",
+            "data": {
+                "axis_angles": [
+                    30.0,
+                    0.0,
+                    60.0
+                ],
+                "order": "XYZ",
+                "type": "Box",
+                "data": {
+                    "has_inverted_normals": false,
+                    "a": {
+                        "x": -1.0,
+                        "y": -1.0,
+                        "z": 1.0
+                    },
+                    "b": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": -1.0
                     }
                 }
             }

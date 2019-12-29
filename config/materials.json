@@ -163,6 +163,18 @@
         "data": {}
     },
     {
+        "name": "white_light_tenth",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_white_tenth",
+        "data": {}
+    },
+    {
+        "name": "white_light_quarter",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_white_quarter",
+        "data": {}
+    },
+    {
         "name": "white_light_half",
         "type": "Lambertian",
         "emittance_texture_name": "color_white_half",
@@ -196,6 +208,20 @@
         "name": "white_light_fifty",
         "type": "Lambertian",
         "emittance_texture_name": "color_white_fifty",
+        "data": {}
+    },
+    {
+        "name": "white_light_tenth_r",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_white_tenth",
+        "reflectance_texture_name": "color_white_real",
+        "data": {}
+    },
+    {
+        "name": "white_light_quarter_r",
+        "type": "Lambertian",
+        "emittance_texture_name": "color_white_quarter",
+        "reflectance_texture_name": "color_white_real",
         "data": {}
     },
     {

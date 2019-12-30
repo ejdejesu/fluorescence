@@ -65,17 +65,26 @@ func clamp(val, min, max float64) float64 {
 	return val
 }
 
-// Scale scales all elements equally so the max channel is 1.0
-func (c Color) Scale() Color {
+// Scale scales all elements equally so the max channel is s
+func (c Color) Scale(s float64) Color {
 	max := math.Max(c.Red, math.Max(c.Green, c.Blue))
-	return c.MultScalar(1.0 / max)
+	return c.MultScalar(s / max)
 }
 
-// ScaleDown scales as Scale does, but only if any channel exceeds 1.0
-func (c Color) ScaleDown() Color {
+// ScaleUp scales as Scale does, but only if the max channel is lower than s
+func (c Color) ScaleUp(s float64) Color {
 	max := math.Max(c.Red, math.Max(c.Green, c.Blue))
-	if max > 1.0 {
-		return c.MultScalar(1.0 / max)
+	if max < s {
+		return c.MultScalar(s / max)
+	}
+	return c
+}
+
+// ScaleDown scales as Scale does, but only if the max channel is greater than s
+func (c Color) ScaleDown(s float64) Color {
+	max := math.Max(c.Red, math.Max(c.Green, c.Blue))
+	if max > s {
+		return c.MultScalar(s / max)
 	}
 	return c
 }

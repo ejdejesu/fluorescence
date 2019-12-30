@@ -1,13 +1,13 @@
 {
-    "image_width": 3000,
-    "image_height": 3000,
+    "image_width": 300,
+    "image_height": 300,
     "file_type": "png",
     "file_directory": "./output/",
     "version": "0.8.1",
     "gamma_correction": 2.2,
     "texture_gamma": 2.2,
     "use_scaling_truncation": true,
-    "sample_count": 100,
+    "sample_count": 30,
     "tile_width": 16,
     "tile_height": 16,
     "max_bounces": 10,
@@ -20,5 +20,5 @@
     },
     "t_min": 1e-7,
     "t_max": 1e+300,
-    "scene_file_name": "cornell_box_rotation.json"
+    "scene_file_name": "polligon_room.json"
 }

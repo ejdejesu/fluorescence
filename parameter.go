@@ -19,35 +19,36 @@ import (
 	"fluorescence/geometry/primitive/transform/translate"
 	"fluorescence/geometry/primitive/triangle"
 	"fluorescence/geometry/primitive/uncappedcylinder"
-	"fluorescence/shading"
 	"fluorescence/shading/material"
 	"fluorescence/shading/texture"
 	"fmt"
 	"io/ioutil"
 	"reflect"
+
+	"github.com/go-gl/mathgl/mgl64"
 )
 
 // Parameters holds top-level information about the program's execution and the image's properties
 type Parameters struct {
-	ImageWidth           int           `json:"image_width"`                // width of the image in pixels
-	ImageHeight          int           `json:"image_height"`               // height of the image in pixels
-	FileType             string        `json:"file_type"`                  // image file type (png, jpg, etc.)
-	FileDirectory        string        `json:"file_directory"`             // folder of image to write
-	Version              string        `json:"version"`                    // program version
-	GammaCorrection      float64       `json:"gamma_correction"`           // how much gamma correction to perform on the image
-	TextureGamma         float64       `json:"texture_gamma"`              // how much counter-gamma correction to apply to image textures
-	UseScalingTruncation bool          `json:"use_scaling_truncation"`     // should the program truncate over-magnitude colors by scaling linearly as opposed to clamping?
-	SampleCount          int           `json:"sample_count"`               // amount of samples to write
-	TileWidth            int           `json:"tile_width"`                 // width of a tile in pixels
-	TileHeight           int           `json:"tile_height"`                // height of a tile in pixels
-	MaxBounces           int           `json:"max_bounces"`                // amount of reflections to check before giving up
-	UseBVH               bool          `json:"use_bvh"`                    // should the program generate and use a Bounding Volume Hierarchy?
-	BGColorMagnitude     float64       `json:"background_color_magnitude"` // amount to scale bg color by
+	ImageWidth           int        `json:"image_width"`                // width of the image in pixels
+	ImageHeight          int        `json:"image_height"`               // height of the image in pixels
+	FileType             string     `json:"file_type"`                  // image file type (png, jpg, etc.)
+	FileDirectory        string     `json:"file_directory"`             // folder of image to write
+	Version              string     `json:"version"`                    // program version
+	GammaCorrection      float64    `json:"gamma_correction"`           // how much gamma correction to perform on the image
+	TextureGamma         float64    `json:"texture_gamma"`              // how much counter-gamma correction to apply to image textures
+	UseScalingTruncation bool       `json:"use_scaling_truncation"`     // should the program truncate over-magnitude colors by scaling linearly as opposed to clamping?
+	SampleCount          int        `json:"sample_count"`               // amount of samples to write
+	TileWidth            int        `json:"tile_width"`                 // width of a tile in pixels
+	TileHeight           int        `json:"tile_height"`                // height of a tile in pixels
+	MaxBounces           int        `json:"max_bounces"`                // amount of reflections to check before giving up
+	UseBVH               bool       `json:"use_bvh"`                    // should the program generate and use a Bounding Volume Hierarchy?
+	BGColorMagnitude     float64    `json:"background_color_magnitude"` // amount to scale bg color by
 	BackgroundColor      mgl64.Vec3 `json:"background_color"`           // color to return when nothing is intersected
-	TMin                 float64       `json:"t_min"`                      // minimum ray "time" to count intersection
-	TMax                 float64       `json:"t_max"`                      // maximum ray "time" to count intersection
-	SceneFileName        string        `json:"scene_file_name"`            // file name of scene config file
-	Scene                *Scene        `json:"-"`                          // Scene reference
+	TMin                 float64    `json:"t_min"`                      // minimum ray "time" to count intersection
+	TMax                 float64    `json:"t_max"`                      // maximum ray "time" to count intersection
+	SceneFileName        string     `json:"scene_file_name"`            // file name of scene config file
+	Scene                *Scene     `json:"-"`                          // Scene reference
 }
 
 // Scene holds information about the pictured scene, such as the objects and camera
@@ -699,7 +700,7 @@ func loadParameters(fileName string) (*Parameters, error) {
 	if err != nil {
 		return nil, err
 	}
-	parameters.BackgroundColor = parameters.BackgroundColor.MultScalar(parameters.BGColorMagnitude)
+	parameters.BackgroundColor = parameters.BackgroundColor.Mul(parameters.BGColorMagnitude)
 	return &parameters, nil
 }
 

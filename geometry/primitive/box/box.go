@@ -29,16 +29,16 @@ func (b *Box) Setup() (*Box, error) {
 	c1 := geometry.MinComponents(b.A, b.B)
 	c8 := geometry.MaxComponents(b.A, b.B)
 
-	if c1.X() == c8.X() || c1.Y()== c8.Y()|| c1.Z() == c8.Z() {
+	if c1.X() == c8.X() || c1.Y() == c8.Y() || c1.Z() == c8.Z() {
 		return nil, fmt.Errorf("box resolves to point, line, or plane")
 	}
 
 	rNegX, err := (&rectangle.Rectangle{
 		A: c1,
 		B: mgl64.Vec3{
-			X: c1.X()
-			Y: c8.Y()
-			Z: c8.Z(),
+			c1.X(),
+			c8.Y(),
+			c8.Z(),
 		},
 		HasNegativeNormal: !b.HasInvertedNormals,
 	}).Setup()
@@ -48,9 +48,9 @@ func (b *Box) Setup() (*Box, error) {
 
 	rPosX, err := (&rectangle.Rectangle{
 		A: mgl64.Vec3{
-			X: c8.X()
-			Y: c1.Y()
-			Z: c1.Z(),
+			c8.X(),
+			c1.Y(),
+			c1.Z(),
 		},
 		B:                 c8,
 		HasNegativeNormal: b.HasInvertedNormals,
@@ -62,9 +62,9 @@ func (b *Box) Setup() (*Box, error) {
 	rNegY, err := (&rectangle.Rectangle{
 		A: c1,
 		B: mgl64.Vec3{
-			X: c8.X()
-			Y: c1.Y()
-			Z: c8.Z(),
+			c8.X(),
+			c1.Y(),
+			c8.Z(),
 		},
 		HasNegativeNormal: !b.HasInvertedNormals,
 	}).Setup()
@@ -74,9 +74,9 @@ func (b *Box) Setup() (*Box, error) {
 
 	rPosY, err := (&rectangle.Rectangle{
 		A: mgl64.Vec3{
-			X: c1.X()
-			Y: c8.Y()
-			Z: c1.Z(),
+			c1.X(),
+			c8.Y(),
+			c1.Z(),
 		},
 		B:                 c8,
 		HasNegativeNormal: b.HasInvertedNormals,
@@ -88,9 +88,9 @@ func (b *Box) Setup() (*Box, error) {
 	rNegZ, err := (&rectangle.Rectangle{
 		A: c1,
 		B: mgl64.Vec3{
-			X: c8.X()
-			Y: c8.Y()
-			Z: c1.Z(),
+			c8.X(),
+			c8.Y(),
+			c1.Z(),
 		},
 		HasNegativeNormal: !b.HasInvertedNormals,
 	}).Setup()
@@ -100,9 +100,9 @@ func (b *Box) Setup() (*Box, error) {
 
 	rPosZ, err := (&rectangle.Rectangle{
 		A: mgl64.Vec3{
-			X: c1.X()
-			Y: c1.Y()
-			Z: c8.Z(),
+			c1.X(),
+			c1.Y(),
+			c8.Z(),
 		},
 		B:                 c8,
 		HasNegativeNormal: b.HasInvertedNormals,
@@ -159,14 +159,14 @@ func (b *Box) Copy() primitive.Primitive {
 func Unit(xOffset, yOffset, zOffset float64) *Box {
 	b, _ := (&Box{
 		A: mgl64.Vec3{
-			X: 0.0 + xOffset,
-			Y: 0.0 + yOffset,
-			Z: 0.0 + zOffset,
+			0.0 + xOffset,
+			0.0 + yOffset,
+			0.0 + zOffset,
 		},
 		B: mgl64.Vec3{
-			X: 1.0 + xOffset,
-			Y: 1.0 + yOffset,
-			Z: 1.0 + zOffset,
+			1.0 + xOffset,
+			1.0 + yOffset,
+			1.0 + zOffset,
 		},
 	}).Setup()
 	return b

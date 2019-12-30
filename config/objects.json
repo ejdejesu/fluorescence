@@ -3,11 +3,11 @@
         "name": "large_center_sphere",
         "type": "Sphere",
         "data": {
-            "center": {
-                "x": 5.0,
-                "y": 5.0,
-                "z": -5.0
-            },
+            "center": [
+                5.0,
+                5.0,
+                -5.0
+            ],
             "radius": 4.0
         }
     },
@@ -15,11 +15,11 @@
         "name": "large_center_sphere_outer",
         "type": "Sphere",
         "data": {
-            "center": {
-                "x": 5.0,
-                "y": 5.0,
-                "z": -5.0
-            },
+            "center": [
+                5.0,
+                5.0,
+                -5.0
+            ],
             "radius": 4.0
         }
     },
@@ -27,11 +27,11 @@
         "name": "large_center_sphere_inner",
         "type": "Sphere",
         "data": {
-            "center": {
-                "x": 5.0,
-                "y": 5.0,
-                "z": -5.0
-            },
+            "center": [
+                5.0,
+                5.0,
+                -5.0
+            ],
             "radius": 3.9
         }
     },
@@ -39,16 +39,16 @@
         "name": "center_platform_cylinder",
         "type": "Cylinder",
         "data": {
-            "a": {
-                "x": 5.0,
-                "y": 0.0001,
-                "z": -5.0
-            },
-            "b": {
-                "x": 5.0,
-                "y": 0.9999,
-                "z": -5.0
-            },
+            "a": [
+                5.0,
+                0.0001,
+                -5.0
+            ],
+            "b": [
+                5.0,
+                0.9999,
+                -5.0
+            ],
             "radius": 2.0
         }
     },
@@ -56,16 +56,16 @@
         "name": "center_platform_cylinder_outer",
         "type": "HollowCylinder",
         "data": {
-            "a": {
-                "x": 5.0,
-                "y": 0.0001,
-                "z": -5.0
-            },
-            "b": {
-                "x": 5.0,
-                "y": 0.9999,
-                "z": -5.0
-            },
+            "a": [
+                5.0,
+                0.0001,
+                -5.0
+            ],
+            "b": [
+                5.0,
+                0.9999,
+                -5.0
+            ],
             "inner_radius": 1.5,
             "outer_radius": 2.0
         }
@@ -74,16 +74,16 @@
         "name": "center_platform_cylinder_inner",
         "type": "Cylinder",
         "data": {
-            "a": {
-                "x": 5.0,
-                "y": 0.0001,
-                "z": -5.0
-            },
-            "b": {
-                "x": 5.0,
-                "y": 0.9999,
-                "z": -5.0
-            },
+            "a": [
+                5.0,
+                0.0001,
+                -5.0
+            ],
+            "b": [
+                5.0,
+                0.9999,
+                -5.0
+            ],
             "radius": 1.499
         }
     },
@@ -91,16 +91,16 @@
         "name": "center_platform_cylinder_lower",
         "type": "Cylinder",
         "data": {
-            "a": {
-                "x": 5.0,
-                "y": 0.0001,
-                "z": -5.0
-            },
-            "b": {
-                "x": 5.0,
-                "y": 0.3,
-                "z": -5.0
-            },
+            "a": [
+                5.0,
+                0.0001,
+                -5.0
+            ],
+            "b": [
+                5.0,
+                0.3,
+                -5.0
+            ],
             "radius": 2.0
         }
     },
@@ -108,16 +108,16 @@
         "name": "center_platform_cylinder_middle",
         "type": "Cylinder",
         "data": {
-            "a": {
-                "x": 5.0,
-                "y": 0.3,
-                "z": -5.0
-            },
-            "b": {
-                "x": 5.0,
-                "y": 0.7,
-                "z": -5.0
-            },
+            "a": [
+                5.0,
+                0.3,
+                -5.0
+            ],
+            "b": [
+                5.0,
+                0.7,
+                -5.0
+            ],
             "radius": 2.0
         }
     },
@@ -125,16 +125,16 @@
         "name": "center_platform_cylinder_upper",
         "type": "Cylinder",
         "data": {
-            "a": {
-                "x": 5.0,
-                "y": 0.7,
-                "z": -5.0
-            },
-            "b": {
-                "x": 5.0,
-                "y": 0.9999,
-                "z": -5.0
-            },
+            "a": [
+                5.0,
+                0.7,
+                -5.0
+            ],
+            "b": [
+                5.0,
+                0.9999,
+                -5.0
+            ],
             "radius": 2.0
         }
     },
@@ -142,11 +142,11 @@
         "name": "large_near_center_sphere",
         "type": "Sphere",
         "data": {
-            "center": {
-                "x": 5.0,
-                "y": 3.0,
-                "z": -4.0
-            },
+            "center": [
+                5.0,
+                3.0,
+                -4.0
+            ],
             "radius": 3.0
         }
     },
@@ -154,11 +154,11 @@
         "name": "planetary_sphere",
         "type": "Sphere",
         "data": {
-            "center": {
-                "x": 500.0,
-                "y": 500.0,
-                "z": -600.0
-            },
+            "center": [
+                500.0,
+                500.0,
+                -600.0
+            ],
             "radius": 500.0
         }
     },
@@ -166,11 +166,11 @@
         "name": "near_left_sphere_2.0",
         "type": "Sphere",
         "data": {
-            "center": {
-                "x": 2.5,
-                "y": 2.5,
-                "z": -2.5
-            },
+            "center": [
+                2.5,
+                2.5,
+                -2.5
+            ],
             "radius": 2.0
         }
     },
@@ -178,11 +178,11 @@
         "name": "center_sphere",
         "type": "Sphere",
         "data": {
-            "center": {
-                "x": 5.0,
-                "y": 5.0,
-                "z": -5.0
-            },
+            "center": [
+                5.0,
+                5.0,
+                -5.0
+            ],
             "radius": 2.0
         }
     },
@@ -190,11 +190,11 @@
         "name": "far_right_top_sphere",
         "type": "Sphere",
         "data": {
-            "center": {
-                "x": 7.5,
-                "y": 7.5,
-                "z": -7.5
-            },
+            "center": [
+                7.5,
+                7.5,
+                -7.5
+            ],
             "radius": 2.0
         }
     },
@@ -202,11 +202,11 @@
         "name": "near_right_sphere",
         "type": "Sphere",
         "data": {
-            "center": {
-                "x": 7.5,
-                "y": 2.0,
-                "z": -2.5
-            },
+            "center": [
+                7.5,
+                2.0,
+                -2.5
+            ],
             "radius": 2.0
         }
     },
@@ -214,11 +214,11 @@
         "name": "far_left_sphere",
         "type": "Sphere",
         "data": {
-            "center": {
-                "x": 2.5,
-                "y": 2.0,
-                "z": -7.5
-            },
+            "center": [
+                2.5,
+                2.0,
+                -7.5
+            ],
             "radius": 2.0
         }
     },
@@ -226,11 +226,11 @@
         "name": "hdr_sphere",
         "type": "Sphere",
         "data": {
-            "center": {
-                "x": 5.0,
-                "y": 5.0,
-                "z": -5.0
-            },
+            "center": [
+                5.0,
+                5.0,
+                -5.0
+            ],
             "radius": 1000000.0
         },
         "has_inverted_normals": true
@@ -239,11 +239,11 @@
         "name": "earth_sphere",
         "type": "Sphere",
         "data": {
-            "center": {
-                "x": 5.0,
-                "y": 5.0,
-                "z": -5.0
-            },
+            "center": [
+                5.0,
+                5.0,
+                -5.0
+            ],
             "radius": 2.0
         }
     },
@@ -251,11 +251,11 @@
         "name": "sun_sphere",
         "type": "Sphere",
         "data": {
-            "center": {
-                "x": 33.2590,
-                "y": 5.0,
-                "z": 33.2590
-            },
+            "center": [
+                33.2590,
+                5.0,
+                33.2590
+            ],
             "radius": 2.180
         }
     },
@@ -263,16 +263,16 @@
         "name": "left_rectangle",
         "type": "Rectangle",
         "data": {
-            "a": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "b": {
-                "x": 0.0,
-                "y": 10.0,
-                "z": -10.0
-            },
+            "a": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "b": [
+                0.0,
+                10.0,
+                -10.0
+            ],
             "is_culled": true,
             "has_negative_normal": false
         }
@@ -281,16 +281,16 @@
         "name": "left_top_rectangle",
         "type": "Rectangle",
         "data": {
-            "a": {
-                "x": 0.0,
-                "y": 9.0,
-                "z": 0.0
-            },
-            "b": {
-                "x": 0.0,
-                "y": 10.0,
-                "z": -10.0
-            },
+            "a": [
+                0.0,
+                9.0,
+                0.0
+            ],
+            "b": [
+                0.0,
+                10.0,
+                -10.0
+            ],
             "is_culled": true,
             "has_negative_normal": false
         }
@@ -299,16 +299,16 @@
         "name": "left_bottom_rectangle",
         "type": "Rectangle",
         "data": {
-            "a": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "b": {
-                "x": 0.0,
-                "y": 7.0,
-                "z": -10.0
-            },
+            "a": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "b": [
+                0.0,
+                7.0,
+                -10.0
+            ],
             "is_culled": true,
             "has_negative_normal": false
         }
@@ -317,16 +317,16 @@
         "name": "left_left_rectangle",
         "type": "Rectangle",
         "data": {
-            "a": {
-                "x": 0.0,
-                "y": 7.0,
-                "z": 0.0
-            },
-            "b": {
-                "x": 0.0,
-                "y": 9.0,
-                "z": -1.0
-            },
+            "a": [
+                0.0,
+                7.0,
+                0.0
+            ],
+            "b": [
+                0.0,
+                9.0,
+                -1.0
+            ],
             "is_culled": true,
             "has_negative_normal": false
         }
@@ -335,16 +335,16 @@
         "name": "left_right_rectangle",
         "type": "Rectangle",
         "data": {
-            "a": {
-                "x": 0.0,
-                "y": 7.0,
-                "z": -3.0
-            },
-            "b": {
-                "x": 0.0,
-                "y": 9.0,
-                "z": -10.0
-            },
+            "a": [
+                0.0,
+                7.0,
+                -3.0
+            ],
+            "b": [
+                0.0,
+                9.0,
+                -10.0
+            ],
             "is_culled": true,
             "has_negative_normal": false
         }
@@ -353,16 +353,16 @@
         "name": "right_rectangle",
         "type": "Rectangle",
         "data": {
-            "a": {
-                "x": 10.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "b": {
-                "x": 10.0,
-                "y": 10.0,
-                "z": -10.0
-            },
+            "a": [
+                10.0,
+                0.0,
+                0.0
+            ],
+            "b": [
+                10.0,
+                10.0,
+                -10.0
+            ],
             "is_culled": true,
             "has_negative_normal": true
         }
@@ -371,16 +371,16 @@
         "name": "bottom_rectangle",
         "type": "Rectangle",
         "data": {
-            "a": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "b": {
-                "x": 10.0,
-                "y": 0.0,
-                "z": -10.0
-            },
+            "a": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "b": [
+                10.0,
+                0.0,
+                -10.0
+            ],
             "is_culled": true,
             "has_negative_normal": false
         }
@@ -389,16 +389,16 @@
         "name": "top_rectangle",
         "type": "Rectangle",
         "data": {
-            "a": {
-                "x": 0.0,
-                "y": 10.0,
-                "z": 0.0
-            },
-            "b": {
-                "x": 10.0,
-                "y": 10.0,
-                "z": -10.0
-            },
+            "a": [
+                0.0,
+                10.0,
+                0.0
+            ],
+            "b": [
+                10.0,
+                10.0,
+                -10.0
+            ],
             "is_culled": true,
             "has_negative_normal": true
         }
@@ -407,16 +407,16 @@
         "name": "near_rectangle",
         "type": "Rectangle",
         "data": {
-            "a": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "b": {
-                "x": 10.0,
-                "y": 10.0,
-                "z": 0.0
-            },
+            "a": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "b": [
+                10.0,
+                10.0,
+                0.0
+            ],
             "is_culled": true,
             "has_negative_normal": true
         }
@@ -425,16 +425,16 @@
         "name": "far_rectangle",
         "type": "Rectangle",
         "data": {
-            "a": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": -10.0
-            },
-            "b": {
-                "x": 10.0,
-                "y": 10.0,
-                "z": -10.0
-            },
+            "a": [
+                0.0,
+                0.0,
+                -10.0
+            ],
+            "b": [
+                10.0,
+                10.0,
+                -10.0
+            ],
             "is_culled": true,
             "has_negative_normal": false
         }
@@ -443,16 +443,16 @@
         "name": "far_mirror_rectangle",
         "type": "Rectangle",
         "data": {
-            "a": {
-                "x": 0.1,
-                "y": 0.1,
-                "z": -9.9999
-            },
-            "b": {
-                "x": 9.9,
-                "y": 9.9,
-                "z": -9.9999
-            },
+            "a": [
+                0.1,
+                0.1,
+                -9.9999
+            ],
+            "b": [
+                9.9,
+                9.9,
+                -9.9999
+            ],
             "is_culled": true,
             "has_negative_normal": false
         }
@@ -461,16 +461,16 @@
         "name": "light_center_rectangle",
         "type": "Rectangle",
         "data": {
-            "a": {
-                "x": 2.5,
-                "y": 9.9999,
-                "z": -2.5
-            },
-            "b": {
-                "x": 7.5,
-                "y": 9.9999,
-                "z": -7.5
-            },
+            "a": [
+                2.5,
+                9.9999,
+                -2.5
+            ],
+            "b": [
+                7.5,
+                9.9999,
+                -7.5
+            ],
             "is_culled": true,
             "has_negative_normal": true
         }
@@ -479,16 +479,16 @@
         "name": "cbt_light",
         "type": "Rectangle",
         "data": {
-            "a": {
-                "x": 4.0,
-                "y": 9.9999,
-                "z": -4.0
-            },
-            "b": {
-                "x": 6.0,
-                "y": 9.9999,
-                "z": -6.0
-            },
+            "a": [
+                4.0,
+                9.9999,
+                -4.0
+            ],
+            "b": [
+                6.0,
+                9.9999,
+                -6.0
+            ],
             "is_culled": true,
             "has_negative_normal": true
         }
@@ -497,16 +497,16 @@
         "name": "light_center_rectangle_quarter",
         "type": "Rectangle",
         "data": {
-            "a": {
-                "x": 3.75,
-                "y": 9.9999,
-                "z": -3.75
-            },
-            "b": {
-                "x": 6.25,
-                "y": 9.9999,
-                "z": -6.25
-            },
+            "a": [
+                3.75,
+                9.9999,
+                -3.75
+            ],
+            "b": [
+                6.25,
+                9.9999,
+                -6.25
+            ],
             "is_culled": true,
             "has_negative_normal": true
         }
@@ -515,16 +515,16 @@
         "name": "light_far_left_rectangle",
         "type": "Rectangle",
         "data": {
-            "a": {
-                "x": 0.0,
-                "y": 9.9999,
-                "z": -5.0
-            },
-            "b": {
-                "x": 3.0,
-                "y": 9.9999,
-                "z": -10.0
-            },
+            "a": [
+                0.0,
+                9.9999,
+                -5.0
+            ],
+            "b": [
+                3.0,
+                9.9999,
+                -10.0
+            ],
             "is_culled": true,
             "has_negative_normal": true
         }
@@ -533,16 +533,16 @@
         "name": "light_far_center_rectangle",
         "type": "Rectangle",
         "data": {
-            "a": {
-                "x": 3.5,
-                "y": 9.9999,
-                "z": -5.0
-            },
-            "b": {
-                "x": 6.5,
-                "y": 9.9999,
-                "z": -10.0
-            },
+            "a": [
+                3.5,
+                9.9999,
+                -5.0
+            ],
+            "b": [
+                6.5,
+                9.9999,
+                -10.0
+            ],
             "is_culled": true,
             "has_negative_normal": true
         }
@@ -551,16 +551,16 @@
         "name": "light_far_right_rectangle",
         "type": "Rectangle",
         "data": {
-            "a": {
-                "x": 7.0,
-                "y": 9.9999,
-                "z": -5.0
-            },
-            "b": {
-                "x": 10.0,
-                "y": 9.9999,
-                "z": -10.0
-            },
+            "a": [
+                7.0,
+                9.9999,
+                -5.0
+            ],
+            "b": [
+                10.0,
+                9.9999,
+                -10.0
+            ],
             "is_culled": true,
             "has_negative_normal": true
         }
@@ -569,37 +569,37 @@
         "name": "far_right_bottom_triangle",
         "type": "Triangle",
         "data": {
-            "a": {
-                "x": 10.0,
-                "y": 0.0,
-                "z": -7.0
-            },
-            "b": {
-                "x": 10.0,
-                "y": 3.0,
-                "z": -10.0
-            },
-            "c": {
-                "x": 7.0,
-                "y": 0.0,
-                "z": -10.0
-            }
+            "a": [
+                10.0,
+                0.0,
+                -7.0
+            ],
+            "b": [
+                10.0,
+                3.0,
+                -10.0
+            ],
+            "c": [
+                7.0,
+                0.0,
+                -10.0
+            ]
         }
     },
     {
         "name": "test_plane",
         "type": "Plane",
         "data": {
-            "point": {
-                "x": 5.0,
-                "y": 0.0,
-                "z": -5.0
-            },
-            "normal": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
+            "point": [
+                5.0,
+                0.0,
+                -5.0
+            ],
+            "normal": [
+                1.0,
+                1.0,
+                1.0
+            ],
             "is_culled": true
         }
     },
@@ -607,16 +607,16 @@
         "name": "floor_plane",
         "type": "Plane",
         "data": {
-            "point": {
-                "x": 5.0,
-                "y": 0.0,
-                "z": -5.0
-            },
-            "normal": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0
-            },
+            "point": [
+                5.0,
+                0.0,
+                -5.0
+            ],
+            "normal": [
+                0.0,
+                1.0,
+                0.0
+            ],
             "is_culled": true
         }
     },
@@ -624,16 +624,16 @@
         "name": "ceiling_plane",
         "type": "Plane",
         "data": {
-            "point": {
-                "x": 5.0,
-                "y": 10.0,
-                "z": -5.0
-            },
-            "normal": {
-                "x": 0.0,
-                "y": -1.0,
-                "z": 0.0
-            },
+            "point": [
+                5.0,
+                10.0,
+                -5.0
+            ],
+            "normal": [
+                0.0,
+                -1.0,
+                0.0
+            ],
             "is_culled": true
         }
     },
@@ -641,16 +641,16 @@
         "name": "sky_plane",
         "type": "Plane",
         "data": {
-            "point": {
-                "x": 0.0,
-                "y": 1000000.0,
-                "z": 0.0
-            },
-            "normal": {
-                "x": 0.0,
-                "y": -1.0,
-                "z": 0.0
-            },
+            "point": [
+                0.0,
+                1000000.0,
+                0.0
+            ],
+            "normal": [
+                0.0,
+                -1.0,
+                0.0
+            ],
             "is_culled": true
         }
     },
@@ -658,11 +658,11 @@
         "name": "sun_near_left",
         "type": "Sphere",
         "data": {
-            "center": {
-                "x": -500.0,
-                "y": 500.0,
-                "z": 500.0
-            },
+            "center": [
+                -500.0,
+                500.0,
+                500.0
+            ],
             "radius": 100.0
         }
     },
@@ -670,16 +670,16 @@
         "name": "target_inner_cylinder",
         "type": "Cylinder",
         "data": {
-            "a": {
-                "x": 5.0,
-                "y": 5.0,
-                "z": -10.0
-            },
-            "b": {
-                "x": 5.0,
-                "y": 5.0,
-                "z": -9.0
-            },
+            "a": [
+                5.0,
+                5.0,
+                -10.0
+            ],
+            "b": [
+                5.0,
+                5.0,
+                -9.0
+            ],
             "radius": 1.5
         }
     },
@@ -687,16 +687,16 @@
         "name": "target_outer_cylinder",
         "type": "HollowCylinder",
         "data": {
-            "a": {
-                "x": 5.0,
-                "y": 5.0,
-                "z": -10.0
-            },
-            "b": {
-                "x": 5.0,
-                "y": 5.0,
-                "z": -9.0
-            },
+            "a": [
+                5.0,
+                5.0,
+                -10.0
+            ],
+            "b": [
+                5.0,
+                5.0,
+                -9.0
+            ],
             "inner_radius": 3.0,
             "outer_radius": 4.5
         }
@@ -705,16 +705,16 @@
         "name": "near_left_cylinder",
         "type": "Cylinder",
         "data": {
-            "a": {
-                "x": 2.0,
-                "y": 0.0,
-                "z": -2.0
-            },
-            "b": {
-                "x": 2.0,
-                "y": 2.5,
-                "z": -2.0
-            },
+            "a": [
+                2.0,
+                0.0,
+                -2.0
+            ],
+            "b": [
+                2.0,
+                2.5,
+                -2.0
+            ],
             "radius": 1.5
         }
     },
@@ -722,16 +722,16 @@
         "name": "center_cylinder",
         "type": "Cylinder",
         "data": {
-            "a": {
-                "x": 5.0,
-                "y": 0.0,
-                "z": -5.0
-            },
-            "b": {
-                "x": 5.0,
-                "y": 5.0,
-                "z": -5.0
-            },
+            "a": [
+                5.0,
+                0.0,
+                -5.0
+            ],
+            "b": [
+                5.0,
+                5.0,
+                -5.0
+            ],
             "radius": 1.5
         }
     },
@@ -739,16 +739,16 @@
         "name": "far_center_cylinder",
         "type": "Cylinder",
         "data": {
-            "a": {
-                "x": 5.0,
-                "y": 0.0,
-                "z": -9.0
-            },
-            "b": {
-                "x": 5.0,
-                "y": 2.0,
-                "z": -9.0
-            },
+            "a": [
+                5.0,
+                0.0,
+                -9.0
+            ],
+            "b": [
+                5.0,
+                2.0,
+                -9.0
+            ],
             "radius": 0.8
         }
     },
@@ -756,16 +756,16 @@
         "name": "far_right_cylinder",
         "type": "Cylinder",
         "data": {
-            "a": {
-                "x": 8.0,
-                "y": 0.0,
-                "z": -8.0
-            },
-            "b": {
-                "x": 8.0,
-                "y": 7.5,
-                "z": -8.0
-            },
+            "a": [
+                8.0,
+                0.0,
+                -8.0
+            ],
+            "b": [
+                8.0,
+                7.5,
+                -8.0
+            ],
             "radius": 1.5
         }
     },
@@ -773,16 +773,16 @@
         "name": "center_pyramid",
         "type": "Pyramid",
         "data": {
-            "a": {
-                "x": 6.0,
-                "y": 0.5,
-                "z": -4.0
-            },
-            "b": {
-                "x": 9.0,
-                "y": 0.5,
-                "z": -6.0
-            },
+            "a": [
+                6.0,
+                0.5,
+                -4.0
+            ],
+            "b": [
+                9.0,
+                0.5,
+                -6.0
+            ],
             "height": 3.0
         }
     },
@@ -790,64 +790,64 @@
         "name": "inner_box",
         "type": "Box",
         "data": {
-            "a": {
-                "x": 1.2,
-                "y": 0.2,
-                "z": -1.2
-            },
-            "b": {
-                "x": 3.8,
-                "y": 3.8,
-                "z": -3.8
-            }
+            "a": [
+                1.2,
+                0.2,
+                -1.2
+            ],
+            "b": [
+                3.8,
+                3.8,
+                -3.8
+            ]
         }
     },
     {
         "name": "outer_box",
         "type": "Box",
         "data": {
-            "a": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": -1.0
-            },
-            "b": {
-                "x": 4.0,
-                "y": 4.0,
-                "z": -4.0
-            }
+            "a": [
+                1.0,
+                0.0,
+                -1.0
+            ],
+            "b": [
+                4.0,
+                4.0,
+                -4.0
+            ]
         }
     },
     {
         "name": "center_box_outer",
         "type": "Box",
         "data": {
-            "a": {
-                "x": 3.0,
-                "y": 0.0,
-                "z": -3.0
-            },
-            "b": {
-                "x": 7.0,
-                "y": 4.0,
-                "z": -7.0
-            }
+            "a": [
+                3.0,
+                0.0,
+                -3.0
+            ],
+            "b": [
+                7.0,
+                4.0,
+                -7.0
+            ]
         }
     },
     {
         "name": "center_box_inner",
         "type": "Box",
         "data": {
-            "a": {
-                "x": 3.3,
-                "y": 0.3,
-                "z": -3.3
-            },
-            "b": {
-                "x": 6.7,
-                "y": 3.7,
-                "z": -6.7
-            },
+            "a": [
+                3.3,
+                0.3,
+                -3.3
+            ],
+            "b": [
+                6.7,
+                3.7,
+                -6.7
+            ],
             "has_inverted_normals": true
         }
     },
@@ -855,11 +855,11 @@
         "name": "far_right_bottom_sphere",
         "type": "Sphere",
         "data": {
-            "center": {
-                "x": 7.5,
-                "y": 2.5,
-                "z": -7.5
-            },
+            "center": [
+                7.5,
+                2.5,
+                -7.5
+            ],
             "radius": 2.5
         }
     },
@@ -867,11 +867,11 @@
         "name": "far_left_sphere_2",
         "type": "Sphere",
         "data": {
-            "center": {
-                "x": 3.2,
-                "y": 4.5,
-                "z": -8.0
-            },
+            "center": [
+                3.2,
+                4.5,
+                -8.0
+            ],
             "radius": 1.5
         }
     },
@@ -879,11 +879,11 @@
         "name": "near_left_sphere_2.5",
         "type": "Sphere",
         "data": {
-            "center": {
-                "x": 2.5,
-                "y": 2.5,
-                "z": -2.5
-            },
+            "center": [
+                2.5,
+                2.5,
+                -2.5
+            ],
             "radius": 2.5
         }
     },
@@ -891,11 +891,11 @@
         "name": "near_left_sphere_inner",
         "type": "Sphere",
         "data": {
-            "center": {
-                "x": 2.5,
-                "y": 2.5,
-                "z": -2.5
-            },
+            "center": [
+                2.5,
+                2.5,
+                -2.5
+            ],
             "radius": 2.0,
             "has_inverted_normals": true
         }
@@ -904,26 +904,26 @@
         "name": "left_box",
         "type": "Translation",
         "data": {
-            "displacement": {
-                "x": 3.4,
-                "y": 0.0001,
-                "z": -7.0
-            },
+            "displacement": [
+                3.4,
+                0.0001,
+                -7.0
+            ],
             "type": "RotationY",
             "data": {
                 "angle": 15.0,
                 "type": "Box",
                 "data": {
-                    "a": {
-                        "x": -1.5,
-                        "y": 0.0,
-                        "z": 1.5
-                    },
-                    "b": {
-                        "x": 1.5,
-                        "y": 6.0,
-                        "z": -1.5
-                    }
+                    "a": [
+                        -1.5,
+                        0.0,
+                        1.5
+                    ],
+                    "b": [
+                        1.5,
+                        6.0,
+                        -1.5
+                    ]
                 }
             }
         }
@@ -932,11 +932,11 @@
         "name": "right_box",
         "type": "Translation",
         "data": {
-            "displacement": {
-                "x": 5.0,
-                "y": 0.0001,
-                "z": -2.0
-            },
+            "displacement": [
+                5.0,
+                0.0001,
+                -2.0
+            ],
             "type": "RotationY",
             "data": {
                 "angle": 45.0,
@@ -948,16 +948,16 @@
                         "angle": 45.0,
                         "type": "Box",
                         "data": {
-                            "a": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "b": {
-                                "x": 2.0,
-                                "y": 2.0,
-                                "z": -2.0
-                            }
+                            "a": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "b": [
+                                2.0,
+                                2.0,
+                                -2.0
+                            ]
                         }
                     }
                 }
@@ -968,11 +968,11 @@
         "name": "right_box_quaternion",
         "type": "Translation",
         "data": {
-            "displacement": {
-                "x": 7.0,
-                "y": 2.5001,
-                "z": -3.0
-            },
+            "displacement": [
+                7.0,
+                2.5001,
+                -3.0
+            ],
             "type": "Quaternion",
             "data": {
                 "axis_angles": [
@@ -983,16 +983,16 @@
                 "order": "XYZ",
                 "type": "Box",
                 "data": {
-                    "a": {
-                        "x": -1.25,
-                        "y": -1.25,
-                        "z": 1.25
-                    },
-                    "b": {
-                        "x": 1.25,
-                        "y": 1.25,
-                        "z": -1.25
-                    }
+                    "a": [
+                        -1.25,
+                        -1.25,
+                        1.25
+                    ],
+                    "b": [
+                        1.25,
+                        1.25,
+                        -1.25
+                    ]
                 }
             }
         }
@@ -1001,11 +1001,11 @@
         "name": "large_box_light",
         "type": "Translation",
         "data": {
-            "displacement": {
-                "x": 5.0,
-                "y": 5.0,
-                "z": -5.0
-            },
+            "displacement": [
+                5.0,
+                5.0,
+                -5.0
+            ],
             "type": "Quaternion",
             "data": {
                 "axis_angles": [
@@ -1017,16 +1017,16 @@
                 "type": "Box",
                 "data": {
                     "has_inverted_normals": false,
-                    "a": {
-                        "x": -0.8,
-                        "y": -0.8,
-                        "z": 0.8
-                    },
-                    "b": {
-                        "x": 0.8,
-                        "y": 0.8,
-                        "z": -0.8
-                    }
+                    "a": [
+                        -0.8,
+                        -0.8,
+                        0.8
+                    ],
+                    "b": [
+                        0.8,
+                        0.8,
+                        -0.8
+                    ]
                 }
             }
         }
@@ -1035,11 +1035,11 @@
         "name": "large_box_inner",
         "type": "Translation",
         "data": {
-            "displacement": {
-                "x": 5.0,
-                "y": 5.0,
-                "z": -5.0
-            },
+            "displacement": [
+                5.0,
+                5.0,
+                -5.0
+            ],
             "type": "Quaternion",
             "data": {
                 "axis_angles": [
@@ -1051,16 +1051,16 @@
                 "type": "Box",
                 "data": {
                     "has_inverted_normals": true,
-                    "a": {
-                        "x": -2.2,
-                        "y": -2.2,
-                        "z": 2.2
-                    },
-                    "b": {
-                        "x": 2.2,
-                        "y": 2.2,
-                        "z": -2.2
-                    }
+                    "a": [
+                        -2.2,
+                        -2.2,
+                        2.2
+                    ],
+                    "b": [
+                        2.2,
+                        2.2,
+                        -2.2
+                    ]
                 }
             }
         }
@@ -1069,11 +1069,11 @@
         "name": "large_box_outer",
         "type": "Translation",
         "data": {
-            "displacement": {
-                "x": 5.0,
-                "y": 5.0,
-                "z": -5.0
-            },
+            "displacement": [
+                5.0,
+                5.0,
+                -5.0
+            ],
             "type": "Quaternion",
             "data": {
                 "axis_angles": [
@@ -1085,16 +1085,16 @@
                 "type": "Box",
                 "data": {
                     "has_inverted_normals": false,
-                    "a": {
-                        "x": -2.8,
-                        "y": -2.8,
-                        "z": 2.8
-                    },
-                    "b": {
-                        "x": 2.8,
-                        "y": 2.8,
-                        "z": -2.8
-                    }
+                    "a": [
+                        -2.8,
+                        -2.8,
+                        2.8
+                    ],
+                    "b": [
+                        2.8,
+                        2.8,
+                        -2.8
+                    ]
                 }
             }
         }
@@ -1103,11 +1103,11 @@
         "name": "right_box_quaternion_inner",
         "type": "Translation",
         "data": {
-            "displacement": {
-                "x": 7.0,
-                "y": 2.5001,
-                "z": -3.0
-            },
+            "displacement": [
+                7.0,
+                2.5001,
+                -3.0
+            ],
             "type": "Quaternion",
             "data": {
                 "axis_angles": [
@@ -1119,16 +1119,16 @@
                 "type": "Box",
                 "data": {
                     "has_inverted_normals": false,
-                    "a": {
-                        "x": -1.0,
-                        "y": -1.0,
-                        "z": 1.0
-                    },
-                    "b": {
-                        "x": 1.0,
-                        "y": 1.0,
-                        "z": -1.0
-                    }
+                    "a": [
+                        -1.0,
+                        -1.0,
+                        1.0
+                    ],
+                    "b": [
+                        1.0,
+                        1.0,
+                        -1.0
+                    ]
                 }
             }
         }

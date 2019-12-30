@@ -37,7 +37,7 @@ func (d Dielectric) IsSpecular() bool {
 func (d Dielectric) Scatter(rayHit RayHit, rng *rand.Rand) (geometry.Ray, bool) {
 	hitPoint := rayHit.Ray.PointAt(rayHit.Time)
 	normal := rayHit.NormalAtHit
-	reflectionVector := geometry.ReflectAround(rayHit.Ray.Direction.Normalize(), normal)
+	reflectionVector := geometry.ReflectAroundVec3(rayHit.Ray.Direction.Normalize(), normal)
 
 	var refractiveNormal mgl64.Vec3
 	var ratioOfRefractiveIndices, cosine float64
@@ -53,7 +53,7 @@ func (d Dielectric) Scatter(rayHit RayHit, rng *rand.Rand) (geometry.Ray, bool) 
 		cosine = -(rayHit.Ray.Direction.Dot(normal))
 	}
 
-	refractedVector, ok := geometry.RefractAround(rayHit.Ray.Direction, refractiveNormal, ratioOfRefractiveIndices)
+	refractedVector, ok := geometry.RefractAroundVec3(rayHit.Ray.Direction, refractiveNormal, ratioOfRefractiveIndices)
 	var reflectionProbability float64
 	reflectionProbability = schlick(cosine, d.RefractiveIndex)
 

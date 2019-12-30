@@ -37,7 +37,7 @@ func (m Metal) Scatter(rayHit RayHit, rng *rand.Rand) (geometry.Ray, bool) {
 	hitPoint := rayHit.Ray.PointAt(rayHit.Time)
 	normal := rayHit.NormalAtHit
 
-	reflectionVector := geometry.ReflectAround(rayHit.Ray.Direction.Normalize(), normal)
+	reflectionVector := geometry.ReflectAroundVec3(rayHit.Ray.Direction.Normalize(), normal)
 	reflectionVector = reflectionVector.Add(geometry.RandomInUnitSphere(rng).Mul(m.Fuzziness))
 	if reflectionVector.Dot(normal) > 0 {
 		return geometry.Ray{

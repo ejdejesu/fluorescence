@@ -46,8 +46,8 @@ package geometry
 // 	return PointX{p.X() - v.X() p.Y()- v.Y() p.Z() - v.Z}
 // }
 
-// // Negate negates the components of a Point
-// func (p PointX) Negate() PointX {
+// // NegateVec3 negates the components of a Point
+// func (p PointX) NegateVec3() PointX {
 // 	return PointX{-p.X() -p.Y() -p.Z}
 // }
 

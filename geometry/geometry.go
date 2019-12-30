@@ -8,19 +8,21 @@ import (
 	"github.com/go-gl/mathgl/mgl64"
 )
 
+// Vec3Zero references zero vector
 var Vec3Zero = mgl64.Vec3{0.0, 0.0, 0.0}
 
+// Vec3Max references the maximum representable float64s in a vector
 var Vec3Max = mgl64.Vec3{mgl64.MaxValue, mgl64.MaxValue, mgl64.MaxValue}
 
-// VectorUp references the up vector (positive Y) with the standard cartesian axes as an orthogonal system
-var VectorUp = mgl64.Vec3{0.0, 1.0, 0.0}
+// Vec3Up references the up vector (positive Y) with the standard cartesian axes as an orthogonal system
+var Vec3Up = mgl64.Vec3{0.0, 1.0, 0.0}
 
-// VectorRight references the right vector (positive X) with the standard cartesian axes as an orthogonal system
-var VectorRight = mgl64.Vec3{1.0, 0.0, 0.0}
+// Vec3Right references the right vector (positive X) with the standard cartesian axes as an orthogonal system
+var Vec3Right = mgl64.Vec3{1.0, 0.0, 0.0}
 
-// VectorForward references the forward vector (negative Z) with the standard cartesian axes as an orthogonal system
+// Vec3Forward references the forward vector (negative Z) with the standard cartesian axes as an orthogonal system
 // it points towards negative Z to preserve the system's right-handedness
-var VectorForward = mgl64.Vec3{0.0, 0.0, -1.0}
+var Vec3Forward = mgl64.Vec3{0.0, 0.0, -1.0}
 
 // RandomOnUnitDisk returns a new Vector pointing from the origin to a
 // random point on a unit disk
@@ -62,8 +64,13 @@ func MaxComponents(p, q mgl64.Vec3) mgl64.Vec3 {
 	return mgl64.Vec3{math.Max(p.X(), q.X()), math.Max(p.Y(), q.Y()), math.Max(p.Z(), q.Z())}
 }
 
-// Pow raises a Vector to an exponential power, component-wise
-func Pow(v mgl64.Vec3, e float64) mgl64.Vec3 {
+// MulVec3 returns the product of two Vec3 component-wise
+func MulVec3(v, w mgl64.Vec3) mgl64.Vec3 {
+	return mgl64.Vec3{v[0] * w[0], v[1] * w[1], v[2] * w[2]}
+}
+
+// PowVec3 raises a Vector to an exponential power, component-wise
+func PowVec3(v mgl64.Vec3, e float64) mgl64.Vec3 {
 	return mgl64.Vec3{
 		math.Pow(v.X(), e),
 		math.Pow(v.Y(), e),
@@ -71,18 +78,51 @@ func Pow(v mgl64.Vec3, e float64) mgl64.Vec3 {
 	}
 }
 
-// Negate returns a Vector pointing in the opposite direction
-func Negate(v mgl64.Vec3) mgl64.Vec3 {
+// NegateVec3 returns a Vector pointing in the opposite direction
+func NegateVec3(v mgl64.Vec3) mgl64.Vec3 {
 	return v.Mul(-1.0)
 }
 
-// ReflectAround returns the reflection of a vector given a normal
-func ReflectAround(v, w mgl64.Vec3) mgl64.Vec3 {
+// ClampVec3 clamps elements of a Vec3
+func ClampVec3(v mgl64.Vec3, min, max float64) mgl64.Vec3 {
+	return mgl64.Vec3{
+		mgl64.Clamp(v[0], min, max),
+		mgl64.Clamp(v[1], min, max),
+		mgl64.Clamp(v[2], min, max),
+	}
+}
+
+// ScaleVec3 scales all elements equally so the max channel is s
+func ScaleVec3(v mgl64.Vec3, s float64) mgl64.Vec3 {
+	max := math.Max(v[0], math.Max(v[1], v[2]))
+	return v.Mul(s / max)
+}
+
+// ScaleDownVec3 scales as Scale does, but only if the max channel exceeds s
+func ScaleDownVec3(v mgl64.Vec3, s float64) mgl64.Vec3 {
+	max := math.Max(v[0], math.Max(v[1], v[2]))
+	if max > s {
+		return v.Mul(s / max)
+	}
+	return v
+}
+
+// ScaleUpVec3 scales as Scale does, but only if the highest channel falls below s
+func ScaleUpVec3(v mgl64.Vec3, s float64) mgl64.Vec3 {
+	max := math.Max(v[0], math.Max(v[1], v[2]))
+	if max < s {
+		return v.Mul(s / max)
+	}
+	return v
+}
+
+// ReflectAroundVec3 returns the reflection of a vector given a normal
+func ReflectAroundVec3(v, w mgl64.Vec3) mgl64.Vec3 {
 	return v.Sub(w.Mul(v.Dot(w) * 2.0))
 }
 
-// RefractAround returns the refraction of a vector given the normal and ratio of reflective indices
-func RefractAround(v, w mgl64.Vec3, rri float64) (mgl64.Vec3, bool) {
+// RefractAroundVec3 returns the refraction of a vector given the normal and ratio of reflective indices
+func RefractAroundVec3(v, w mgl64.Vec3, rri float64) (mgl64.Vec3, bool) {
 	dt := v.Normalize().Dot(w)
 	discriminant := 1.0 - (rri*rri)*(1.0-(dt*dt))
 	// fmt.Println(rri)

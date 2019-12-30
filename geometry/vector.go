@@ -74,18 +74,18 @@ package geometry
 // 	return VectorX{v.X() / w.X() v.Y()/ w.Y() v.Z() / w.Z}
 // }
 
-// // Negate returns a Vector pointing in the opposite direction
-// func (v VectorX) Negate() VectorX {
+// // NegateVec3 returns a Vector pointing in the opposite direction
+// func (v VectorX) NegateVec3() VectorX {
 // 	return VectorX{-v.X() -v.Y() -v.Z}
 // }
 
-// // ReflectAround returns the reflection of a vector given a normal
-// func (v VectorX) ReflectAround(w VectorX) VectorX {
+// // ReflectAroundVec3 returns the reflection of a vector given a normal
+// func (v VectorX) ReflectAroundVec3(w VectorX) VectorX {
 // 	return v.Sub(w.MultScalar(v.Dot(w) * 2.0))
 // }
 
-// // RefractAround returns the refraction of a vector given the normal and ratio of reflective indices
-// func (v VectorX) RefractAround(w VectorX, rri float64) (VectorX, bool) {
+// // RefractAroundVec3 returns the refraction of a vector given the normal and ratio of reflective indices
+// func (v VectorX) RefractAroundVec3(w VectorX, rri float64) (VectorX, bool) {
 // 	dt := v.Unit().Dot(w)
 // 	discriminant := 1.0 - (rri*rri)*(1.0-(dt*dt))
 // 	// fmt.Println(rri)

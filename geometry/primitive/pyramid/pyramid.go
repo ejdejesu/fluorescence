@@ -9,14 +9,16 @@ import (
 	"fluorescence/geometry/primitive/triangle"
 	"fluorescence/shading/material"
 	"fmt"
+
+	"github.com/go-gl/mathgl/mgl64"
 )
 
 // Pyramid represents a pyramid geometric shape
 type Pyramid struct {
-	A                 mgl64.Vec3 `json:"a"`
-	B                 mgl64.Vec3 `json:"b"`
-	Height             float64        `json:"height"`
-	HasInvertedNormals bool           `json:"has_inverted_normals"`
+	A                  mgl64.Vec3 `json:"a"`
+	B                  mgl64.Vec3 `json:"b"`
+	Height             float64    `json:"height"`
+	HasInvertedNormals bool       `json:"has_inverted_normals"`
 	list               *primitivelist.PrimitiveList
 	box                *aabb.AABB
 }
@@ -26,21 +28,21 @@ func (p *Pyramid) Setup() (*Pyramid, error) {
 	if p.Height <= 0 {
 		return nil, fmt.Errorf("pyramid height is 0 or negative")
 	}
-	if p.A.Y()!= p.B.Y(){
+	if p.A.Y() != p.B.Y() {
 		return nil, fmt.Errorf("pyramid is not directed upwards")
 	}
 
 	c1 := geometry.MinComponents(p.A, p.B)
 	c3 := geometry.MaxComponents(p.A, p.B)
-	c2 :=mgl64.Vec3{
-		X: c1.X()
-		Y: c1.Y()
-		Z: c3.Z(),
+	c2 := mgl64.Vec3{
+		c1.X(),
+		c1.Y(),
+		c3.Z(),
 	}
-	c4 :=mgl64.Vec3{
-		X: c3.X()
-		Y: c1.Y()
-		Z: c1.Z(),
+	c4 := mgl64.Vec3{
+		c3.X(),
+		c1.Y(),
+		c1.Z(),
 	}
 
 	base, err := (&rectangle.Rectangle{
@@ -53,9 +55,9 @@ func (p *Pyramid) Setup() (*Pyramid, error) {
 		return nil, err
 	}
 
-	diagonalBaseVectorHalf := c1.To(c3).DivScalar(2.0)
-	baseCenterPoint := c1.AddVector(diagonalBaseVectorHalf)
-	topPoint := baseCenterPoint.AddVector(geometry.VectorUp.MultScalar(p.Height))
+	diagonalBaseVectorHalf := c3.Sub(c1).Mul(0.5)
+	baseCenterPoint := c1.Add(diagonalBaseVectorHalf)
+	topPoint := baseCenterPoint.Add(geometry.Vec3Up.Mul(p.Height))
 
 	tri1, err := (&triangle.Triangle{
 		A:        c1,
@@ -145,15 +147,15 @@ func (p *Pyramid) Copy() primitive.Primitive {
 // Unit return a unit pyramid
 func Unit(xOffset, yOffset, zOffset float64) *Pyramid {
 	p, _ := (&Pyramid{
-		A:mgl64.Vec3{
-			X: 0.0 + xOffset,
-			Y: 0.0 + yOffset,
-			Z: 0.0 + zOffset,
+		A: mgl64.Vec3{
+			0.0 + xOffset,
+			0.0 + yOffset,
+			0.0 + zOffset,
 		},
-		B:mgl64.Vec3{
-			X: 1.0 + xOffset,
-			Y: 0.0 + yOffset,
-			Z: 1.0 + zOffset,
+		B: mgl64.Vec3{
+			1.0 + xOffset,
+			0.0 + yOffset,
+			1.0 + zOffset,
 		},
 		Height: 1.0,
 	}).Setup()

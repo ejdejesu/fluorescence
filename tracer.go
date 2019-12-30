@@ -3,20 +3,20 @@ package main
 import (
 	"context"
 	"fluorescence/geometry"
-	"fluorescence/shading"
 	"image"
 	"math"
 	"math/rand"
 	"runtime"
 	"time"
 
+	"github.com/go-gl/mathgl/mgl64"
 	"golang.org/x/sync/semaphore"
 )
 
 // Tile holds information about a section of pixels on the image
 type Tile struct {
-	Originmgl64.Vec3  // Top left corner of Tile
-	Span  mgl64.Vec3 // Width and Height of Tile
+	Origin mgl64.Vec2 // Top left corner of Tile
+	Span   mgl64.Vec2 // Width and Height of Tile
 }
 
 // TraceImage is the powerhouse function, driving the raycasting algorith by casting rays into the scene
@@ -42,11 +42,11 @@ func TraceImage(params *Parameters, img *image.RGBA64, doneChan chan<- int, maxT
 // traceTile iterates over the pixels in a tile and writes the received colors to the image
 func traceTile(p *Parameters, rng *rand.Rand, img *image.RGBA64, dc chan<- int, sem *semaphore.Weighted, t Tile, sampleCount int) {
 	defer sem.Release(1)
-	for y := t.Origin.Y; y < t.Origin.Y+t.Span.Y; y++ {
-		for x := t.Origin.X; x < t.Origin.X+t.Span.X; x++ {
+	for y := t.Origin.Y(); y < t.Origin.Y()+t.Span.Y(); y++ {
+		for x := t.Origin.X(); x < t.Origin.X()+t.Span.X(); x++ {
 			pixelColor := tracePixel(p, int(x), int(y), rng)
 
-			img.SetRGBA64(int(x), p.ImageHeight-int(y)-1, pixelColor.ToRGBA64())
+			img.SetRGBA64(int(x), p.ImageHeight-int(y)-1, geometry.Vec3ToRGBA64(pixelColor))
 			dc <- 1
 		}
 	}
@@ -68,9 +68,9 @@ func tracePixel(p *Parameters, x, y int, rng *rand.Rand) mgl64.Vec3 {
 		pixelColor = pixelColor.Add(tempColor)
 	}
 	if p.UseScalingTruncation {
-		return pixelColor.DivScalar(float64(p.SampleCount)).ScaleDown().Pow(1.0 / p.GammaCorrection)
+		return geometry.PowVec3(geometry.ScaleDownVec3(pixelColor.Mul(1.0/float64(p.SampleCount)), 1.0), 1.0/p.GammaCorrection)
 	}
-	return pixelColor.DivScalar(float64(p.SampleCount)).Clamp(0, 1).Pow(1.0 / p.GammaCorrection)
+	return geometry.PowVec3(geometry.ClampVec3(pixelColor.Mul(1.0/float64(p.SampleCount)), 0.0, 1.0), 1.0/p.GammaCorrection)
 
 }
 
@@ -80,7 +80,7 @@ func traceRay(parameters *Parameters, r geometry.Ray, rng *rand.Rand, depth int)
 	// if we've gone too deep...
 	if depth > parameters.MaxBounces {
 		// ...just return BLACK
-		return mgl64.Vec3Black
+		return geometry.Vec3Zero
 	}
 	// check if we've hit something
 	rayHit, hitSomething := parameters.Scene.Objects.Intersection(r, parameters.TMin, parameters.TMax)
@@ -95,7 +95,7 @@ func traceRay(parameters *Parameters, r geometry.Ray, rng *rand.Rand, depth int)
 
 	// if the surface is BLACK, it's not going to let any incoming light contribute to the outgoing color
 	// so we can safely say no light is reflected and simply return the emittance of the material
-	if mat.Reflectance(rayHit.U, rayHit.V) == mgl64.Vec3Black {
+	if mat.Reflectance(rayHit.U, rayHit.V) == geometry.Vec3Zero {
 		return mat.Emittance(rayHit.U, rayHit.V)
 	}
 
@@ -103,12 +103,12 @@ func traceRay(parameters *Parameters, r geometry.Ray, rng *rand.Rand, depth int)
 	scatteredRay, wasScattered := rayHit.Material.Scatter(*rayHit, rng)
 	// if no ray could have reflected to us, we just return BLACK
 	if !wasScattered {
-		return mgl64.Vec3Black
+		return geometry.Vec3Zero
 	}
 	// get the color that came to this point and gave us the outgoing ray
 	incomingColor := traceRay(parameters, scatteredRay, rng, depth+1)
 	// return the (very-roughly approximated) value of the rendering equation
-	return mat.Emittance(rayHit.U, rayHit.V).Add(mat.Reflectance(rayHit.U, rayHit.V).MultColor(incomingColor))
+	return mat.Emittance(rayHit.U, rayHit.V).Add(geometry.MulVec3(mat.Reflectance(rayHit.U, rayHit.V), incomingColor))
 }
 
 // getTiles creates and return a grid of tiles on the image
@@ -119,13 +119,13 @@ func getTiles(p *Parameters, i *image.RGBA64) []Tile {
 			width := math.Min(float64(p.TileWidth), float64(p.ImageWidth-x))
 			height := math.Min(float64(p.TileHeight), float64(p.ImageHeight-y))
 			tiles = append(tiles, Tile{
-				Origin:mgl64.Vec3{
-					X: float64(x),
-					Y: float64(y),
+				Origin: mgl64.Vec2{
+					float64(x),
+					float64(y),
 				},
-				Span:mgl64.Vec3{
-					X: width,
-					Y: height,
+				Span: mgl64.Vec2{
+					width,
+					height,
 				},
 			})
 		}

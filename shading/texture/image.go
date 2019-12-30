@@ -51,5 +51,5 @@ func (it *Image) Value(u, v float64) mgl64.Vec3 {
 	// get the color of the image at that point
 	color := it.Image.At(x, y)
 	// convert to a color, de-gamma, and apply magnitude
-	return geometry.Pow(geometry.ColorToVec3(color), it.Gamma).Mul(it.Magnitude)
+	return geometry.PowVec3(geometry.ColorToVec3(color), it.Gamma).Mul(it.Magnitude)
 }

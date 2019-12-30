@@ -47,7 +47,7 @@ func (hc *HollowCylinder) Setup() (*HollowCylinder, error) {
 	}
 	hollowDiskA, err := (&hollowdisk.HollowDisk{
 		Center:      hc.A,
-		Normal:      hc.B.To(hc.A).Unit(),
+		Normal:      hc.A.Sub(hc.B).Normalize(),
 		InnerRadius: hc.InnerRadius,
 		OuterRadius: hc.OuterRadius,
 		IsCulled:    false,
@@ -57,7 +57,7 @@ func (hc *HollowCylinder) Setup() (*HollowCylinder, error) {
 	}
 	hollowDiskB, err := (&hollowdisk.HollowDisk{
 		Center:      hc.B,
-		Normal:      hc.A.To(hc.B).Unit(),
+		Normal:      hc.B.Sub(hc.A).Normalize(),
 		InnerRadius: hc.InnerRadius,
 		OuterRadius: hc.OuterRadius,
 		IsCulled:    false,
@@ -117,14 +117,14 @@ func (hc *HollowCylinder) Copy() primitive.Primitive {
 func Unit(xOffset, yOffset, zOffset float64) *HollowCylinder {
 	hc, _ := (&HollowCylinder{
 		A: mgl64.Vec3{
-			X: 0.0 + xOffset,
-			Y: 0.0 + yOffset,
-			Z: 0.0 + zOffset,
+			0.0 + xOffset,
+			0.0 + yOffset,
+			0.0 + zOffset,
 		},
 		B: mgl64.Vec3{
-			X: 0.0 + xOffset,
-			Y: 1.0 + yOffset,
-			Z: 0.0 + zOffset,
+			0.0 + xOffset,
+			1.0 + yOffset,
+			0.0 + zOffset,
 		},
 		InnerRadius: 0.5,
 		OuterRadius: 1.0,

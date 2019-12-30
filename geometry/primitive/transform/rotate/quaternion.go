@@ -97,7 +97,7 @@ func (q *Quaternion) BoundingBox(t0, t1 float64) (*aabb.AABB, bool) {
 		return nil, false
 	}
 	minPoint := geometry.Vec3Max
-	maxPoint := geometry.Negate(geometry.Vec3Max)
+	maxPoint := geometry.NegateVec3(geometry.Vec3Max)
 	for i := 0.0; i < 2; i++ {
 		for j := 0.0; j < 2; j++ {
 			for k := 0.0; k < 2; k++ {

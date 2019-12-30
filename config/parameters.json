@@ -20,5 +20,5 @@
     },
     "t_min": 1e-7,
     "t_max": 1e+300,
-    "scene_file_name": "polligon_room.json"
+    "scene_file_name": "poliigon_room.json"
 }
